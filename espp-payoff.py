@@ -84,44 +84,54 @@ def get_payoff_data():
 
         modeled_price += 1
 
-def get_replicating_portfolio():
+def get_replicating_portfolio(maximum_shares_purchased,maximum_investment,purchase_discount,annualized_volatility):
+    ### Logic
+    
     ### Replicating portfolio
     ### Shares purchased
 
     replicating_shares = .15 * MAXIMUM_SHARES_PURCHASED
-    replicating_shares_market_value = replicating_shares * current_price
+    replicating_shares_value = replicating_shares * current_price
 
-    print(replicating_shares_market_value)
+    print(replicating_shares_value)
 
     ### Sell 150 call options @ strike of the kink
 
-    call_option_value = get_options_price(
+    returns_kink = min(maximum_investment / maximum_shares_purchased / (1 - purchase_discount),current_price)
+
+    sell_call_option_value = get_options_price(
         current_price=current_price,
-        strike_price=RETURNS_KINK,
+        strike_price=returns_kink,
         expiration_years=.5,
         risk_free_rate=.03,
         annualized_volatility=annualized_volatility)
 
-    call_options_value = call_option_value * -replicating_shares
+    sell_call_options_value = sell_call_option_value * -replicating_shares
 
-    print(call_option_value)
-    print(call_options_value)
+    print(sell_call_option_value)
+    print(sell_call_options_value)
 
     ### Buy 185 call options @ current_price strike
 
-    call_option_value = get_options_price(
+    buy_call_option_value = get_options_price(
         current_price=current_price,
         strike_price=current_price,
         expiration_years=.5,
         risk_free_rate=.03,
         annualized_volatility=annualized_volatility)
 
-    replicating_options = (1 / maximum_share_price) * MAXIMUM_INVESTMENT
+    buy_replicating_options = (1 / maximum_share_price) * MAXIMUM_INVESTMENT
 
-    call_options_value = call_option_value * replicating_options
+    buy_call_options_value = buy_call_option_value * buy_replicating_options
 
-    print(call_option_value)
-    print(call_options_value)
+    print(buy_call_option_value)
+    print(buy_call_options_value)
+    total_value = replicating_shares_value + sell_call_options_value + buy_call_options_value
+
+    ReplicatingPortfolio = namedtuple('ReplicatingPortfolio', 'shares_value sell_call_options_value buy_call_options_value total_value')
+    replicating_portfolio = ReplicatingPortfolio(replicating_shares_value,sell_call_options_value,buy_call_options_value,total_value)
+
+    return replicating_portfolio
 
 if __name__ == '__main__':
 
@@ -130,7 +140,6 @@ if __name__ == '__main__':
     MAXIMUM_INVESTMENT = 12500
     MAXIMUM_SHARES_PURCHASED = 1000
     PURCHASE_DISCOUNT = .15
-    RETURNS_KINK = MAXIMUM_INVESTMENT / MAXIMUM_SHARES_PURCHASED / (1 - PURCHASE_DISCOUNT)
     # stock_history = get_stock_history(TICKER)
     # annualized_volatility = get_annualized_volatility(stock_history)
     # current_price = stock_history[-1].close
@@ -140,6 +149,13 @@ if __name__ == '__main__':
     minimum_shares_purchased = MAXIMUM_INVESTMENT / maximum_share_price
 
 
-    get_replicating_portfolio()
+    replicating_portfolio = get_replicating_portfolio(
+        maximum_shares_purchased=MAXIMUM_SHARES_PURCHASED,
+        maximum_investment=MAXIMUM_INVESTMENT,
+        purchase_discount=PURCHASE_DISCOUNT,
+        annualized_volatility=annualized_volatility
+        )
+    
+    print(replicating_portfolio)
 
     
