@@ -84,7 +84,7 @@ def get_payoff_data():
 
         modeled_price += 1
 
-def get_replicating_portfolio(maximum_shares_purchased,maximum_investment,purchase_discount,annualized_volatility):
+def get_replicating_portfolio(maximum_shares_purchased,maximum_investment,purchase_discount,annualized_volatility,risk_free_rate):
     ### Logic
     
     ### Replicating portfolio
@@ -117,7 +117,7 @@ def get_replicating_portfolio(maximum_shares_purchased,maximum_investment,purcha
         current_price=current_price,
         strike_price=current_price,
         expiration_years=.5,
-        risk_free_rate=.03,
+        risk_free_rate=risk_free_rate,
         annualized_volatility=annualized_volatility)
 
     buy_replicating_options = (1 / maximum_share_price) * MAXIMUM_INVESTMENT
@@ -136,14 +136,14 @@ def get_replicating_portfolio(maximum_shares_purchased,maximum_investment,purcha
 if __name__ == '__main__':
 
     TICKER = 'SQ'
-    RISK_FREE_RATE = .03
+    RISK_FREE_RATE = .045
     MAXIMUM_INVESTMENT = 12500
     MAXIMUM_SHARES_PURCHASED = 1000
     PURCHASE_DISCOUNT = .15
     # stock_history = get_stock_history(TICKER)
     # annualized_volatility = get_annualized_volatility(stock_history)
     # current_price = stock_history[-1].close
-    current_price = 79
+    current_price = 5
     annualized_volatility = .891
     maximum_share_price = current_price * (1 - PURCHASE_DISCOUNT)
     minimum_shares_purchased = MAXIMUM_INVESTMENT / maximum_share_price
@@ -153,7 +153,8 @@ if __name__ == '__main__':
         maximum_shares_purchased=MAXIMUM_SHARES_PURCHASED,
         maximum_investment=MAXIMUM_INVESTMENT,
         purchase_discount=PURCHASE_DISCOUNT,
-        annualized_volatility=annualized_volatility
+        annualized_volatility=annualized_volatility,
+        risk_free_rate=RISK_FREE_RATE
         )
     
     print(replicating_portfolio)
