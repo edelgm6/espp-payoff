@@ -22,8 +22,7 @@ def get_options_price(current_price,
 
     return current_price * N(d1) - strike_price * np.exp(-risk_free_rate*expiration_years) * N(d2)
 
-def get_annualized_volatility(ticker):
-
+def get_stock_history(ticker):
     client = RESTClient(KEYS.POLYGON_API_KEY)
 
     response = client.get_aggs(
@@ -36,7 +35,9 @@ def get_annualized_volatility(ticker):
         sort='asc'
     )
 
-    closing_prices = [agg.close for agg in response]
+def get_annualized_volatility(stock_history):
+
+    closing_prices = [agg.close for agg in stock_history]
 
     daily_pct_changes = []
     for day in range(1,len(closing_prices)):
@@ -48,20 +49,10 @@ def get_annualized_volatility(ticker):
 
     return annualized_volatility
 
-if __name__ == '__main__':
+def get_payoff_data():
 
-    ## TODO: Should set it up such that we only call the API one time to calculate the annualized volatility
-
-    TICKER = 'SQ'
-    RISK_FREE_RATE = .03
-    MAXIMUM_INVESTMENT = 12500
-    MAXIMUM_SHARES_PURCHASED = 1000
-    CURRENT_PRICE = 79
-    PURCHASE_DISCOUNT = .15
-    annualized_volatility = get_annualized_volatility(TICKER)
-
-    max_price_model = CURRENT_PRICE * 1.5
-    min_price_model = CURRENT_PRICE * .5
+    max_price_model = current_price * 1.5
+    min_price_model = current_price * .5
 
     modeled_price = min_price_model
 
@@ -72,7 +63,6 @@ if __name__ == '__main__':
         )
 
     while modeled_price <= max_price_model:
-        print(modeled_price)
         purchase_price = modeled_price * (1 - PURCHASE_DISCOUNT)
         shares_purchased = min(MAXIMUM_SHARES_PURCHASED, MAXIMUM_INVESTMENT / purchase_price) // 1
 
@@ -92,30 +82,21 @@ if __name__ == '__main__':
                 )
             )
 
-        # print(shares_purchased)
-        # print(purchase_value)
-        # print(market_value)
-        # print(market_value / purchase_value - 1)
-
         modeled_price += 1
 
-    # print(espp_value_tuples)
-
+def get_replicating_portfolio():
     ### Replicating portfolio
     ### Shares purchased
 
     replicating_shares = .15 * MAXIMUM_SHARES_PURCHASED
-    replicating_shares_market_value = replicating_shares * CURRENT_PRICE
+    replicating_shares_market_value = replicating_shares * current_price
 
     print(replicating_shares_market_value)
 
     ### Sell 150 call options @ strike of the kink
-    RETURNS_KINK = MAXIMUM_INVESTMENT / MAXIMUM_SHARES_PURCHASED / (1 - PURCHASE_DISCOUNT)
-
-    # print(RETURNS_KINK)
 
     call_option_value = get_options_price(
-        current_price=CURRENT_PRICE,
+        current_price=current_price,
         strike_price=RETURNS_KINK,
         expiration_years=.5,
         risk_free_rate=.03,
@@ -123,24 +104,42 @@ if __name__ == '__main__':
 
     call_options_value = call_option_value * -replicating_shares
 
-    # print(call_option_value)
+    print(call_option_value)
     print(call_options_value)
 
     ### Buy 185 call options @ current_price strike
 
-    MAXIMUM_SHARE_PRICE = CURRENT_PRICE * (1 - PURCHASE_DISCOUNT)
-    minimum_shares_purchased = MAXIMUM_INVESTMENT / MAXIMUM_SHARE_PRICE
-
     call_option_value = get_options_price(
-        current_price=CURRENT_PRICE,
-        strike_price=CURRENT_PRICE,
+        current_price=current_price,
+        strike_price=current_price,
         expiration_years=.5,
         risk_free_rate=.03,
         annualized_volatility=annualized_volatility)
 
-    replicating_options = (1 / MAXIMUM_SHARE_PRICE) * MAXIMUM_INVESTMENT
+    replicating_options = (1 / maximum_share_price) * MAXIMUM_INVESTMENT
 
     call_options_value = call_option_value * replicating_options
 
-    # print(call_option_value)
+    print(call_option_value)
     print(call_options_value)
+
+if __name__ == '__main__':
+
+    TICKER = 'SQ'
+    RISK_FREE_RATE = .03
+    MAXIMUM_INVESTMENT = 12500
+    MAXIMUM_SHARES_PURCHASED = 1000
+    PURCHASE_DISCOUNT = .15
+    RETURNS_KINK = MAXIMUM_INVESTMENT / MAXIMUM_SHARES_PURCHASED / (1 - PURCHASE_DISCOUNT)
+    # stock_history = get_stock_history(TICKER)
+    # annualized_volatility = get_annualized_volatility(stock_history)
+    # current_price = stock_history[-1].close
+    current_price = 79
+    annualized_volatility = .891
+    maximum_share_price = current_price * (1 - PURCHASE_DISCOUNT)
+    minimum_shares_purchased = MAXIMUM_INVESTMENT / maximum_share_price
+
+
+    get_replicating_portfolio()
+
+    
