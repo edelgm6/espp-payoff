@@ -133,6 +133,46 @@ def get_replicating_portfolio(maximum_shares_purchased,maximum_investment,purcha
 
     return replicating_portfolio
 
+def create_chart_page():
+    html_template = """
+        <div>
+        <canvas id="myChart"></canvas>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+        <script>
+        const ctx = document.getElementById('myChart');
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [1,2,3,4,5,6,7,8,9,10],
+                datasets: [{
+                    label: 'payoff',
+                    data: [12, 19, 3, 5, 2, 3],
+                    borderWidth: 1
+                }]
+                },
+                options: {
+                scales: {
+                    y: {
+                    beginAtZero: true
+                    }
+                }
+            }
+        });
+        </script>
+    """
+
+    f = open('/Users/garrettedel/Desktop/espp-payoff/test-chart.html', 'w')
+    f.write(html_template)
+    f.close()
+
+
+
+
+
 if __name__ == '__main__':
 
     TICKER = 'SQ'
@@ -158,5 +198,6 @@ if __name__ == '__main__':
         )
     
     print(replicating_portfolio)
+    create_chart_page()
 
     
