@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.views import View
-from web.serializers import PayoffsSerializer
 from django.http import Http404
+from web.serializers import PayoffsSerializer, ReplicatingPortfolioSeriesSerializer
+from web.espp import ESPP
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -16,11 +17,29 @@ class Index(View):
 class Payoffs(APIView):
 
     def get(self, request, format=None):
-        data = {
-            'prices': [1,2,3,4,5],
-            'payoffs': [150,300,450,600,750]
-            }
+        
+        espp = ESPP()
+        
+        data = espp.get_payoff_series()
+        print(data)
         serializer = PayoffsSerializer(data=data)
         if serializer.is_valid():
+            
             return Response(serializer.data)
+        print(serializer.errors)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class ReplicatingPortfolio(APIView):
+
+    def get(self, request, format=None):
+        
+        espp = ESPP()
+        
+        data = espp.get_replication_portfolio_series()
+        print(data)
+        serializer = ReplicatingPortfolioSeriesSerializer(data=data)
+        if serializer.is_valid():
+            
+            return Response(serializer.data)
+        print(serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

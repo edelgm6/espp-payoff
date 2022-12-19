@@ -15,10 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from web.views import Payoffs, Index
+from web.views import Payoffs, Index, ReplicatingPortfolio
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('payoffs/', Payoffs.as_view()),
+    path('replicating-portfolio-series/', ReplicatingPortfolio.as_view()),
     path('', Index.as_view())
 ]
