@@ -17,7 +17,6 @@ class ESPPTestCase(TestCase):
         espp = ESPP()
 
         replicating_portfolio = espp.get_replicating_portfolio()
-        print(replicating_portfolio)
         self.assertEqual(replicating_portfolio.buy_shares_position.count,espp.maximum_shares_purchased * espp.purchase_discount)
         self.assertEqual(replicating_portfolio.sell_call_options_position.count,-espp.maximum_shares_purchased * espp.purchase_discount)
         self.assertEqual(replicating_portfolio.buy_call_options_position.count,(1 / espp.maximum_purchase_price) * espp.maximum_investment)
