@@ -21,3 +21,6 @@ class ReplicatingPortfolioSeriesSerializer(serializers.Serializer):
     buy_call_options_series = serializers.ListField(
         child=serializers.FloatField()
     )
+    payoffs = serializers.ListField(
+        child=serializers.FloatField(min_value=0)
+    )

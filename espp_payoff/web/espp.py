@@ -1,6 +1,7 @@
 from polygon import RESTClient
 from scipy.stats import norm
 from django.conf import settings
+from collections import namedtuple
 import statistics
 import math
 import numpy as np
@@ -18,6 +19,7 @@ class Security:
     pass
 
 class Stock(Security):
+    # Implement a get_payoff function here for consistency
     def __init__(self, ticker, price, annualized_volatility):
         self.ticker = ticker
         self.price = price
@@ -114,45 +116,24 @@ class ESPP:
         
 
     def get_replicating_portfolio(self):
-        
-        ### Replicating portfolio
-        ### Shares purchased
 
         buy_shares_count = self.purchase_discount * self.maximum_shares_purchased
         buy_shares_position = Position(security=self.stock,count=buy_shares_count)
-        # replicating_shares_value = replicating_shares * self.stock.price
 
-        ### Sell 150 call options @ strike of the kink
         sell_call_option_strike_price = min(self.maximum_investment / self.maximum_shares_purchased / (1 - self.purchase_discount),self.stock.price)
         sell_call_option = CallOption(strike_price=sell_call_option_strike_price,expiration_years=self.expiration_years,stock=self.stock)
         sell_call_options_position = Position(security=sell_call_option,count=-buy_shares_count)
-        # sell_call_option_value = sell_call_option.get_price(self.stock.price,self.risk_free_rate,self.stock.annualizized_volatility,self.expiration_years)
-        # sell_call_options_value = sell_call_option_value * -replicating_shares
-
-        ### Buy 185 call options @ current_price strike
 
         buy_call_option = CallOption(strike_price=self.stock.price,expiration_years=self.expiration_years,stock=self.stock)
         buy_call_options_count = (1 / self.maximum_purchase_price) * self.maximum_investment
         buy_call_options_position = Position(security=buy_call_option,count=buy_call_options_count)
-        
-        # buy_call_option_value = buy_call_option.get_price()
-        # buy_call_options_value = buy_call_option_value * buy_replicating_options
-        # total_value = replicating_shares_value + sell_call_opstions_value + buy_call_options_value
 
-        replicating_portfolio = {
-            'buy_shares_position': buy_shares_position,
-            'sell_call_options_position': sell_call_options_position,
-            'buy_call_options_position': buy_call_options_position
-        }
-            # 'buy_shares_count': replicating_shares,
-            # 'buy_shares_value': replicating_shares_value,
-            # 'sell_call_options_count': -replicating_shares,
-            # 'sell_call_options_strike_price': sell_call_option_strike_price,
-            # 'sell_call_options_value': sell_call_options_value,
-            # 'buy_call_options_count': buy_replicating_options,
-            # 'buy_call_options_strike_price': self.stock.price,
-            # 'buy_call_options_value': buy_call_options_value,
-            # 'total_value': total_value
-        
+        ReplicatingPortfolio = namedtuple('ReplicatingPortoflio', ['buy_shares_position','sell_call_options_position','buy_call_options_position'])
+
+        replicating_portfolio = ReplicatingPortfolio(
+            buy_shares_position=buy_shares_position,
+            sell_call_options_position=sell_call_options_position,
+            buy_call_options_position=buy_call_options_position
+            )
 
         return replicating_portfolio

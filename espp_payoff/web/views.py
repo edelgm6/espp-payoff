@@ -23,7 +23,6 @@ class Payoffs(APIView):
         charts = Charts(espp=espp)
         
         data = charts.get_payoff_series()
-        print(data)
         serializer = PayoffsSerializer(data=data)
         if serializer.is_valid():
             return Response(serializer.data)
@@ -35,12 +34,12 @@ class ReplicatingPortfolio(APIView):
     def get(self, request, format=None):
         
         espp = ESPP()
-        
-        data = espp.get_replication_portfolio_series()
-        print(data)
-        serializer = ReplicatingPortfolioSeriesSerializer(data=data)
+        charts = Charts(espp=espp)
+        portfolio = charts.get_replicating_portfolio_series()
+        payoff = charts.get_payoff_series()
+        portfolio['payoffs'] = payoff['payoffs']
+        serializer = ReplicatingPortfolioSeriesSerializer(data=portfolio)
         if serializer.is_valid():
-            
             return Response(serializer.data)
         print(serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

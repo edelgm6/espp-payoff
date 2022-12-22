@@ -7,7 +7,7 @@ class Charts:
     def get_price_series(self):
         # TODO: What if returns kink and share price is already in the prices list?
         
-        max_price_model = round(self.stock.price * 1.25)
+        max_price_model = round(self.espp.stock.price * 1.25)
         MIN_PRICE_MODEL = 1
         prices = [price for price in range(MIN_PRICE_MODEL, max_price_model)]
         # prices.append(self.returns_kink)
@@ -18,22 +18,18 @@ class Charts:
 
     def get_payoff_series(self):
 
-        payoffs = self.get_payoff_data()
-
-        prices = [payoff.modeled_price for payoff in payoffs]
-        payoffs = [payoff.return_dollars for payoff in payoffs]
+        prices = self.get_price_series()
+        payoffs = [self.espp.get_payoff(price) for price in prices]
 
         return {'prices': prices,'payoffs': payoffs}
 
-    def get_replication_portfolio_series(self):
+    def get_replicating_portfolio_series(self):
         prices = self.get_price_series()
-        replicating_portfolio = self.get_replicating_portfolio()
+        replicating_portfolio = self.espp.get_replicating_portfolio()
 
-        shares_series = [price * replicating_portfolio['buy_shares_count'] for price in prices]
-        sell_call_options_series = ([0 for price in prices if price < replicating_portfolio['sell_call_options_strike_price']] + 
-            [(price - replicating_portfolio['sell_call_options_strike_price']) * replicating_portfolio['sell_call_options_count'] for i, price in enumerate(prices) if price >= replicating_portfolio['sell_call_options_strike_price']])
-        buy_call_options_series = ([0 for price in prices if price < replicating_portfolio['buy_call_options_strike_price']] + 
-            [(price - replicating_portfolio['buy_call_options_strike_price']) * replicating_portfolio['buy_call_options_count'] for i, price in enumerate(prices) if price >= replicating_portfolio['buy_call_options_strike_price']])
+        shares_series = [price * replicating_portfolio.buy_shares_position.count for price in prices]
+        sell_call_options_series = [replicating_portfolio.sell_call_options_position.security.get_payoff(price) * replicating_portfolio.sell_call_options_position.count for price in prices]
+        buy_call_options_series = [replicating_portfolio.buy_call_options_position.security.get_payoff(price) * replicating_portfolio.buy_call_options_position.count for price in prices]
 
         replicating_portfolio_series = {
             'prices': prices,

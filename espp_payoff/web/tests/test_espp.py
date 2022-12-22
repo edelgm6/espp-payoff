@@ -1,8 +1,6 @@
 from django.test import TestCase
 from web.views import Payoffs
 from web.espp import Stock, CallOption, ESPP
-from rest_framework.test import APIRequestFactory
-import json
 
 class ESPPTestCase(TestCase):
 
@@ -24,8 +22,6 @@ class ESPPTestCase(TestCase):
         self.assertEqual(replicating_portfolio['sell_call_options_position'].count,-espp.maximum_shares_purchased * espp.purchase_discount)
         self.assertEqual(replicating_portfolio['buy_call_options_position'].count,(1 / espp.maximum_purchase_price) * espp.maximum_investment)
         
-        
-
 
 class StockTestCase(TestCase):
 
