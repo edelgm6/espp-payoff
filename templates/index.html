@@ -1,4 +1,4 @@
-
+{% load static %}
 <!doctype html>
 <html lang="en">
   <head>
@@ -9,26 +9,71 @@
   </head>
   <body>
     <div class="container">
-      <h1>What is your ESPP worth?</h1>
-      <p>Many companies offer an Employee Stock Purchase plan — the option to buy shares in the company at at a 15% discount
-        to the price at the beginning or the end of the purchase period.</p>
-      <p>This seems like a good deal — but <b>how good of a deal is it?</b> Put another way, if we went to Goldman Sachs
-        and told them that we wanted them to sell us a security that behaved like an ESPP, how much would it cost?
-        That's what we're going to find out.</p>
-      <div>
-        <canvas id="myChart"></canvas>
-        <canvas id="portfolioChart"></canvas>
+      <div class="row">
+      <div class="col-md-12">
+        <h1>What is your ESPP worth?</h1>
+        <p>Many companies offer an Employee Stock Purchase plan — the option to buy shares in the company at at a 15% discount
+          to the price at the beginning or the end of the purchase period.</p>
+        <p>This seems like a good deal — but <b>how good of a deal is it?</b> Put another way, if we went to Goldman Sachs
+          and told them that we wanted them to sell us a security that behaved like an ESPP, how much would it cost?
+          That's what we're going to find out.</p>
       </div>
+      </div>
+      <div class="col-md-12">
+      <div class="row">
+      <div class="col-sm-5">
+        <p>An Employee Stock Purchase Plan (ESPP) typically has the following features.
+        <ul>
+          <li>Purchase up to $12,500 worth of your own company's stock</li>
+          <li>Purchase your company's stock at the <i>lower</i></li> of either:
+          <ul>
+            <li>85% of the price at the <strong>beginning</strong> of the period</li>
+            <li>85% of the price at the <strong>end</strong> of the period</li>
+          </ul>
+          <li>Purchase no more than 1000 shares
+        </ul>
+        That system creates a payoff chart like what we have to the right — from, $0, it <strong>increases by $150 per dollar in share
+        price</strong>, then flattens out until it hits the <strong>price at the beginning of the offering period</strong>
+        and then increases <strong>proportionately to the increase in stock price</strong> relative to the current price.
+
+        If that's confusing don't worry — we'll go through it step by step.
+        </p>
+
+      </div>
+      <div class="col-sm-7">
+        <canvas id="myChart"></canvas>
+      </div>
+      </div>
+
+      <div class="row">
+      <div class="col-md-5">
+        <p>placeholder</p>
+      </div>
+      <div class="col-md-7">
+      <canvas id="kink-chart"></canvas>
+      </div>
+      </div>
+
+      <div class="row">
+      <div class="col-md-5">
+        <p>placeholder</p>
+      </div>
+      <div class="col-md-7">
+      <canvas id="portfolioChart"></canvas>
+      </div>
+      </div>
+
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{% static "/web/js/base-config.js" %}"></script>
     <script>
       fetch('/payoffs')
         .then(response => response.json())
         .then(data => {
           const prices = data.prices;
           const payoffs = data.payoffs;
-      
+
           const ctx = document.getElementById('myChart');
           const chart = new Chart(ctx, {
             type: 'line',
@@ -44,7 +89,7 @@
             }
           });
         });
-      
+
       fetch('/replicating-portfolio-series')
         .then(response => response.json())
         .then(data => {
@@ -53,7 +98,7 @@
           const sell_call_options_series = data.sell_call_options_series;
           const buy_call_options_series = data.buy_call_options_series;
           const payoffs = data.payoffs;
-      
+
           const ctx = document.getElementById('portfolioChart');
           const chart = new Chart(ctx, {
             type: 'line',
@@ -81,10 +126,25 @@
                       borderWidth: 1
                   }
               ]
+            },
+            options: {
+              scales: {
+                x: {
+                  title: {
+                    display: true,
+                    text: 'Stock price'
+                  }
+                },
+                y: {
+                  title: {
+                    display: true,
+                    text: 'Payoff'
+                  }
+                }
+              }
             }
           });
         });
     </script>
   </body>
 </html>
-<div>

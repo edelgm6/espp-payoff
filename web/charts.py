@@ -6,13 +6,13 @@ class Charts:
 
     def get_price_series(self):
         # TODO: What if returns kink and share price is already in the prices list?
-        
+
         max_price_model = round(self.espp.stock.price * 1.25)
         MIN_PRICE_MODEL = 1
         prices = [price for price in range(MIN_PRICE_MODEL, max_price_model)]
-        # prices.append(self.returns_kink)
+        prices.append(self.espp.shares_cap_transition)
         # prices.append(self.stock.price)
-        # prices.sort()
+        prices.sort()
 
         return prices
 
@@ -20,6 +20,7 @@ class Charts:
 
         prices = self.get_price_series()
         payoffs = [self.espp.get_payoff(price) for price in prices]
+        print(payoffs)
 
         return {'prices': prices,'payoffs': payoffs}
 

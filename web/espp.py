@@ -31,7 +31,7 @@ class Stock(Security):
 
     def get_price(self):
         return self.price
-    
+
     def get_history(self):
         ### TODO: Figure out how to save this if it's called
         client = RESTClient(settings.POLYGON_API_KEY)
@@ -89,20 +89,21 @@ class CallOption(Security):
 class ESPP:
     def __init__(self):
         self.ticker = 'SQ'
-        self.risk_free_rate = .045
+        self.risk_free_rate = .03
         self.maximum_investment = 12500
         self.maximum_shares_purchased = 1000
         self.purchase_discount = .15
         # self.stock_history = get_stock_history(TICKER)
         # self.annualized_volatility = get_annualized_volatility(stock_history)
         # self.current_price = stock_history[-1].close
-        current_price = 79
-        annualized_volatility = .891
+        current_price = 28
+        annualized_volatility = .2
         self.stock = Stock(self.ticker,current_price,annualized_volatility)
 
         self.maximum_purchase_price = self.stock.price * (1 - self.purchase_discount)
         self.minimum_shares_purchased = self.maximum_investment / self.maximum_purchase_price
         self.expiration_years = .5
+        self.shares_cap_transition = self.maximum_investment / self.maximum_shares_purchased / (1 - self.purchase_discount)
 
     def get_payoff(self, price):
 
@@ -111,16 +112,16 @@ class ESPP:
 
         purchase_value = purchase_price * shares_purchased
         market_value = price * shares_purchased
-        
+
         return market_value - purchase_value
-        
+
 
     def get_replicating_portfolio(self):
 
         buy_shares_count = self.purchase_discount * self.maximum_shares_purchased
         buy_shares_position = Position(security=self.stock,count=buy_shares_count)
 
-        sell_call_option_strike_price = min(self.maximum_investment / self.maximum_shares_purchased / (1 - self.purchase_discount),self.stock.price)
+        sell_call_option_strike_price = self.shares_cap_transition
         sell_call_option = CallOption(strike_price=sell_call_option_strike_price,expiration_years=self.expiration_years,stock=self.stock)
         sell_call_options_position = Position(security=sell_call_option,count=-buy_shares_count)
 
