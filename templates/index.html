@@ -25,15 +25,18 @@
       <div class="col-md-12">
       <div class="row">
       <div class="col-sm-5">
-        <p>An Employee Stock Purchase Plan (ESPP) typically has the following features.
+        <p>An Employee Stock Purchase Plan (ESPP) typically has the following features:
         <ul>
-          <li>Purchase up to $12,500 worth of your own company's stock</li>
-          <li>Purchase your company's stock at the <i>lower</i></li> of either:
+          <li>Purchase limit: Purchase your company's stock up to the lower of —</li>
+            <ul>
+              <li>$12,500</li>
+              <li>1000 shares</li>
+            </ul>
+          <li>Purchase price: Purchase your company's stock at price of the lower of:
           <ul>
             <li>85% of the price at the <strong>beginning</strong> of the period</li>
             <li>85% of the price at the <strong>end</strong> of the period</li>
           </ul>
-          <li>Purchase no more than 1000 shares
         </ul>
         That system creates a payoff chart like what we have to the right — from, $0, it <strong>increases by $150 per dollar in share
         price</strong>, then flattens out until it hits the <strong>price at the beginning of the offering period</strong>
@@ -45,6 +48,23 @@
 
       <div class="col-md-7">
       <canvas id="payoff-example"></canvas>
+      </div>
+      </div>
+
+      <hr>
+
+
+      <div class="row">
+      <div class="col-sm-5">
+        <p>The leftmost section of the chart represents stock prices that <strong>are low enough
+          to hit the 1000 shares purchase limit</strong>, i.e., when you cannot invest the entire
+          $12,500. Given the 15% purchase discount, this limit kicks in at $12.50 / .85, or $14.70.
+          At this point, each dollar change in the stock price drives a $150 change in the payoff.
+          E.g., at $5, you purchase 1000 shares for $4.25 (i.e., the 85% discount), locking in a
+          gain of $750 (i.e., 5 x $150).
+      </div>
+      <div class="col-md-7">
+      <canvas id="shares-cap-example"></canvas>
       </div>
       </div>
 
@@ -85,21 +105,6 @@
       </div>
       </div>
 
-      <hr>
-
-      <div class="row">
-      <div class="col-sm-5">
-        <p>The leftmost section of the chart represents stock prices that <strong>are low enough
-          to hit the 1000 shares purchase limit</strong>, i.e., when you cannot invest the entire
-          $12,500. Given the 15% purchase discount, this limit kicks in at $12.50 / .85, or $14.70.
-          At this point, each dollar change in the stock price drives a $150 change in the payoff.
-          E.g., at $5, you purchase 1000 shares for $4.25 (i.e., the 85% discount), locking in a
-          gain of $750 (i.e., 5 x $150).
-      </div>
-      <div class="col-md-7">
-      <canvas id="shares-cap-example"></canvas>
-      </div>
-      </div>
 
       <h2>Valuing the ESPP</h2>
       <p>We know what the payoff looks like, but now we need to put a value on that payoff. Enter

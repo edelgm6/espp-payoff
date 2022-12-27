@@ -22,7 +22,7 @@ TEMPLATE_DIR = os.path.join(BASE_DIR,'templates')
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-=q^)=g&r8hj#e@p@cf%)mire)b&md(k--a#_-(t4%#g2_8j&2q'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -136,6 +136,6 @@ REST_FRAMEWORK = {
 }
 
 try:
-    from local_settings import *
+    from espp_payoff.local_settings import *
 except ImportError:
     pass
