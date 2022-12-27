@@ -10,7 +10,7 @@ class Charts:
         max_price_model = round(self.espp.stock.price * 1.25)
         MIN_PRICE_MODEL = 1
         prices = [price for price in range(MIN_PRICE_MODEL, max_price_model)]
-        prices.append(self.espp.shares_cap_transition)
+        # prices.append(self.espp.shares_cap_transition)
         # prices.append(self.stock.price)
         prices.sort()
 

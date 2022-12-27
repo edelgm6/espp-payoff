@@ -19,6 +19,9 @@
           That's what we're going to find out.</p>
       </div>
       </div>
+
+      <h2>Understanding the payoff chart</h2>
+
       <div class="col-md-12">
       <div class="row">
       <div class="col-sm-5">
@@ -38,21 +41,72 @@
 
         If that's confusing don't worry — we'll go through it step by step.
         </p>
+      </div>
 
+      <div class="col-md-7">
+      <canvas id="payoff-example"></canvas>
       </div>
-      <div class="col-sm-7">
-        <canvas id="myChart"></canvas>
       </div>
-      </div>
+
+      <hr>
 
       <div class="row">
-      <div class="col-md-5">
-        <p>placeholder</p>
+      <div class="col-sm-5">
+        <p>The simplest part of the payoff chart to understand is the flat part in the middle. This represents the stock prices where:
+          <ul>
+            <li>The stock price at the end of the offering period is less than the stock price at the beginning of the offering period</li>
+            <li>And the stock price is still high enough that you can invest the entire $12,500 (i.e., you don't hit the 1000 share limit)</li>
+          </ul>
+          In this case, you will invest $12,500 at an 85% discount to the current stock price, yielding a ~17% return, or ~$2205 gain.
+        </p>
       </div>
       <div class="col-md-7">
-      <canvas id="kink-chart"></canvas>
+      <canvas id="middle-example"></canvas>
       </div>
       </div>
+
+      <hr>
+
+      <div class="row">
+      <div class="col-sm-5">
+        <p>The rightmost section of the chart represents stock prices where <strong>the
+          price at the end of the period is greater than the price at the beginning of the period.</strong>
+          To understand why, consider our original example:
+          <ul>
+            <li>Stock price is $28 at the beginning of the purchase period</li>
+            <li>Stock price is $34 at the end of the purchase period</li>
+            <li>You buy $12,500 worth of stock at a 15% discount <strong>to the $28
+              starting price</strong> since it is lower than the ending price</li>
+            <li>You get a return of (($34 - .85 * $28) / .85 * $28) * $12,500, or $5357</li>
+          </ul>
+      </div>
+      <div class="col-md-7">
+      <canvas id="upside-example"></canvas>
+      </div>
+      </div>
+
+      <hr>
+
+      <div class="row">
+      <div class="col-sm-5">
+        <p>The leftmost section of the chart represents stock prices that <strong>are low enough
+          to hit the 1000 shares purchase limit</strong>, i.e., when you cannot invest the entire
+          $12,500. Given the 15% purchase discount, this limit kicks in at $12.50 / .85, or $14.70.
+          At this point, each dollar change in the stock price drives a $150 change in the payoff.
+          E.g., at $5, you purchase 1000 shares for $4.25 (i.e., the 85% discount), locking in a
+          gain of $750 (i.e., 5 x $150).
+      </div>
+      <div class="col-md-7">
+      <canvas id="shares-cap-example"></canvas>
+      </div>
+      </div>
+
+      <h2>Valuing the ESPP</h2>
+      <p>We know what the payoff looks like, but now we need to put a value on that payoff. Enter
+        the <strong>replicating portfolio.</strong>
+        Put simply: What combination of stocks, bonds, and options recreates the same payoff
+        that we observe with the ESPP? And since each of the components of the replicating
+        portfolio can be valued, we will know the value of the ESPP!</p>
 
       <div class="row">
       <div class="col-md-5">
@@ -63,10 +117,23 @@
       </div>
       </div>
 
+      <div class="row">
+      <div class="col-md-5">
+        <p>placeholder</p>
+      </div>
+      <div class="col-sm-7">
+        <canvas id="myChart"></canvas>
+      </div>
+      </div>
+
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="{% static "/web/js/base-config.js" %}"></script>
+    <script src="{% static "/web/js/chart-config.js" %}"></script>
+    <script src="{% static "/web/js/payoff-example.js" %}"></script>
+    <script src="{% static "/web/js/middle-example.js" %}"></script>
+    <script src="{% static "/web/js/upside-example.js" %}"></script>
+    <script src="{% static "/web/js/shares-cap-example.js" %}"></script>
     <script>
       fetch('/payoffs')
         .then(response => response.json())
@@ -86,7 +153,8 @@
                       borderWidth: 1
                   }
               ]
-            }
+            },
+            options: base_options
           });
         });
 
@@ -127,24 +195,9 @@
                   }
               ]
             },
-            options: {
-              scales: {
-                x: {
-                  title: {
-                    display: true,
-                    text: 'Stock price'
-                  }
-                },
-                y: {
-                  title: {
-                    display: true,
-                    text: 'Payoff'
-                  }
-                }
-              }
-            }
+            options: base_options
           });
-        });
+      });
     </script>
   </body>
 </html>
