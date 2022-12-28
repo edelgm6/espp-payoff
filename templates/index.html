@@ -106,12 +106,68 @@
       </div>
 
 
-      <h2>Valuing the ESPP</h2>
+      <h2>Creating a replicating portfolio</h2>
       <p>We know what the payoff looks like, but now we need to put a value on that payoff. Enter
         the <strong>replicating portfolio.</strong>
         Put simply: What combination of stocks, bonds, and options recreates the same payoff
         that we observe with the ESPP? And since each of the components of the replicating
         portfolio can be valued, we will know the value of the ESPP!</p>
+
+      <div class="row">
+      <div class="col-sm-5">
+        <p>We know from earlier that the payoff chart rises by $150 for each $1 increase in the stock price up to
+          the point where we can invest the full $12,500 (i.e., ~$14.70). We can <strong>replicate this payoff by
+          buying 150 shares of the stock!</strong> I.e., when the price of the stock goes up by $1, we will gain
+          $150 if we have 150 shares.</p>
+
+        <p>But we also need a way to <strong>neutralize that $150 increase beyond the $14.70 mark</strong> — we'll
+          do that by <strong>selling call options</strong>.
+      </div>
+      <div class="col-md-7">
+      <canvas id="buy-stock-example"></canvas>
+      </div>
+      </div>
+
+      <hr>
+
+      <div class="row">
+      <div class="col-sm-5">
+        <p>A call option is the <strong>option to buy a stock at a given price (known as the 'strike price').</strong></p>
+      </div>
+      <div class="col-md-7">
+      <canvas id="sell-calls-example"></canvas>
+      </div>
+      </div>
+
+      <hr>
+
+      <div class="row">
+      <div class="col-sm-5">
+        <p>The final upward kink in the payoff is done by <strong>buying call options.</strong></p>
+      </div>
+      <div class="col-md-7">
+      <canvas id="buy-calls-example"></canvas>
+      </div>
+      </div>
+
+      <h2>Valuing the replicating portfolio</h2>
+      <p>Now, we have a replicating portfolio consisting of
+        <ul>
+          <li>150 shares of stock</li>
+          <li>Negative exposure to 150 call options at a strike price of $14.70</li>
+          <li>Positive exposure to TODO call options at a strike price of $28.00</li>
+        </ul>
+        Valuing the stock is straightforward: 150 shares x $28.00 = $4,200. But what about the call options?
+      </p>
+
+      <h3>Valuing call options</h3>
+      <p>Diving into the specifics of the Black-Scholes option pricing model is outside the scope of this site. 
+        The critical takeaways for our purposes are:
+        <ul>
+          <li>The lower the call price is relative to the current price, the higher the value of the option</li>
+          <li>The higher the volatility of the stock, the higher the value of the option</li>
+        </ul>
+      </p>
 
       <div class="row">
       <div class="col-md-5">
@@ -139,6 +195,9 @@
     <script src="{% static "/web/js/middle-example.js" %}"></script>
     <script src="{% static "/web/js/upside-example.js" %}"></script>
     <script src="{% static "/web/js/shares-cap-example.js" %}"></script>
+    <script src="{% static "/web/js/buy-stock-example.js" %}"></script>
+    <script src="{% static "/web/js/sell-calls-example.js" %}"></script>
+    <script src="{% static "/web/js/buy-calls-example.js" %}"></script>
     <script>
       fetch('/payoffs')
         .then(response => response.json())

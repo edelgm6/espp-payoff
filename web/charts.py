@@ -20,7 +20,6 @@ class Charts:
 
         prices = self.get_price_series()
         payoffs = [self.espp.get_payoff(price) for price in prices]
-        print(payoffs)
 
         return {'prices': prices,'payoffs': payoffs}
 
@@ -38,5 +37,7 @@ class Charts:
             'sell_call_options_series': sell_call_options_series,
             'buy_call_options_series': buy_call_options_series
         }
+
+        print(buy_call_options_series)
 
         return replicating_portfolio_series

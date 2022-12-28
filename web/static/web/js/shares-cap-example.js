@@ -8,23 +8,23 @@ const shares_cap_chart = new Chart(shares_cap, {
             label: '1000 shares cap',
             data: shares_cap_payoffs,
             borderWidth: 1,
-            borderColor: highlight_color,
-            backgroundColor: highlight_color,
+            borderColor: primary_color,
+            backgroundColor: primary_color,
 
         },
         {
             label: 'flat return',
             data: flat_payoffs,
             borderWidth: 1,
-            borderColor: secondary_gray,
-            backgroundColor: secondary_gray,
+            borderColor: secondary_color,
+            backgroundColor: secondary_color,
         },
         {
             label: 'price above starting price',
             data: upside_payoffs,
             borderWidth: 1,
-            borderColor: primary_gray,
-            backgroundColor: primary_gray,
+            borderColor: tertiary_color,
+            backgroundColor: tertiary_color,
         }
     ]
   },
