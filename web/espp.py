@@ -2,6 +2,7 @@ from polygon import RESTClient
 from scipy.stats import norm
 from django.conf import settings
 from collections import namedtuple
+import datetime
 import statistics
 import math
 import numpy as np
@@ -50,12 +51,15 @@ class Stock(Security):
         ### TODO: Figure out how to save this if it's called
         client = RESTClient(settings.POLYGON_API_KEY)
 
+        yesterday = datetime.date.today() - datetime.timedelta(days=1)
+        one_year_ago = yesterday - datetime.timedelta(days=364)
+
         response = client.get_aggs(
             ticker=self.ticker,
             multiplier=1,
             timespan='day',
-            from_='2021-12-15',
-            to='2022-12-14',
+            from_=one_year_ago,
+            to=yesterday,
             adjusted=True,
             sort='asc'
         )
