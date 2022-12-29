@@ -23,30 +23,34 @@ class Stock(Security):
     # Implement a get_payoff function here for consistency
     def __init__(self, ticker, **kwargs):
         self.ticker = ticker
-        print(kwargs)
 
         if 'price' not in kwargs or 'volatility' not in kwargs:
-            price, volatility = self.get_price_and_volatility()
+            latest_price, volatility, price_history, volatility_history, dates = self.get_price_and_volatility_data()
 
         if 'price' in kwargs:
-            print('has price')
             self.price = kwargs['price']
         else:
-            self.price = price
+            self.price = latest_price
 
         if 'volatility' in kwargs:
-            print('has volatility')
             self.volatility = kwargs['volatility']
         else:
             self.volatility = volatility
 
-    def get_price_and_volatility(self):
+    def get_price_and_volatility_data(self):
         history = self._get_history()
-        price = self._get_price(history)
-        volatility = self._get_annualized_volatility(history)
+        dates = self._get_price_dates(history)
+        price_history = self._get_price_history(history)
+        latest_price = price_history[-1]
+        daily_percent_changes = self._get_daily_price_change_percent(price_history)
+        volatility = self._get_annualized_volatility(daily_percent_changes)
 
-        return price, volatility
+        return latest_price, volatility, price_history, daily_percent_changes, dates
 
+    def _get_price_dates(self, history):
+        dates = [datetime.date.fromtimestamp(agg.timestamp/1000.0) for agg in history]
+        return dates
+    
     def _get_history(self):
         ### TODO: Figure out how to save this if it's called
         client = RESTClient(settings.POLYGON_API_KEY)
@@ -66,20 +70,21 @@ class Stock(Security):
 
         return response
 
-    def _get_price(self, history):
-        price = history[-1].close
-        return price
-
-    def _get_annualized_volatility(self, history):
-
+    def _get_price_history(self, history):
         closing_prices = [agg.close for agg in history]
+        return closing_prices
 
-        daily_pct_changes = []
+    def _get_daily_price_change_percent(self, closing_prices):
+
+        daily_percent_changes = []
         for day in range(1,len(closing_prices)):
-            daily_pct_change = closing_prices[day] / closing_prices[day - 1] - 1
-            daily_pct_changes.append(daily_pct_change)
+            daily_percent_change = closing_prices[day] / closing_prices[day - 1] - 1
+            daily_percent_changes.append(daily_percent_change)
+        
+        return daily_percent_changes
 
-        daily_volatility = statistics.pstdev(daily_pct_changes)
+    def _get_annualized_volatility(self, daily_percent_changes):
+        daily_volatility = statistics.pstdev(daily_percent_changes)
         annualized_volatility = daily_volatility * math.sqrt(252)
 
         return round(annualized_volatility,2)
