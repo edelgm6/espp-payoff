@@ -20,19 +20,33 @@ class Security:
 
 class Stock(Security):
     # Implement a get_payoff function here for consistency
-    def __init__(self, ticker, price, annualized_volatility):
+    def __init__(self, ticker, **kwargs):
         self.ticker = ticker
-        self.price = price
-        self.annualized_volatility = annualized_volatility
-        if annualized_volatility:
-            self.annualizized_volatility = annualized_volatility
+        print(kwargs)
+
+        if 'price' not in kwargs or 'volatility' not in kwargs:
+            price, volatility = self.get_price_and_volatility()
+
+        if 'price' in kwargs:
+            print('has price')
+            self.price = kwargs['price']
         else:
-            self.annualizized_volatility = self.get_annualized_volatility()
+            self.price = price
 
-    def get_price(self):
-        return self.price
+        if 'volatility' in kwargs:
+            print('has volatility')
+            self.volatility = kwargs['volatility']
+        else:
+            self.volatility = volatility
 
-    def get_history(self):
+    def get_price_and_volatility(self):
+        history = self._get_history()
+        price = self._get_price(history)
+        volatility = self._get_annualized_volatility(history)
+
+        return price, volatility
+
+    def _get_history(self):
         ### TODO: Figure out how to save this if it's called
         client = RESTClient(settings.POLYGON_API_KEY)
 
@@ -48,9 +62,13 @@ class Stock(Security):
 
         return response
 
-    def get_annualized_volatility(self):
+    def _get_price(self, history):
+        price = history[-1].close
+        return price
 
-        closing_prices = [agg.close for agg in self.stock_history]
+    def _get_annualized_volatility(self, history):
+
+        closing_prices = [agg.close for agg in history]
 
         daily_pct_changes = []
         for day in range(1,len(closing_prices)):
@@ -60,7 +78,7 @@ class Stock(Security):
         daily_volatility = statistics.pstdev(daily_pct_changes)
         annualized_volatility = daily_volatility * math.sqrt(252)
 
-        return annualized_volatility
+        return round(annualized_volatility,2)
 
 class CallOption(Security):
     def __init__(self, strike_price, expiration_years, stock):

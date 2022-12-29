@@ -37,9 +37,9 @@ class StockData(APIView):
 
         stock = Stock(ticker=ticker)
 
-        # volatility = stock.get_annualized_volatility()
+        price, volatility = stock.get_price_and_volatility()
         
-        return Response({'volatility': .1, 'price': 105.33})
+        return Response({'price': price, 'volatility': volatility})
 
         # espp = ESPP()
         # charts = Charts(espp=espp)
