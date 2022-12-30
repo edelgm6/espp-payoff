@@ -37,45 +37,45 @@ function getPayoffData(event) {
     is_first_payoffs_update = false;
     });
 
-    // fetch(`/replicating-portfolio-series?${queryString}`)
-    // .then(response => response.json())
-    // .then(data => {
-    //     const prices = data.prices;
-    //     const shares_series = data.shares_series;
-    //     const sell_call_options_series = data.sell_call_options_series;
-    //     const buy_call_options_series = data.buy_call_options_series;
-    //     const payoffs = data.payoffs;
+    fetch(`/replicating-portfolio-series?${queryString}`)
+    .then(response => response.json())
+    .then(data => {
+        const prices = data.prices;
+        const shares_series = data.shares_series;
+        const sell_call_options_series = data.sell_call_options_series;
+        const buy_call_options_series = data.buy_call_options_series;
+        const payoffs = data.payoffs;
 
-    //     const ctx = document.getElementById('portfolio-chart');
-    //     const chart = new Chart(ctx, {
-    //     type: 'line',
-    //     data: {
-    //         labels: prices,
-    //         datasets: [
-    //             {
-    //                 label: 'shares',
-    //                 data: shares_series,
-    //                 borderWidth: 1
-    //             },
-    //             {
-    //                 label: 'sell call options',
-    //                 data: sell_call_options_series,
-    //                 borderWidth: 1
-    //             },
-    //             {
-    //                 label: 'buy call options',
-    //                 data: buy_call_options_series,
-    //                 borderWidth: 1
-    //             },
-    //             {
-    //                 label: 'espp',
-    //                 data: payoffs,
-    //                 borderWidth: 1
-    //             }
-    //         ]
-    //     },
-    //     options: base_options
-    //     });
-    // is_first_payoffs_update = false;
-    // });
+        const ctx = document.getElementById('portfolio-chart');
+        const chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: prices,
+            datasets: [
+                {
+                    label: 'shares',
+                    data: shares_series,
+                    borderWidth: 1
+                },
+                {
+                    label: 'sell call options',
+                    data: sell_call_options_series,
+                    borderWidth: 1
+                },
+                {
+                    label: 'buy call options',
+                    data: buy_call_options_series,
+                    borderWidth: 1
+                },
+                {
+                    label: 'espp',
+                    data: payoffs,
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: base_options
+        });
+    is_first_payoffs_update = false;
+    });
 }

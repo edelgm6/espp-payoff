@@ -28,9 +28,7 @@ class Stock(Security):
             latest_price, volatility, price_history, volatility_history, dates = self.get_price_and_volatility_data()
 
         if 'price' in kwargs:
-            print(kwargs['price'])
             self.price = kwargs['price']
-            print(self.price)
         else:
             self.price = latest_price
 
@@ -123,7 +121,6 @@ class ESPP:
         self.purchase_discount = .15
         self.stock = stock
 
-        print(self.stock.price)
         self.maximum_purchase_price = self.stock.price * (1 - self.purchase_discount)
         self.minimum_shares_purchased = self.maximum_investment / self.maximum_purchase_price
         self.expiration_years = .5
