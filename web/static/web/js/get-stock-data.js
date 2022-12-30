@@ -1,3 +1,5 @@
+//TODO: Put common variables in a single JS file
+
 const form = document.querySelector('form');
 const tickerField = document.querySelector('#ticker');
 const volatilityField = document.querySelector('#volatility');
@@ -5,7 +7,6 @@ const priceField = document.querySelector('#price');
 var is_first_update = true;
 var price_history_chart = {};
 
-// form.addEventListener('submit', event => {
 function getStockData(event) {
   event.preventDefault();
 
@@ -53,13 +54,15 @@ function getStockData(event) {
               type: 'linear',
               display: true,
               position: 'right',
-              grid: {
-                display: false, // only want the grid lines for one axis to show up
-              },
             },
           },
           options: {
             scales: {
+              x: {
+                grid: {
+                  display: false
+                },
+              },
               y1: {
                 grid: {
                   display: false
@@ -78,7 +81,6 @@ function getStockData(event) {
         });
   is_first_update = false;
   } else {
-    console.log('heyo');
     price_history_chart['data']['datasets'][0]['data'] = price_history;
     price_history_chart['data']['datasets'][1]['data'] = daily_percent_changes;
     price_history_chart['data']['labels'] = dates;
@@ -86,4 +88,3 @@ function getStockData(event) {
   };
 });
 };
-// });
