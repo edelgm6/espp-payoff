@@ -28,7 +28,9 @@ class Stock(Security):
             latest_price, volatility, price_history, volatility_history, dates = self.get_price_and_volatility_data()
 
         if 'price' in kwargs:
+            print(kwargs['price'])
             self.price = kwargs['price']
+            print(self.price)
         else:
             self.price = latest_price
 
@@ -114,19 +116,14 @@ class CallOption(Security):
         return stock_price * N(d1) - self.strike_price * np.exp(-risk_free_rate*self.expiration_years) * N(d2)
 
 class ESPP:
-    def __init__(self):
-        self.ticker = 'SQ'
+    def __init__(self, stock):
         self.risk_free_rate = .03
         self.maximum_investment = 12500
         self.maximum_shares_purchased = 1000
         self.purchase_discount = .15
-        # self.stock_history = get_stock_history(TICKER)
-        # self.annualized_volatility = get_annualized_volatility(stock_history)
-        # self.current_price = stock_history[-1].close
-        current_price = 28
-        annualized_volatility = .2
-        self.stock = Stock(self.ticker,current_price,annualized_volatility)
+        self.stock = stock
 
+        print(self.stock.price)
         self.maximum_purchase_price = self.stock.price * (1 - self.purchase_discount)
         self.minimum_shares_purchased = self.maximum_investment / self.maximum_purchase_price
         self.expiration_years = .5

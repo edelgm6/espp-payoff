@@ -19,12 +19,18 @@ class Payoffs(APIView):
 
     def get(self, request, format=None):
         
-        espp = ESPP()
+        ticker = self.request.GET.get('ticker')
+        volatility = self.request.GET.get('volatility')
+        price = self.request.GET.get('price')
+
+        stock = Stock(ticker=ticker,price=price,volatility=volatility)
+        espp = ESPP(stock=stock)
         charts = Charts(espp=espp)
         
         data = charts.get_payoff_series()
         serializer = PayoffsSerializer(data=data)
         if serializer.is_valid():
+            print(serializer.data)
             return Response(serializer.data)
         print(serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -49,30 +55,23 @@ class StockData(APIView):
             }
         )
 
-        # espp = ESPP()
-        # charts = Charts(espp=espp)
-        # portfolio = charts.get_replicating_portfolio_series()
-        # payoff = charts.get_payoff_series()
-        # portfolio['payoffs'] = payoff['payoffs']
-        # serializer = ReplicatingPortfolioSeriesSerializer(data=portfolio)
-        # if serializer.is_valid():
-        #     return Response(serializer.data)
-        # print(serializer.errors)
-        # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 class ReplicatingPortfolio(APIView):
 
     def get(self, request, format=None):
-        
-        return Response()
 
-        # espp = ESPP()
-        # charts = Charts(espp=espp)
-        # portfolio = charts.get_replicating_portfolio_series()
-        # payoff = charts.get_payoff_series()
-        # portfolio['payoffs'] = payoff['payoffs']
-        # serializer = ReplicatingPortfolioSeriesSerializer(data=portfolio)
-        # if serializer.is_valid():
-        #     return Response(serializer.data)
-        # print(serializer.errors)
-        # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        ticker = self.request.GET.get('ticker')
+        volatility = self.request.GET.get('volatility')
+        price = self.request.GET.get('price')
+
+        stock = Stock(ticker=ticker,price=price,volatility=volatility)
+        espp = ESPP(stock=stock)
+
+        charts = Charts(espp=espp)
+        portfolio = charts.get_replicating_portfolio_series()
+        payoff = charts.get_payoff_series()
+        portfolio['payoffs'] = payoff['payoffs']
+        serializer = ReplicatingPortfolioSeriesSerializer(data=portfolio)
+        if serializer.is_valid():
+            return Response(serializer.data)
+        print(serializer.errors)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

@@ -8,7 +8,6 @@ var price_history_chart = {};
 // form.addEventListener('submit', event => {
 function getStockData(event) {
   event.preventDefault();
-  console.log('running script')
 
   const params = new URLSearchParams();
   params.set('ticker', tickerField.value);
