@@ -68,7 +68,9 @@ form.addEventListener('submit', event => {
                   callback: function(value,index,ticks) {
                     return (value * 100).toFixed(2) + '%';
                   }
-                }
+                },
+                min: -.3,
+                max: .3
               }
             }
           }
