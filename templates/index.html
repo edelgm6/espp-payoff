@@ -11,12 +11,6 @@
     <div class="container">
 
       <div class="row">
-        <div class="col-md-5">
-        {% include "espp-form.html" %}
-        </div>
-      </div>
-
-      <div class="row">
       <div class="col-md-12">
         <h1>What is your ESPP worth?</h1>
         <p>Many companies offer an Employee Stock Purchase plan — the option to buy shares in the company at at a 15% discount
@@ -25,6 +19,36 @@
           and told them that we wanted them to sell us a security that behaved like an ESPP, how much would it cost?
           That's what we're going to find out.</p>
       </div>
+      </div>
+
+      <h2>Calculator</h2>
+      <p>If you want to skip the explanation and make your calculation, start here.</p>
+
+      <div class="row">
+        <div class="col-md-5">
+          {% include "espp-form.html" %}
+        </div>
+        <div class="col-md-7">
+          <canvas id="price-history"></canvas>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-5">
+          <p>placeholder</p>
+        </div>
+        <div class="col-md-7">
+        <canvas id="portfolio-chart"></canvas>
+        </div>
+        </div>
+  
+        <div class="row">
+        <div class="col-md-5">
+          <p>placeholder</p>
+        </div>
+        <div class="col-sm-7">
+          <canvas id="payoff-chart"></canvas>
+        </div>
       </div>
 
       <h2>Understanding the payoff chart</h2>
@@ -52,7 +76,6 @@
         If that's confusing don't worry — we'll go through it step by step.
         </p>
       </div>
-
       <div class="col-md-7">
       <canvas id="payoff-example"></canvas>
       </div>
@@ -176,24 +199,6 @@
         </ul>
       </p>
 
-      <div class="row">
-      <div class="col-md-5">
-        <p>placeholder</p>
-      </div>
-      <div class="col-md-7">
-      <canvas id="portfolioChart"></canvas>
-      </div>
-      </div>
-
-      <div class="row">
-      <div class="col-md-5">
-        <p>placeholder</p>
-      </div>
-      <div class="col-sm-7">
-        <canvas id="myChart"></canvas>
-      </div>
-      </div>
-
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -206,70 +211,6 @@
     <script src="{% static "/web/js/sell-calls-example.js" %}"></script>
     <script src="{% static "/web/js/buy-calls-example.js" %}"></script>
     <script src="{% static "/web/js/get-stock-data.js" %}"></script>
-    <script>
-      fetch('/payoffs')
-        .then(response => response.json())
-        .then(data => {
-          const prices = data.prices;
-          const payoffs = data.payoffs;
-
-          const ctx = document.getElementById('myChart');
-          const chart = new Chart(ctx, {
-            type: 'line',
-            data: {
-              labels: prices,
-              datasets: [
-                  {
-                      label: 'payoff',
-                      data: payoffs,
-                      borderWidth: 1
-                  }
-              ]
-            },
-            options: base_options
-          });
-        });
-
-      fetch('/replicating-portfolio-series')
-        .then(response => response.json())
-        .then(data => {
-          const prices = data.prices;
-          const shares_series = data.shares_series;
-          const sell_call_options_series = data.sell_call_options_series;
-          const buy_call_options_series = data.buy_call_options_series;
-          const payoffs = data.payoffs;
-
-          const ctx = document.getElementById('portfolioChart');
-          const chart = new Chart(ctx, {
-            type: 'line',
-            data: {
-              labels: prices,
-              datasets: [
-                  {
-                      label: 'shares',
-                      data: shares_series,
-                      borderWidth: 1
-                  },
-                  {
-                      label: 'sell call options',
-                      data: sell_call_options_series,
-                      borderWidth: 1
-                  },
-                  {
-                      label: 'buy call options',
-                      data: buy_call_options_series,
-                      borderWidth: 1
-                  },
-                  {
-                      label: 'espp',
-                      data: payoffs,
-                      borderWidth: 1
-                  }
-              ]
-            },
-            options: base_options
-          });
-      });
-    </script>
+    <script src="{% static "/web/js/get-payoff-data.js" %}"></script>
   </body>
 </html>

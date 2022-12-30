@@ -2,6 +2,7 @@ from polygon import RESTClient
 from scipy.stats import norm
 from django.conf import settings
 from collections import namedtuple
+import datetime
 import statistics
 import math
 import numpy as np
@@ -20,47 +21,73 @@ class Security:
 
 class Stock(Security):
     # Implement a get_payoff function here for consistency
-    def __init__(self, ticker, price, annualized_volatility):
+    def __init__(self, ticker, **kwargs):
         self.ticker = ticker
-        self.price = price
-        self.annualized_volatility = annualized_volatility
-        if annualized_volatility:
-            self.annualizized_volatility = annualized_volatility
+
+        if 'price' not in kwargs or 'volatility' not in kwargs:
+            latest_price, volatility, price_history, volatility_history, dates = self.get_price_and_volatility_data()
+
+        if 'price' in kwargs:
+            self.price = kwargs['price']
         else:
-            self.annualizized_volatility = self.get_annualized_volatility()
+            self.price = latest_price
 
-    def get_price(self):
-        return self.price
+        if 'volatility' in kwargs:
+            self.volatility = kwargs['volatility']
+        else:
+            self.volatility = volatility
 
-    def get_history(self):
+    def get_price_and_volatility_data(self):
+        history = self._get_history()
+        dates = self._get_price_dates(history)
+        price_history = self._get_price_history(history)
+        latest_price = price_history[-1]
+        daily_percent_changes = self._get_daily_price_change_percent(price_history)
+        volatility = self._get_annualized_volatility(daily_percent_changes)
+
+        return latest_price, volatility, price_history, daily_percent_changes, dates
+
+    def _get_price_dates(self, history):
+        dates = [datetime.date.fromtimestamp(agg.timestamp/1000.0) for agg in history]
+        return dates
+    
+    def _get_history(self):
         ### TODO: Figure out how to save this if it's called
         client = RESTClient(settings.POLYGON_API_KEY)
+
+        yesterday = datetime.date.today() - datetime.timedelta(days=1)
+        one_year_ago = yesterday - datetime.timedelta(days=364)
 
         response = client.get_aggs(
             ticker=self.ticker,
             multiplier=1,
             timespan='day',
-            from_='2021-12-15',
-            to='2022-12-14',
+            from_=one_year_ago,
+            to=yesterday,
             adjusted=True,
             sort='asc'
         )
 
         return response
 
-    def get_annualized_volatility(self):
+    def _get_price_history(self, history):
+        closing_prices = [agg.close for agg in history]
+        return closing_prices
 
-        closing_prices = [agg.close for agg in self.stock_history]
+    def _get_daily_price_change_percent(self, closing_prices):
 
-        daily_pct_changes = []
+        daily_percent_changes = []
         for day in range(1,len(closing_prices)):
-            daily_pct_change = closing_prices[day] / closing_prices[day - 1] - 1
-            daily_pct_changes.append(daily_pct_change)
+            daily_percent_change = closing_prices[day] / closing_prices[day - 1] - 1
+            daily_percent_changes.append(daily_percent_change)
+        
+        return daily_percent_changes
 
-        daily_volatility = statistics.pstdev(daily_pct_changes)
+    def _get_annualized_volatility(self, daily_percent_changes):
+        daily_volatility = statistics.pstdev(daily_percent_changes)
         annualized_volatility = daily_volatility * math.sqrt(252)
 
-        return annualized_volatility
+        return round(annualized_volatility,2)
 
 class CallOption(Security):
     def __init__(self, strike_price, expiration_years, stock):
@@ -87,18 +114,12 @@ class CallOption(Security):
         return stock_price * N(d1) - self.strike_price * np.exp(-risk_free_rate*self.expiration_years) * N(d2)
 
 class ESPP:
-    def __init__(self):
-        self.ticker = 'SQ'
+    def __init__(self, stock):
         self.risk_free_rate = .03
         self.maximum_investment = 12500
         self.maximum_shares_purchased = 1000
         self.purchase_discount = .15
-        # self.stock_history = get_stock_history(TICKER)
-        # self.annualized_volatility = get_annualized_volatility(stock_history)
-        # self.current_price = stock_history[-1].close
-        current_price = 28
-        annualized_volatility = .2
-        self.stock = Stock(self.ticker,current_price,annualized_volatility)
+        self.stock = stock
 
         self.maximum_purchase_price = self.stock.price * (1 - self.purchase_discount)
         self.minimum_shares_purchased = self.maximum_investment / self.maximum_purchase_price
