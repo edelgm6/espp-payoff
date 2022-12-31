@@ -64,14 +64,12 @@ class ReplicatingPortfolio(APIView):
             return Response(stock_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         else:
             data = stock_serializer.data
-            print(data)
             stock = Stock(ticker=data['ticker'],price=data['price'],volatility=data['volatility'])
             espp = ESPP(stock=stock)
             charts = Charts(espp=espp)
 
             portfolio = charts.get_replicating_portfolio_series()
             payoff = charts.get_payoff_series()
-            print(payoff)
             portfolio['payoffs'] = payoff['payoffs']
             serializer = ReplicatingPortfolioSeriesSerializer(data=portfolio)
             if serializer.is_valid():
