@@ -48,7 +48,7 @@ function getStockData(event) {
             y: {
               type: 'linear',
               display: true,
-              position: 'left'
+              position: 'left',
             },
             y1: {
               type: 'linear',
@@ -63,7 +63,22 @@ function getStockData(event) {
                   display: false
                 },
               },
+              y: {
+                title: {
+                  display: true,
+                  text: 'Stock price'
+                },
+                ticks: {
+                  callback: function(value,index,ticks) {
+                    return '$' + value.toLocaleString();
+                  }
+                }
+              },
               y1: {
+                title: {
+                  display: true,
+                  text: 'Daily percent change'
+                },
                 grid: {
                   display: false
                 },
@@ -73,8 +88,8 @@ function getStockData(event) {
                     return (value * 100).toFixed(2) + '%';
                   }
                 },
-                min: -.3,
-                max: .3
+                min: -.2,
+                max: .2
               }
             }
           }
