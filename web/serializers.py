@@ -1,9 +1,18 @@
 from rest_framework import serializers
+from web.espp import Stock
 
-class StockDataSerializer(serializers.Serializer):
-    ticker = serializers.CharField(min_length=0)
-    price = serializers.FloatField(min_value=.01)
-    volatility = serializers.FloatField(min_value=.01)
+class StockSerializer(serializers.Serializer):
+    ticker = serializers.CharField(min_length=0, required=False)
+    price = serializers.FloatField(min_value=.01, required=False)
+    volatility = serializers.FloatField(min_value=.01, required=False)
+
+    def create(self, validated_data):
+        return Stock(**validated_data)
+
+    def validate(self, data):
+        if data.get('ticker') is None and (not data.get('price') or not data.get('volatility')):
+            raise serializers.ValidationError("if ticker is None, must have both price and volatility")
+        return data
 
 class PayoffsSerializer(serializers.Serializer):
     prices = serializers.ListField(

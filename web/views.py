@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views import View
 from django.http import Http404
-from web.serializers import PayoffsSerializer, ReplicatingPortfolioSeriesSerializer, StockDataSerializer
+from web.serializers import PayoffsSerializer, ReplicatingPortfolioSeriesSerializer, StockSerializer
 from web.espp import ESPP, Stock
 from web.charts import Charts
 from rest_framework.views import APIView
@@ -19,13 +19,12 @@ class Payoffs(APIView):
 
     def get(self, request, format=None):
 
-        stock_serializer = StockDataSerializer(data=request.query_params)
+        stock_serializer = StockSerializer(data=request.query_params)
         if not stock_serializer.is_valid():
             print(stock_serializer.errors)
             return Response(stock_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         else:
-            data = stock_serializer.data
-            stock = Stock(ticker=data['ticker'],price=data['price'],volatility=data['volatility'])
+            stock = stock_serializer.save()
             espp = ESPP(stock=stock)
             charts = Charts(espp=espp)
             
@@ -59,7 +58,7 @@ class StockData(APIView):
 class ReplicatingPortfolio(APIView):
 
     def get(self, request, format=None):
-        stock_serializer = StockDataSerializer(data=request.query_params)
+        stock_serializer = StockSerializer(data=request.query_params)
         if not stock_serializer.is_valid():
             print(stock_serializer.errors)
             return Response(stock_serializer.errors, status=status.HTTP_400_BAD_REQUEST)

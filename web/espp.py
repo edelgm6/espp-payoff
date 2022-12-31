@@ -21,19 +21,19 @@ class Security:
 
 class Stock(Security):
     # Implement a get_payoff function here for consistency
-    def __init__(self, ticker, **kwargs):
+    def __init__(self, ticker=None, price=None, volatility=None):
         self.ticker = ticker
 
-        if 'price' not in kwargs or 'volatility' not in kwargs:
-            latest_price, volatility, price_history, volatility_history, dates = self.get_price_and_volatility_data()
+        if not price or not volatility:
+            latest_price, volatility,_,_,_ = self.get_price_and_volatility_data()
 
-        if 'price' in kwargs:
-            self.price = kwargs['price']
+        if price:
+            self.price = price
         else:
             self.price = latest_price
 
-        if 'volatility' in kwargs:
-            self.volatility = kwargs['volatility']
+        if volatility:
+            self.volatility = volatility
         else:
             self.volatility = volatility
 
