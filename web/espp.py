@@ -87,7 +87,7 @@ class Stock(Security):
         daily_volatility = statistics.pstdev(daily_percent_changes)
         annualized_volatility = daily_volatility * math.sqrt(252)
 
-        return round(annualized_volatility,2)
+        return round(annualized_volatility,4)
 
 class CallOption(Security):
     def __init__(self, strike_price, expiration_years, stock):

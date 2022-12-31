@@ -40,3 +40,4 @@ class ReplicatingPortfolioSeriesSerializer(serializers.Serializer):
     payoffs = serializers.ListField(
         child=serializers.FloatField(min_value=0)
     )
+    

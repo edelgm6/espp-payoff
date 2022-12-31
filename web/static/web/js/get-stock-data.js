@@ -11,13 +11,14 @@ function getStockData(event) {
   event.preventDefault();
 
   const params = new URLSearchParams();
+  tickerField.value = tickerField.value.toUpperCase();
   params.set('ticker', tickerField.value);
   const queryString = params.toString();
 
   fetch(`/stock-data?${queryString}`)
     .then(response => response.json())
     .then(data => {
-      volatilityField.value = data.volatility;
+      volatilityField.value = (data.volatility * 100.0).toFixed(2);
       priceField.value = data.price;
       const price_history = data.price_history;
       const daily_percent_changes = data.daily_percent_changes;

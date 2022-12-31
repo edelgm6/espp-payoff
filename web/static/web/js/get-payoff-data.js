@@ -1,7 +1,3 @@
-// const form = document.querySelector('form');
-// const tickerField = document.querySelector('#ticker');
-// const volatilityField = document.querySelector('#volatility');
-// const priceField = document.querySelector('#price');
 var is_first_payoffs_update = true;
 var is_first_portfolio_update = true;
 var payoffs_chart = {};
@@ -11,9 +7,11 @@ function getPayoffData(event) {
     event.preventDefault();
 
     const params = new URLSearchParams();
+    const decimal_volatility = (parseFloat(volatilityField.value) / 100.0).toString();
+
     params.set('ticker', tickerField.value);
     params.set('price', priceField.value);
-    params.set('volatility', volatilityField.value);
+    params.set('volatility', decimal_volatility);
     const queryString = params.toString();
 
     fetch(`/payoffs?${queryString}`)
