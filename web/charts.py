@@ -27,12 +27,20 @@ class Charts:
         prices = self.get_price_series()
         replicating_portfolio = self.espp.get_replicating_portfolio()
 
-        shares_series = [price * replicating_portfolio.buy_shares_position.count for price in prices]
-        sell_call_options_series = [replicating_portfolio.sell_call_options_position.security.get_payoff(price) * replicating_portfolio.sell_call_options_position.count for price in prices]
-        buy_call_options_series = [replicating_portfolio.buy_call_options_position.security.get_payoff(price) * replicating_portfolio.buy_call_options_position.count for price in prices]
+        shares_series = [
+            price * replicating_portfolio.buy_shares_position.count for price in prices
+            ]
+        sell_call_options_series = [
+            replicating_portfolio.sell_call_options_position.security.get_payoff(price) *
+                replicating_portfolio.sell_call_options_position.count for price in prices
+            ]
+        buy_call_options_series = [
+            replicating_portfolio.buy_call_options_position.security.get_payoff(price) *
+            replicating_portfolio.buy_call_options_position.count for price in prices
+            ]
 
-        for list in [prices,shares_series,sell_call_options_series,buy_call_options_series]:
-            list.insert(0,0)
+        for series_list in [prices,shares_series,sell_call_options_series,buy_call_options_series]:
+            series_list.insert(0,0)
 
         replicating_portfolio_series = {
             'prices': prices,

@@ -11,7 +11,9 @@ class StockSerializer(serializers.Serializer):
 
     def validate(self, data):
         if data.get('ticker') is None and (not data.get('price') or not data.get('volatility')):
-            raise serializers.ValidationError("if ticker is None, must have both price and volatility")
+            raise serializers.ValidationError(
+                "if ticker is None, must have both price and volatility"
+                )
         return data
 
 class PayoffsSerializer(serializers.Serializer):

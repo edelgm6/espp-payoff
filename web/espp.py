@@ -1,10 +1,11 @@
-from polygon import RESTClient
-from scipy.stats import norm
-from django.conf import settings
 from collections import namedtuple
 import datetime
 import statistics
 import math
+from scipy.stats import norm
+from django.conf import settings
+from polygon import RESTClient
+
 import numpy as np
 
 class Position:
@@ -50,7 +51,7 @@ class Stock(Security):
     def _get_price_dates(self, history):
         dates = [datetime.date.fromtimestamp(agg.timestamp/1000.0) for agg in history]
         return dates
-    
+
     def _get_history(self):
         ### TODO: Figure out how to save this if it's called
         client = RESTClient(settings.POLYGON_API_KEY)
@@ -80,7 +81,6 @@ class Stock(Security):
         for day in range(1,len(closing_prices)):
             daily_percent_change = closing_prices[day] / closing_prices[day - 1] - 1
             daily_percent_changes.append(daily_percent_change)
-        
         return daily_percent_changes
 
     def _get_annualized_volatility(self, daily_percent_changes):
@@ -103,7 +103,7 @@ class CallOption(Security):
         annualized_volatility = self.stock.annualized_volatility
         stock_price = self.stock.price
 
-        N = norm.cdf
+        normal_distribution = norm.cdf
 
         d1 = (np.log(stock_price/self.strike_price) +
             (risk_free_rate + annualized_volatility**2/2) *
@@ -111,7 +111,10 @@ class CallOption(Security):
 
         d2 = d1 - annualized_volatility * np.sqrt(self.expiration_years)
 
-        return stock_price * N(d1) - self.strike_price * np.exp(-risk_free_rate*self.expiration_years) * N(d2)
+        return (
+            stock_price * normal_distribution(d1) - self.strike_price *
+            np.exp(-risk_free_rate*self.expiration_years) * normal_distribution(d2)
+            )
 
 class ESPP:
     def __init__(self, stock):
@@ -124,12 +127,17 @@ class ESPP:
         self.maximum_purchase_price = self.stock.price * (1 - self.purchase_discount)
         self.minimum_shares_purchased = self.maximum_investment / self.maximum_purchase_price
         self.expiration_years = .5
-        self.shares_cap_transition = self.maximum_investment / self.maximum_shares_purchased / (1 - self.purchase_discount)
+        self.shares_cap_transition = (
+            self.maximum_investment / self.maximum_shares_purchased / (1 - self.purchase_discount)
+            )
 
     def get_payoff(self, price):
 
         purchase_price = min(price * (1 - self.purchase_discount), self.maximum_purchase_price)
-        shares_purchased = min(self.maximum_shares_purchased, self.maximum_investment / purchase_price)
+        shares_purchased = min(
+            self.maximum_shares_purchased,
+            self.maximum_investment / purchase_price
+            )
 
         purchase_value = purchase_price * shares_purchased
         market_value = price * shares_purchased
@@ -143,14 +151,25 @@ class ESPP:
         buy_shares_position = Position(security=self.stock,count=buy_shares_count)
 
         sell_call_option_strike_price = self.shares_cap_transition
-        sell_call_option = CallOption(strike_price=sell_call_option_strike_price,expiration_years=self.expiration_years,stock=self.stock)
+        sell_call_option = CallOption(
+            strike_price=sell_call_option_strike_price,
+            expiration_years=self.expiration_years,
+            stock=self.stock
+            )
         sell_call_options_position = Position(security=sell_call_option,count=-buy_shares_count)
 
-        buy_call_option = CallOption(strike_price=self.stock.price,expiration_years=self.expiration_years,stock=self.stock)
+        buy_call_option = CallOption(
+            strike_price=self.stock.price,
+            expiration_years=self.expiration_years,
+            stock=self.stock
+            )
         buy_call_options_count = (1 / self.maximum_purchase_price) * self.maximum_investment
         buy_call_options_position = Position(security=buy_call_option,count=buy_call_options_count)
 
-        ReplicatingPortfolio = namedtuple('ReplicatingPortoflio', ['buy_shares_position','sell_call_options_position','buy_call_options_position'])
+        ReplicatingPortfolio = namedtuple(
+            'ReplicatingPortoflio',
+            ['buy_shares_position','sell_call_options_position','buy_call_options_position']
+            )
 
         replicating_portfolio = ReplicatingPortfolio(
             buy_shares_position=buy_shares_position,

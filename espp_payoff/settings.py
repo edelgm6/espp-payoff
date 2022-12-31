@@ -136,6 +136,6 @@ REST_FRAMEWORK = {
 }
 
 try:
-    from espp_payoff.local_settings import *
+    from espp_payoff.local_settings import POLYGON_API_KEY, SECRET_KEY
 except ImportError:
     pass

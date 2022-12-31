@@ -1,6 +1,5 @@
 from django.shortcuts import render
 from django.views import View
-from django.http import Http404
 from web.serializers import PayoffsSerializer, ReplicatingPortfolioSeriesSerializer, StockSerializer
 from web.espp import ESPP, Stock
 from web.charts import Charts
@@ -12,7 +11,6 @@ class Index(View):
     template = 'index.html'
 
     def get(self, request, format=None):
-        
         return render(request, self.template)
 
 class Payoffs(APIView):
@@ -27,7 +25,6 @@ class Payoffs(APIView):
             stock = stock_serializer.save()
             espp = ESPP(stock=stock)
             charts = Charts(espp=espp)
-            
             data = charts.get_payoff_series()
             serializer = PayoffsSerializer(data=data)
             if serializer.is_valid():
@@ -38,11 +35,10 @@ class Payoffs(APIView):
 class StockData(APIView):
 
     def get(self, request, format=None):
-        
+
         ticker = self.request.GET.get('ticker')
 
         stock = Stock(ticker=ticker)
-
         price, volatility, price_history, daily_percent_changes, dates = stock.get_price_and_volatility_data()
         
         return Response(
