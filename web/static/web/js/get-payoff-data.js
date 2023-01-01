@@ -86,7 +86,6 @@ function getPayoffData(event) {
             replicating_portfolio_chart['data']['datasets'][0]['data'] = shares_series;
             replicating_portfolio_chart['data']['datasets'][1]['data'] = sell_call_options_series;
             replicating_portfolio_chart['data']['datasets'][2]['data'] = buy_call_options_series;
-            replicating_portfolio_chart['data']['datasets'][3]['data'] = payoffs;
             replicating_portfolio_chart.update();
         }
     });
