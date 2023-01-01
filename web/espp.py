@@ -53,7 +53,6 @@ class Stock(Security):
         return dates
 
     def _get_history(self):
-        ### TODO: Figure out how to save this if it's called
         client = RESTClient(settings.POLYGON_API_KEY)
 
         yesterday = datetime.date.today() - datetime.timedelta(days=1)

@@ -1,6 +1,44 @@
 from rest_framework import serializers
 from web.espp import Stock
 
+class PayoffChartSerializer(serializers.Serializer):
+    prices = serializers.ListField(
+        child=serializers.FloatField(min_value=0)
+    )
+    payoffs = serializers.ListField(
+        child=serializers.FloatField(min_value=0)
+    )
+
+class StockChartSerializer(serializers.Serializer):
+    price = serializers.FloatField(min_value=0)
+    volatility = serializers.FloatField(min_value=.01)
+    price_history = serializers.ListField(
+        child=serializers.FloatField(min_value=.01)
+    )
+    daily_percent_changes = serializers.ListField(
+        child=serializers.FloatField()
+    )
+    dates = serializers.ListField(
+        child=serializers.DateField()
+    )
+
+class ReplicatingPortfolioChartSerializer(serializers.Serializer):
+    prices = serializers.ListField(
+        child=serializers.FloatField(min_value=0)
+    )
+    shares_series = serializers.ListField(
+        child=serializers.FloatField(min_value=0)
+    )
+    sell_call_options_series = serializers.ListField(
+        child=serializers.FloatField()
+    )
+    buy_call_options_series = serializers.ListField(
+        child=serializers.FloatField()
+    )
+    # payoffs = serializers.ListField(
+    #     child=serializers.FloatField(min_value=0)
+    # )
+
 class StockSerializer(serializers.Serializer):
     ticker = serializers.CharField(min_length=0, required=False)
     price = serializers.FloatField(min_value=.01, required=False)
