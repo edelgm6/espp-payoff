@@ -9,19 +9,10 @@ class StockChart:
         self.daily_percent_changes = daily_percent_changes
         self.dates = dates
 
-class PayoffChart:
+class ESPPChart:
 
     def __init__(self, espp):
         self.prices = self.get_price_series(espp)
-        self.payoffs = self.get_payoff_series(espp, self.prices)
-
-    def get_payoff_series(self, espp, prices):
-
-        payoffs = [espp.get_payoff(price) for price in prices if price > 0]
-
-        payoffs.insert(0,0)
-
-        return payoffs
 
     def get_price_series(self, espp):
         # TODO: What if returns kink and share price is already in the prices list?
@@ -33,14 +24,28 @@ class PayoffChart:
 
         return prices
 
-class Charts:
+class PayoffChart(ESPPChart):
 
     def __init__(self, espp):
-        self.espp = espp
+        super().__init__(espp)
+        self.payoffs = self.get_payoff_series(espp, self.prices)
 
-    def get_replicating_portfolio_series(self):
-        prices = self.get_price_series()
-        replicating_portfolio = self.espp.get_replicating_portfolio()
+    def get_payoff_series(self, espp, prices):
+
+        payoffs = [espp.get_payoff(price) for price in prices if price > 0]
+        payoffs.insert(0,0)
+
+        return payoffs
+
+class ReplicatingPortfolioChart(ESPPChart):
+
+    def __init__(self, espp):
+        super().__init__(espp)
+        self.shares_series, self.sell_call_options_series, self.buy_call_options_series = self.get_replicating_portfolio_series(espp, self.prices)
+
+
+    def get_replicating_portfolio_series(self, espp, prices):
+        replicating_portfolio = espp.get_replicating_portfolio()
 
         shares_series = [
             price * replicating_portfolio.buy_shares_position.count for price in prices
@@ -57,11 +62,4 @@ class Charts:
         for series_list in [prices,shares_series,sell_call_options_series,buy_call_options_series]:
             series_list.insert(0,0)
 
-        replicating_portfolio_series = {
-            'prices': prices,
-            'shares_series': shares_series,
-            'sell_call_options_series': sell_call_options_series,
-            'buy_call_options_series': buy_call_options_series
-        }
-
-        return replicating_portfolio_series
+        return shares_series, sell_call_options_series, buy_call_options_series

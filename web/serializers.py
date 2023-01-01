@@ -22,6 +22,23 @@ class StockChartSerializer(serializers.Serializer):
         child=serializers.DateField()
     )
 
+class ReplicatingPortfolioChartSerializer(serializers.Serializer):
+    prices = serializers.ListField(
+        child=serializers.FloatField(min_value=0)
+    )
+    shares_series = serializers.ListField(
+        child=serializers.FloatField(min_value=0)
+    )
+    sell_call_options_series = serializers.ListField(
+        child=serializers.FloatField()
+    )
+    buy_call_options_series = serializers.ListField(
+        child=serializers.FloatField()
+    )
+    # payoffs = serializers.ListField(
+    #     child=serializers.FloatField(min_value=0)
+    # )
+
 class StockSerializer(serializers.Serializer):
     ticker = serializers.CharField(min_length=0, required=False)
     price = serializers.FloatField(min_value=.01, required=False)

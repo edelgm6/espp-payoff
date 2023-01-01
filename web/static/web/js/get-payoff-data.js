@@ -76,11 +76,6 @@ function getPayoffData(event) {
                         data: buy_call_options_series,
                         borderWidth: 1
                     },
-                    {
-                        label: 'espp',
-                        data: payoffs,
-                        borderWidth: 1
-                    }
                 ]
             },
             options: base_options
