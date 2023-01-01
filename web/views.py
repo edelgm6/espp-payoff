@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views import View
-from web.serializers import PayoffsSerializer, PayoffChartSerializer, ReplicatingPortfolioChartSerializer, ReplicatingPortfolioSeriesSerializer, StockSerializer, StockChartSerializer
+from web.serializers import PayoffChartSerializer, ReplicatingPortfolioChartSerializer, StockSerializer, StockChartSerializer
 from web.espp import ESPP
 from web.charts import StockChart, PayoffChart, ReplicatingPortfolioChart
 from rest_framework.views import APIView
