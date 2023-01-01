@@ -44,6 +44,7 @@ class StockData(APIView):
         stock = stock_serializer.save()
         price, volatility, price_history, daily_percent_changes, dates = stock.get_price_and_volatility_data()
         
+        # TODO: Change this to a serializer
         return Response(
             {
                 'price': price, 

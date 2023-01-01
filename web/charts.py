@@ -36,7 +36,7 @@ class Charts:
             ]
         buy_call_options_series = [
             replicating_portfolio.buy_call_options_position.security.get_payoff(price) *
-            replicating_portfolio.buy_call_options_position.count for price in prices
+                replicating_portfolio.buy_call_options_position.count for price in prices
             ]
 
         for series_list in [prices,shares_series,sell_call_options_series,buy_call_options_series]:
