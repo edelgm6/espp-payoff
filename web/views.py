@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from django.views import View
-from web.serializers import PayoffsSerializer, ReplicatingPortfolioSeriesSerializer, StockSerializer
-from web.espp import ESPP, Stock
-from web.charts import Charts
+from web.serializers import PayoffsSerializer, PayoffChartSerializer, ReplicatingPortfolioSeriesSerializer, StockSerializer, StockChartSerializer
+from web.espp import ESPP
+from web.charts import Charts, StockChart, PayoffChart
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -15,6 +15,7 @@ class Index(View):
 
 class Payoffs(APIView):
 
+    #TODO: Turn into a chart object and serialize back out
     def get(self, request, format=None):
 
         stock_serializer = StockSerializer(data=request.query_params)
@@ -24,13 +25,9 @@ class Payoffs(APIView):
 
         stock = stock_serializer.save()
         espp = ESPP(stock=stock)
-        charts = Charts(espp=espp)
-        data = charts.get_payoff_series()
-        serializer = PayoffsSerializer(data=data)
-        if serializer.is_valid():
-            return Response(serializer.data)
-        print(serializer.errors)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        payoff_chart = PayoffChart(espp=espp)
+        payoff_chart_serializer = PayoffChartSerializer(payoff_chart)
+        return Response(payoff_chart_serializer.data)
 
 class StockData(APIView):
 
@@ -40,20 +37,11 @@ class StockData(APIView):
         if not stock_serializer.is_valid():
             print(stock_serializer.errors)
             return Response(stock_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        
         stock = stock_serializer.save()
-        price, volatility, price_history, daily_percent_changes, dates = stock.get_price_and_volatility_data()
-        
-        # TODO: Change this to a serializer
-        return Response(
-            {
-                'price': price, 
-                'volatility': volatility,
-                'price_history': price_history,
-                'daily_percent_changes': daily_percent_changes,
-                'dates': dates
-            }
-        )
+
+        stock_chart = StockChart(stock)
+        stock_chart_serializer = StockChartSerializer(stock_chart)
+        return Response(stock_chart_serializer.data)
 
 class ReplicatingPortfolio(APIView):
 

@@ -1,27 +1,42 @@
 
+class StockChart:
+    
+    def __init__(self, stock):
+        price, volatility, price_history, daily_percent_changes, dates = stock.get_price_and_volatility_data()
+        self.price = price
+        self.volatility = volatility
+        self.price_history = price_history
+        self.daily_percent_changes = daily_percent_changes
+        self.dates = dates
+
+class PayoffChart:
+
+    def __init__(self, espp):
+        self.prices = self.get_price_series(espp)
+        self.payoffs = self.get_payoff_series(espp, self.prices)
+
+    def get_payoff_series(self, espp, prices):
+
+        payoffs = [espp.get_payoff(price) for price in prices if price > 0]
+
+        payoffs.insert(0,0)
+
+        return payoffs
+
+    def get_price_series(self, espp):
+        # TODO: What if returns kink and share price is already in the prices list?
+
+        max_price_model = max(round(espp.stock.price * 1.25),20)
+        MIN_PRICE_MODEL = 1
+        prices = [price for price in range(MIN_PRICE_MODEL, max_price_model)]
+        prices.insert(0,0)
+
+        return prices
+
 class Charts:
 
     def __init__(self, espp):
         self.espp = espp
-
-    def get_price_series(self):
-        # TODO: What if returns kink and share price is already in the prices list?
-
-        max_price_model = max(round(self.espp.stock.price * 1.25),20)
-        MIN_PRICE_MODEL = 1
-        prices = [price for price in range(MIN_PRICE_MODEL, max_price_model)]
-
-        return prices
-
-    def get_payoff_series(self):
-
-        prices = self.get_price_series()
-        payoffs = [self.espp.get_payoff(price) for price in prices]
-
-        prices.insert(0,0)
-        payoffs.insert(0,0)
-
-        return {'prices': prices,'payoffs': payoffs}
 
     def get_replicating_portfolio_series(self):
         prices = self.get_price_series()
