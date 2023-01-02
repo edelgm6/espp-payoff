@@ -1,6 +1,21 @@
 from rest_framework import serializers
 from web.espp import Stock
 
+class ReplicatingPortfolioValueSerializer(serializers.Serializer):
+    buy_shares_count = serializers.FloatField(min_value=0)
+    buy_shares_price = serializers.FloatField(min_value=0)
+    buy_shares_value = serializers.FloatField(min_value=0)
+
+    sell_call_options_count = serializers.FloatField(min_value=0)
+    sell_call_options_price = serializers.FloatField()
+    sell_call_options_strike_price = serializers.FloatField()
+    sell_call_options_value = serializers.FloatField(max_value=0)
+
+    buy_call_options_count = serializers.FloatField(min_value=0)
+    buy_call_options_price = serializers.FloatField(min_value=0)
+    buy_call_options_strike_price = serializers.FloatField(min_value=0)
+    buy_call_options_value = serializers.FloatField(min_value=0)
+
 class PayoffChartSerializer(serializers.Serializer):
     prices = serializers.ListField(
         child=serializers.FloatField(min_value=0)
