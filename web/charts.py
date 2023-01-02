@@ -21,12 +21,14 @@ class ReplicatingPortfolioValueChart:
         self.sell_call_options_count = replicating_portfolio.sell_call_options_position.count
         self.sell_call_options_price = replicating_portfolio.sell_call_options_position.security.get_price(espp.risk_free_rate)
         self.sell_call_options_strike_price = replicating_portfolio.sell_call_options_position.security.strike_price
-        self.sell_call_options_value = self.buy_shares_count * self.buy_shares_price
+        self.sell_call_options_value = self.sell_call_options_count * self.sell_call_options_price
 
         self.buy_call_options_count = replicating_portfolio.buy_call_options_position.count
         self.buy_call_options_price = replicating_portfolio.buy_call_options_position.security.get_price(espp.risk_free_rate)
         self.buy_call_options_strike_price = replicating_portfolio.buy_call_options_position.security.strike_price
-        self.buy_call_options_value = self.buy_call_options_count * self.buy_shares_price
+        self.buy_call_options_value = self.buy_call_options_count * self.buy_call_options_price
+
+        self.total_value = self.buy_shares_value + self.sell_call_options_value + self.buy_call_options_value
 
 class ESPPChart:
 

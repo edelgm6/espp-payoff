@@ -59,14 +59,14 @@ class ReplicatingPortfolio(APIView):
 class ReplicatingPortfolioValue(APIView):
 
     def get(self, request, format=None):
-        return Response({'heyyo': 'whatever'})
-        # stock_serializer = StockSerializer(data=request.query_params)
-        # if not stock_serializer.is_valid():
-        #     print(stock_serializer.errors)
-        #     return Response(stock_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        # return Response({'heyyo': 'whatever'})
+        stock_serializer = StockSerializer(data=request.query_params)
+        if not stock_serializer.is_valid():
+            print(stock_serializer.errors)
+            return Response(stock_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-        # stock = stock_serializer.save()
-        # espp = ESPP(stock=stock)
-        # replicating_portfolio_value_chart = ReplicatingPortfolioValueChart(espp=espp)
-        # replicating_portfolio_value_chart_serializer = ReplicatingPortfolioValueChartSerializer(replicating_portfolio_value_chart)
-        # return Response(replicating_portfolio_value_chart_serializer.data)
+        stock = stock_serializer.save()
+        espp = ESPP(stock=stock)
+        replicating_portfolio_value_chart = ReplicatingPortfolioValueChart(espp=espp)
+        replicating_portfolio_value_chart_serializer = ReplicatingPortfolioValueSerializer(replicating_portfolio_value_chart)
+        return Response(replicating_portfolio_value_chart_serializer.data)

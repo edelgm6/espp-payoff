@@ -16,6 +16,8 @@ class ReplicatingPortfolioValueSerializer(serializers.Serializer):
     buy_call_options_strike_price = serializers.FloatField(min_value=0)
     buy_call_options_value = serializers.FloatField(min_value=0)
 
+    total_value = serializers.FloatField(min_value=0)
+
 class PayoffChartSerializer(serializers.Serializer):
     prices = serializers.ListField(
         child=serializers.FloatField(min_value=0)

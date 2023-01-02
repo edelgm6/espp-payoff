@@ -94,21 +94,21 @@ function getPayoffData(event) {
     .then(response => response.json())
     .then(data => {
 
+        const buy_shares_value = data.buy_shares_value;
+        const sell_call_options_value = data.sell_call_options_value;
+        const buy_call_options_value = data.buy_call_options_value;
+        const total_value = data.total_value;
     
         var ctx = document.getElementById('value-chart')
         var value_chart = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                labels: ['Buy shares','Sell call options', 'Buy call options', 'Total'],
                 datasets: [
                     {
-                        label: '# of Votes',
-                        data: [12, 19, 3, 5, 2, 3],
+                        label: 'Value',
+                        data: [buy_shares_value, sell_call_options_value, buy_call_options_value, total_value],
                     },
-                    {
-                        label: '# of Votes2',
-                        data: [12, 19, 3, 5, 2, 3],
-                    }
                 ]
             },
             options: {
