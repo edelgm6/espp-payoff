@@ -9,6 +9,13 @@ class StockChart:
         self.daily_percent_changes = daily_percent_changes
         self.dates = dates
 
+class TotalData:
+
+    def __init__(self, espp):
+        self.replicating_portfolio_value_data = ReplicatingPortfolioValueChart(espp)
+        self.replicating_portfolio_data = ReplicatingPortfolioChart(espp)
+        self.payoff_data = PayoffChart(espp)
+
 class ReplicatingPortfolioValueChart:
     
     def __init__(self, espp):

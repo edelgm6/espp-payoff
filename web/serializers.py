@@ -26,19 +26,6 @@ class PayoffChartSerializer(serializers.Serializer):
         child=serializers.FloatField(min_value=0)
     )
 
-class StockChartSerializer(serializers.Serializer):
-    price = serializers.FloatField(min_value=0)
-    volatility = serializers.FloatField(min_value=.01)
-    price_history = serializers.ListField(
-        child=serializers.FloatField(min_value=.01)
-    )
-    daily_percent_changes = serializers.ListField(
-        child=serializers.FloatField()
-    )
-    dates = serializers.ListField(
-        child=serializers.DateField()
-    )
-
 class ReplicatingPortfolioChartSerializer(serializers.Serializer):
     prices = serializers.ListField(
         child=serializers.FloatField(min_value=0)
@@ -52,6 +39,11 @@ class ReplicatingPortfolioChartSerializer(serializers.Serializer):
     buy_call_options_series = serializers.ListField(
         child=serializers.FloatField()
     )
+
+class TotalDataSerializer(serializers.Serializer):
+    replicating_portfolio_value_data = ReplicatingPortfolioValueSerializer()
+    replicating_portfolio_data = ReplicatingPortfolioChartSerializer()
+    payoff_data = PayoffChartSerializer()
 
 class StockSerializer(serializers.Serializer):
     ticker = serializers.CharField(min_length=0, required=False)
@@ -67,3 +59,16 @@ class StockSerializer(serializers.Serializer):
                 "if ticker is None, must have both price and volatility"
                 )
         return data
+
+class StockChartSerializer(serializers.Serializer):
+    price = serializers.FloatField(min_value=0)
+    volatility = serializers.FloatField(min_value=.01)
+    price_history = serializers.ListField(
+        child=serializers.FloatField(min_value=.01)
+    )
+    daily_percent_changes = serializers.ListField(
+        child=serializers.FloatField()
+    )
+    dates = serializers.ListField(
+        child=serializers.DateField()
+    )
