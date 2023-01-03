@@ -18,7 +18,9 @@ class Position:
 
 # TODO: Security has a price
 class Security:
-    pass
+    
+    def get_price():
+        pass
 
 class Stock(Security):
     # Implement a get_payoff function here for consistency
@@ -47,6 +49,9 @@ class Stock(Security):
         volatility = self._get_annualized_volatility(daily_percent_changes)
 
         return latest_price, volatility, price_history, daily_percent_changes, dates
+
+    def get_price(self):
+        return self.price
 
     def _get_price_dates(self, history):
         dates = [datetime.date.fromtimestamp(agg.timestamp/1000.0) for agg in history]
@@ -99,7 +104,7 @@ class CallOption(Security):
 
     def get_price(self, risk_free_rate):
 
-        annualized_volatility = self.stock.annualized_volatility
+        annualized_volatility = self.stock.volatility
         stock_price = self.stock.price
 
         normal_distribution = norm.cdf

@@ -14,7 +14,8 @@ class ESPPTestCase(TestCase):
         self.assertEqual(round(payoff),6115)
 
     def test_get_replicating_portfolio(self):
-        espp = ESPP()
+        stock = Stock(ticker='SQ',price=100,volatility=.1)
+        espp = ESPP(stock)
 
         replicating_portfolio = espp.get_replicating_portfolio()
         self.assertEqual(replicating_portfolio.buy_shares_position.count,espp.maximum_shares_purchased * espp.purchase_discount)

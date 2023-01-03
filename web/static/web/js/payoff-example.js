@@ -11,5 +11,5 @@ const chart = new Chart(payoff_example, {
         },
     ]
   },
-  options: base_options
+  options: base_options_no_legend
 });
