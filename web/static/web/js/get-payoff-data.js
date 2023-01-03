@@ -3,6 +3,7 @@ var is_first_portfolio_update = true;
 var is_first_value_update = true;
 var payoffs_chart = {};
 var replicating_portfolio_chart = {};
+var value_chart = {};
 
 function getPayoffData(event) {
     event.preventDefault();
@@ -35,7 +36,7 @@ function getPayoffData(event) {
                     }
                 ]
             },
-            options: base_options
+            options: base_options_no_legend
             });
             is_first_payoffs_update = false;
         } else {
@@ -99,31 +100,48 @@ function getPayoffData(event) {
         const buy_call_options_value = data.buy_call_options_value;
         const total_value = data.total_value;
     
-        var ctx = document.getElementById('value-chart')
-        var value_chart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['Buy shares','Sell call options', 'Buy call options', 'Total'],
-                datasets: [
-                    {
-                        label: 'Value',
-                        data: [buy_shares_value, sell_call_options_value, buy_call_options_value, total_value],
+        if (!is_first_value_update) {
+            value_chart['data']['datasets'][0]['data'][0] = buy_shares_value;
+            value_chart['data']['datasets'][0]['data'][1] = sell_call_options_value;
+            value_chart['data']['datasets'][0]['data'][2] = buy_call_options_value;
+            value_chart['data']['datasets'][0]['data'][3] = total_value;
+            value_chart.update();
+        } else {
+            var ctx = document.getElementById('value-chart')
+            value_chart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Buy shares','Sell call options', 'Buy call options', 'Total'],
+                    datasets: [
+                        {
+                            label: 'Value',
+                            data: [buy_shares_value, sell_call_options_value, buy_call_options_value, total_value],
+                        },
+                    ]
+                },
+                options: {
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
                     },
-                ]
-            },
-            options: {
-                indexAxis: 'y',
-                scales: {
-                    x: {
-                        stacked: true
-                    },
-                    y: {
-                        stacked: true
+                    indexAxis: 'y',
+                    scales: {
+                        x: {
+                            stacked: true,
+                            ticks: {
+                                callback: function(value,index,ticks) {
+                                    return '$' + value.toLocaleString();
+                                }
+                            }
+                        },
+                        y: {
+                            stacked: true
+                        }
                     }
                 }
-            }
-        });
-
-    
+            });
+            is_first_value_update = false;
+        };
     });
 }
