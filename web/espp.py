@@ -2,6 +2,8 @@ from collections import namedtuple
 import datetime
 import statistics
 import math
+import json
+from web.models import StockData
 from scipy.stats import norm
 from django.conf import settings
 from polygon import RESTClient
@@ -23,27 +25,32 @@ class Security:
         pass
 
 class Stock(Security):
-    # Implement a get_payoff function here for consistency
+
     def __init__(self, ticker=None, price=None, volatility=None):
         self.ticker = ticker
-
-        if not price or not volatility:
-            latest_price, volatility,_,_,_ = self.get_price_and_volatility_data()
-
-        if price:
-            self.price = price
-        else:
-            self.price = latest_price
-
-        if volatility:
-            self.volatility = volatility
-        else:
-            self.volatility = volatility
+        self.price = price
+        self.volatility = volatility
 
     def get_price_and_volatility_data(self):
-        history = self._get_history()
-        dates = self._get_price_dates(history)
-        price_history = self._get_price_history(history)
+        
+        try:
+            stock_data = StockData.objects.get(ticker=self.ticker,date_added=datetime.date.today())
+            print('found data')
+        except StockData.DoesNotExist:
+            stock_data = None
+            print('no data')
+
+        if stock_data:
+            stock_data = json.loads(stock_data.pricing_history)
+            dates = stock_data['dates']
+            price_history = stock_data['price_history']
+        else:
+            history = self._get_history()
+            dates = self._get_price_dates(history)
+            price_history = self._get_price_history(history)
+            pricing_history_json = json.dumps({'dates': dates, 'price_history': price_history}, default=str)
+            stock_data = StockData.objects.create(ticker=self.ticker,pricing_history=pricing_history_json)
+
         latest_price = price_history[-1]
         daily_percent_changes = self._get_daily_price_change_percent(price_history)
         volatility = self._get_annualized_volatility(daily_percent_changes)
