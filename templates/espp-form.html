@@ -1,11 +1,33 @@
-<form>
+<!-- <form action="#" id="form" autocomplete="off">
+  <label for="name">Enter your name</label>
+  <input
+    type="text"
+    class="form__input form-control"
+    placeholder="Enter your name"
+    autocomplete="off"
+    name="name"
+    id="name"
+  />
+  <label for="email">Enter your email</label>
+  <input
+    type="email"
+    class="form__input form-control"
+    placeholder="Enter your email"
+    autocomplete="off"
+    name="email"
+    id="email"
+  />
+  <button class="btn btn-primary" id="submit-btn">Submit</button>
+</form> -->
+
+<form id="espp-form" autocomplete="off" action="#">
   <div class="row mb-3">
     <label for="ticker" class="col-sm-2 col-form-label">Ticker</label>
     <div class="col-sm-6">
       <div class="input-group">
-        <input type="text" class="form-control" id="ticker" placeholder="e.g., AAPL" data-bs-toggle="tooltip"
-          title="Add stock ticker here and click 'Get data' button to populate latest price and volatility">
-        <button class="btn btn-outline-secondary" type="button" onclick="populateStockChart(event)">Get data</button>
+        <input type="text" class="form__input form-control" id="ticker" name="ticker" placeholder="e.g., AAPL" data-bs-toggle="tooltip"
+          title="Add stock ticker here and click 'Get data' button to populate latest price and volatility" autocomplete="off"/>
+        <button class="btn btn-outline-secondary" onclick="populateStockChart(event)">Get data</button>
       </div>
     </div>
   </div>
@@ -16,7 +38,7 @@
         <span class="input-group-text">$</span>
         <input type="number" step=".01" min="0" class="form-control" id="price" placeholder="e.g., 102.44"
           data-bs-toggle="tooltip"
-          title="Latest stock price — you can auto-populate via the 'Get data' button or add yourself">
+          title="Latest stock price — you can auto-populate via the 'Get data' button or add yourself"/>
       </div>
     </div>
   </div>
@@ -26,7 +48,7 @@
       <div class="input-group">
         <input type="number" step=".01" min="0" class="form-control" id="volatility" placeholder="e.g., 10.5 for 10.5%"
           data-bs-toggle="tooltip"
-          title="Latest annualized volatility — you can auto-populate via the 'Get data' button or add yourself">
+          title="Latest annualized volatility — you can auto-populate via the 'Get data' button or add yourself"/>
         <span class="input-group-text">%</span>
       </div>
     </div>
