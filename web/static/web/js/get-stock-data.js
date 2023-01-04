@@ -46,18 +46,18 @@ async function populateStockChart(event) {
     data = await getStockData(ticker);
   }
 
-  var volatility;
+  var volatility = data.volatility;
   if (called_api) {
     volatility = (data.volatility * 100.0).toFixed(2);
-  } else {
-    volatility = data.volatility;
   }
+
   volatilityField.value = volatility;
   priceField.value = data.price;
   const price_history = data.price_history;
   const daily_percent_changes = data.daily_percent_changes;
   const dates = data.dates;
 
+  //Set the local variable so we don't call the API each time
   stock_data[today][ticker] = {};
   stock_data[today][ticker]['price'] = data.price;
   stock_data[today][ticker]['volatility'] = volatility;
