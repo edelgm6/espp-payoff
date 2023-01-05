@@ -1,14 +1,18 @@
-<form>
+<form id="espp-form" autocomplete="off" action="#" novalidate>
   <div class="row mb-3">
     <label for="ticker" class="col-sm-2 col-form-label">Ticker</label>
     <div class="col-sm-6">
       <div class="input-group">
-        <input type="text" class="form-control" id="ticker" placeholder="e.g., AAPL" data-bs-toggle="tooltip"
-          title="Add stock ticker here and click 'Get data' button to populate latest price and volatility">
-        <button class="btn btn-outline-secondary" type="button" onclick="populateStockChart(event)">Get data</button>
+        <input type="text" class="form-control" id="ticker" name="ticker" maxlength="5" placeholder="e.g., AAPL" data-bs-toggle="tooltip"
+          title="Add stock ticker here and click 'Get data' button to populate latest price and volatility" autocomplete="off" required>
+        <button class="btn btn-outline-secondary" onclick="populateStockChart(event)">Get data</button>
+        <div class="invalid-feedback">
+          Invalid ticker
+        </div>
       </div>
     </div>
   </div>
+
   <div class="row mb-3">
     <label for="price" class="col-sm-2 col-form-label">Price</label>
     <div class="col-sm-6">
@@ -17,6 +21,9 @@
         <input type="number" step=".01" min="0" class="form-control" id="price" placeholder="e.g., 102.44"
           data-bs-toggle="tooltip"
           title="Latest stock price — you can auto-populate via the 'Get data' button or add yourself">
+          <div class="invalid-feedback">
+            Must be a positive number
+          </div>
       </div>
     </div>
   </div>
@@ -28,13 +35,15 @@
           data-bs-toggle="tooltip"
           title="Latest annualized volatility — you can auto-populate via the 'Get data' button or add yourself">
         <span class="input-group-text">%</span>
+        <div class="invalid-feedback">
+          Must be a positive number
+        </div>
       </div>
     </div>
   </div>
   <div class="form-group row">
     <div class="col-sm-12">
-      <button class="btn btn-primary" onclick="getPayoffData(event)" data-bs-toggle="tooltip"
-        title="Must have Price and Volatility fields populated to work">Calculate ESPP value</button>
+      <button class="btn btn-primary" onclick="getPayoffData(event)">Calculate ESPP value</button>
     </div>
   </div>
 </form>
