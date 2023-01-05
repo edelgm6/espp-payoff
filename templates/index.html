@@ -29,7 +29,7 @@
         <div class="col-md-5">
           {% include "espp-form.html" %}
         </div>
-        <div class="col-md-7">
+        <div class="col-md-7" style="height: 300px">
           <canvas id="price-history"></canvas>
         </div>
       </div>
@@ -38,9 +38,9 @@
         <div class="col-md-5">
           <p>This chart shows the payoff from your ESPP investment assuming you invest the full $12,500. Things to note:</p>
           <ul>
-            <li>Any stock price between the current price and ~$14.70 will give a flat payoff of ~$2,200</li>
+            <li>Any stock price between the current price and ~$14.70 will give a flat payoff of ~$2,300</li>
             <li>Below ~$14.70, your payoff decreases by $150 for every dollar decrease in the stock price</li>
-            <li>Any stock price above the current stock price has a payoff greater than $2,200</li>
+            <li>Any stock price above the current stock price has a payoff greater than $2,300</li>
           </ul>
         </div>
         <div class="col-sm-7">
@@ -53,7 +53,7 @@
           <p>This shows the <strong>replicating portfolio</strong> — i.e., the collection of stocks and options that,
           considered together, creates the same payoff chart seen above.</p>
         </div>
-        <div class="col-md-7">
+        <div class="col-md-7" style="height: 300px">
         <canvas id="portfolio-chart"></canvas>
         </div>
       </div>
@@ -64,7 +64,7 @@
             the Black-Scholes option pricing model) to identify the value of the ESPP.</p>
           </p>
         </div>
-        <div class="col-md-7">
+        <div class="col-md-7" style="height: 300px">
         <canvas id="value-chart"></canvas>
         </div>
       </div>
@@ -94,7 +94,7 @@
         If that's confusing don't worry — we'll go through it step by step.
         </p>
       </div>
-      <div class="col-md-7">
+      <div class="col-md-7" style="height: 300px">
       <canvas id="payoff-example"></canvas>
       </div>
       </div>
@@ -111,7 +111,7 @@
           E.g., at $5, you purchase 1000 shares for $4.25 (i.e., the 85% discount), locking in a
           gain of $750 (i.e., 5 x $150).
       </div>
-      <div class="col-md-7">
+      <div class="col-md-7" style="height: 300px">
       <canvas id="shares-cap-example"></canvas>
       </div>
       </div>
@@ -128,7 +128,7 @@
           In this case, you will invest $12,500 at an 85% discount to the current stock price, yielding a ~17% return, or ~$2205 gain.
         </p>
       </div>
-      <div class="col-md-7">
+      <div class="col-md-7" style="height: 300px">
       <canvas id="middle-example"></canvas>
       </div>
       </div>
@@ -148,7 +148,7 @@
             <li>You get a return of (($34 - .85 * $28) / .85 * $28) * $12,500, or $5357</li>
           </ul>
       </div>
-      <div class="col-md-7">
+      <div class="col-md-7" style="height: 300px">
       <canvas id="upside-example"></canvas>
       </div>
       </div>
@@ -171,7 +171,7 @@
         <p>But we also need a way to <strong>neutralize that $150 increase beyond the $14.70 mark</strong> — we'll
           do that by <strong>selling call options</strong>.
       </div>
-      <div class="col-md-7">
+      <div class="col-md-7" style="height: 300px">
       <canvas id="buy-stock-example"></canvas>
       </div>
       </div>
@@ -182,7 +182,7 @@
       <div class="col-sm-5">
         <p>A call option is the <strong>option to buy a stock at a given price (known as the 'strike price').</strong></p>
       </div>
-      <div class="col-md-7">
+      <div class="col-md-7" style="height: 300px">
       <canvas id="sell-calls-example"></canvas>
       </div>
       </div>
@@ -194,7 +194,7 @@
         <p>The final upward kink in the payoff is done by <strong>buying call options.</strong> The number of call options 
         is the <strong>maximum investment (i.e., $12,500) divided by the maximum purchase price (i.e., .85 * the current price).</strong></p> 
       </div>
-      <div class="col-md-7">
+      <div class="col-md-7" style="height: 300px">
       <canvas id="buy-calls-example"></canvas>
       </div>
       </div>
@@ -206,7 +206,7 @@
           <li>Negative exposure to 150 call options at a strike price of $14.70</li>
           <li>Positive exposure to TODO call options at a strike price of $28.00</li>
         </ul>
-        Valuing the stock is straightforward: 150 shares x $28.00 = $4,200. But what about the call options?
+        Valuing the stock is straightforward: 150 shares x $28.00 = $4,300. But what about the call options?
       </p>
 
       <h3>Valuing call options</h3>
@@ -241,5 +241,6 @@
     <script src="{% static "/web/js/get-stock-data.js" %}"></script>
     <script src="{% static "/web/js/get-payoff-data.js" %}"></script>
     <script src="{% static "/web/js/espp-form-validation.js" %}"></script>
+
   </body>
 </html>

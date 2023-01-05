@@ -1,4 +1,5 @@
 base_options = {
+  maintainAspectRatio: false,
   scales: {
     x: {
       title: {
@@ -29,6 +30,7 @@ base_options = {
 }
 
 base_options_no_legend = {
+  maintainAspectRatio: false,
   plugins: {
     legend: {
         display: false
