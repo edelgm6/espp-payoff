@@ -1,12 +1,5 @@
-//TODO: Put common variables in a single JS file
-
-const form = document.querySelector('form');
-const tickerField = document.querySelector('#ticker');
-const volatilityField = document.querySelector('#volatility');
-const priceField = document.querySelector('#price');
 var stock_data = {};
 var ticker;
-
 var is_first_update = true;
 var price_history_chart = {};
 
@@ -22,6 +15,10 @@ async function getStockData(ticker) {
 
 async function populateStockChart(event) {
   event.preventDefault();
+
+  if (!validateTicker()) {
+    return;
+  }
 
   var today = new Date();
   var dd = String(today.getDate()).padStart(2, '0');

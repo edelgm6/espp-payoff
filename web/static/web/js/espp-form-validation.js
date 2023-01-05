@@ -1,35 +1,29 @@
-// const validation = new window.JustValidate('#form');
+function validateTicker() {
+    const ticker_input = document.querySelector('#ticker');
+    var ticker_value = ticker_input.value;
 
-// validation
-//   .addField('#name', [
-//     {
-//       rule: 'minLength',
-//       value: 3,
-//     },
-//     {
-//       rule: 'maxLength',
-//       value: 30,
-//     },
-//   ]);
+    if (ticker_value.length == 0 || ticker_value.length > 5) {
+        ticker_input.className = 'form-control is-invalid';
+        return false;
+    }
 
-const validation = new window.JustValidate('#espp-form');
+    let regex = /[^a-z]/i;
+    if (regex.test(ticker_value)) {
+        ticker_input.className = 'form-control is-invalid';
+        return false;
+    }
 
-validation
-    .addField('#volatility', [
-        {
-            rule: 'required',
-            errorMessage: 'this field is required'
-        },
-    ])
-    .addField('#price', [
-        {
-            rule: 'required',
-            errorMessage: 'this field is required'
-        },
-    ])
-    .addField('#ticker', [
-        {
-            rule: 'required',
-            errorMessage: 'this field is required'
-        },
-    ]);
+    ticker_input.className = 'form-control';
+    return true;
+}
+
+function validateVolatilityAndPrice(input) {
+    var input_value = Number(input.value);
+
+    if (isNaN(input_value) || input_value <= 0) {
+        input.className = 'form-control is-invalid';
+        return false;
+    }
+    input.className = 'form-control';
+    return true;
+}

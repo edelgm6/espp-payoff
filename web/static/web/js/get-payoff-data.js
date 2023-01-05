@@ -6,6 +6,12 @@ var value_chart = {};
 function getPayoffData(event) {
     event.preventDefault();
 
+    var price_field_valid = validateVolatilityAndPrice(priceField);
+    var volatility_field_valid = validateVolatilityAndPrice(volatilityField);
+    if (!price_field_valid || !volatility_field_valid) {
+        return;
+    }
+
     const params = new URLSearchParams();
     const decimal_volatility = (parseFloat(volatilityField.value) / 100.0).toString();
 
