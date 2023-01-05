@@ -174,7 +174,7 @@ class ESPP:
             expiration_years=self.expiration_years,
             stock=self.stock
             )
-        buy_call_options_count = (1 / self.maximum_purchase_price) * self.maximum_investment
+        buy_call_options_count = self.maximum_investment / self.maximum_purchase_price
         buy_call_options_position = Position(security=buy_call_option,count=buy_call_options_count)
 
         ReplicatingPortfolio = namedtuple(
