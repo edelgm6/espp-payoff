@@ -49,7 +49,7 @@ async function populateStockChart(event) {
   }
 
   volatilityField.value = volatility;
-  priceField.value = data.price;
+  priceField.value = data.price.toFixed(2);
   const price_history = data.price_history;
   const daily_percent_changes = data.daily_percent_changes;
   const dates = data.dates;
