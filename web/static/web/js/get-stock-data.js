@@ -140,4 +140,6 @@ async function populateStockChart(event) {
     price_history_chart['data']['labels'] = dates;
     price_history_chart.update();
   };
+  validateVolatilityAndPrice(priceField);
+  validateVolatilityAndPrice(volatilityField);
 };
