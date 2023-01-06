@@ -6,10 +6,10 @@ import json
 from web.models import StockData
 from scipy.stats import norm
 from django.conf import settings
-from polygon import RESTClient, NoResultsError
+from polygon import RESTClient, NoResultsError, BadResponse
 import numpy as np
 from rest_framework import status
-from rest_framework.exceptions import NotFound
+from rest_framework.exceptions import NotFound, Throttled
 
 class Position:
     def __init__(self, security, count):
@@ -80,7 +80,9 @@ class Stock(Security):
                 sort='asc'
             )
         except NoResultsError:
-            raise NotFound(detail='Invalid ticker', code=status.HTTP_404_NOT_FOUND)
+            raise NotFound(detail='Invalid ticker')
+        except BadResponse:
+            raise Throttled(detail='Too many stock data requests')
 
         return response
 

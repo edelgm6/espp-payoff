@@ -11,14 +11,19 @@ async function getStockData(ticker) {
   try {
     const response = await fetch(`/stock-data?${queryString}`);
     if (!response.ok) {
-      throw new Error(response);
+      throw response;
     }
     const data = await response.json();
     return data;
-  } catch (error) {
+  } catch (response) {
     const parentDiv = tickerField.parentNode;
     const targetDiv = parentDiv.querySelector('div');
-    targetDiv.innerHTML = 'Ticker not found'
+
+    if (response.status == 429) {
+      targetDiv.innerHTML = 'Too many requests, try again in a minute!'
+    } else {
+      targetDiv.innerHTML = 'Ticker not found'
+    }
     tickerField.className = 'form-control is-invalid';
     return false;
   }
