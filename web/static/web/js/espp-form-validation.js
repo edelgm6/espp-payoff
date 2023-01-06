@@ -1,19 +1,25 @@
+//TODO: Think we don't need to declare a new ticker_input variable
+//as we should already have in the form-fields.js file
+
 function validateTicker() {
-    const ticker_input = document.querySelector('#ticker');
-    var ticker_value = ticker_input.value;
+    const parentDiv = tickerField.parentNode;
+    const validationDiv = parentDiv.querySelector('div');
+    var ticker_value = tickerField.value;
 
     if (ticker_value.length == 0 || ticker_value.length > 5) {
-        ticker_input.className = 'form-control is-invalid';
+        validationDiv.innerHTML = 'Invalid ticker'
+        tickerField.className = 'form-control is-invalid';
         return false;
     }
 
     let regex = /[^a-z]/i;
     if (regex.test(ticker_value)) {
-        ticker_input.className = 'form-control is-invalid';
+        validationDiv.innerHTML = 'Invalid ticker'
+        tickerField.className = 'form-control is-invalid';
         return false;
     }
 
-    ticker_input.className = 'form-control';
+    tickerField.className = 'form-control';
     return true;
 }
 

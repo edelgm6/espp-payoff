@@ -6,9 +6,10 @@ import json
 from web.models import StockData
 from scipy.stats import norm
 from django.conf import settings
-from polygon import RESTClient
-
+from polygon import RESTClient, NoResultsError
 import numpy as np
+from rest_framework import status
+from rest_framework.exceptions import NotFound
 
 class Position:
     def __init__(self, security, count):
@@ -35,10 +36,8 @@ class Stock(Security):
         
         try:
             stock_data = StockData.objects.get(ticker=self.ticker,date_added=datetime.date.today())
-            print('found data')
         except StockData.DoesNotExist:
             stock_data = None
-            print('no data')
 
         if stock_data:
             stock_data = json.loads(stock_data.pricing_history)
@@ -70,15 +69,18 @@ class Stock(Security):
         yesterday = datetime.date.today() - datetime.timedelta(days=1)
         one_year_ago = yesterday - datetime.timedelta(days=364)
 
-        response = client.get_aggs(
-            ticker=self.ticker,
-            multiplier=1,
-            timespan='day',
-            from_=one_year_ago,
-            to=yesterday,
-            adjusted=True,
-            sort='asc'
-        )
+        try:
+            response = client.get_aggs(
+                ticker=self.ticker,
+                multiplier=1,
+                timespan='day',
+                from_=one_year_ago,
+                to=yesterday,
+                adjusted=True,
+                sort='asc'
+            )
+        except NoResultsError:
+            raise NotFound(detail='Invalid ticker', code=status.HTTP_404_NOT_FOUND)
 
         return response
 
