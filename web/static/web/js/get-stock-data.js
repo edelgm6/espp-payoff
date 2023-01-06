@@ -8,9 +8,25 @@ async function getStockData(ticker) {
   params.set('ticker', ticker);
   const queryString = params.toString();
 
-  const response = await fetch(`/stock-data?${queryString}`);
-  const data = await response.json();
-  return data;
+  try {
+    const response = await fetch(`/stock-data?${queryString}`);
+    if (!response.ok) {
+      throw response;
+    }
+    const data = await response.json();
+    return data;
+  } catch (response) {
+    const parentDiv = tickerField.parentNode;
+    const targetDiv = parentDiv.querySelector('div');
+
+    if (response.status == 429) {
+      targetDiv.innerHTML = 'Too many requests, try again in a minute!'
+    } else {
+      targetDiv.innerHTML = 'Ticker not found'
+    }
+    tickerField.className = 'form-control is-invalid';
+    return false;
+  }
 }
 
 async function populateStockChart(event) {
@@ -37,10 +53,20 @@ async function populateStockChart(event) {
       called_api = false;
     } else {
       data = await getStockData(ticker);
+      console.log(data);
+      if (!data) {
+        console.log('error found, cancel operation')
+        return;
+      }
     }
   } else {
     stock_data[today] = {};
     data = await getStockData(ticker);
+    console.log(data);
+    if (!data) {
+      console.log('error found, cancel operation')
+      return;
+    }
   }
 
   var volatility = data.volatility;

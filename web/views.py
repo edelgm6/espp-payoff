@@ -6,6 +6,7 @@ from web.charts import StockChart, TotalData
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.exceptions import NotFound
 
 class Index(View):
     template = 'index.html'
@@ -36,7 +37,6 @@ class StockData(APIView):
             print(stock_serializer.errors)
             return Response(stock_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         stock = stock_serializer.save()
-
         stock_chart = StockChart(stock)
         stock_chart_serializer = StockChartSerializer(stock_chart)
         return Response(stock_chart_serializer.data)
