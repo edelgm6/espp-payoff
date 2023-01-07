@@ -73,6 +73,7 @@ class ReplicatingPortfolioChart(ESPPChart):
 
 
     def get_replicating_portfolio_series(self, espp, prices):
+        
         replicating_portfolio = espp.get_replicating_portfolio()
 
         shares_series = [
@@ -86,8 +87,5 @@ class ReplicatingPortfolioChart(ESPPChart):
             replicating_portfolio.buy_call_options_position.security.get_payoff(price) *
                 replicating_portfolio.buy_call_options_position.count for price in prices
             ]
-
-        for series_list in [prices,shares_series,sell_call_options_series,buy_call_options_series]:
-            series_list.insert(0,0)
 
         return shares_series, sell_call_options_series, buy_call_options_series

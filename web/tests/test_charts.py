@@ -1,11 +1,10 @@
 from django.test import TestCase
-from web.views import Payoffs
-from web.espp import Stock, CallOption, ESPP
-from web.charts import ReplicatingPortfolioValueChart
+from web.espp import Stock, ESPP
+from web.charts import ReplicatingPortfolioValueChart, ReplicatingPortfolioChart
 from rest_framework.test import APIRequestFactory
 import json
 
-class ReplicatingPortfolioChartTestCase(TestCase):
+class ReplicatingPortfolioValueChartTestCase(TestCase):
 
     def test_replicating_portfolio_chart(self):
         stock = Stock(price=100,volatility=.1)
@@ -13,6 +12,14 @@ class ReplicatingPortfolioChartTestCase(TestCase):
 
         replicating_portfolio_value_chart = ReplicatingPortfolioValueChart(espp=espp)
         print(replicating_portfolio_value_chart.buy_call_options_count)
+
+class ReplicatingPortfolioChartTestCase(TestCase):
+
+    def test_replicating_portfolio_chart(self):
+        stock = Stock(price=100,volatility=.1)
+        espp = ESPP(stock=stock)
+
+        replicating_portfolio_chart = ReplicatingPortfolioChart(espp=espp)
 
 # class ESPPTestCase(TestCase):
 
