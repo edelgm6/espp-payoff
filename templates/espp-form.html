@@ -2,7 +2,7 @@
   <div class="row mb-3">
     <label for="ticker" class="col-sm-2 col-form-label">Ticker</label>
     <div class="col-sm-6">
-      <div class="input-group">
+      <div class="input-group has-validation">
         <input type="text" class="form-control" id="ticker" name="ticker" maxlength="5" placeholder="e.g., AAPL" data-bs-toggle="tooltip"
           title="Add stock ticker here and click 'Get data' button to populate latest price and volatility" autocomplete="off" required>
         <button class="btn btn-outline-secondary" onclick="populateStockChart(event)">Get data</button>
@@ -16,7 +16,7 @@
   <div class="row mb-3">
     <label for="price" class="col-sm-2 col-form-label">Price</label>
     <div class="col-sm-6">
-      <div class="input-group">
+      <div class="input-group has-validation">
         <span class="input-group-text">$</span>
         <input type="number" step=".01" min="0" class="form-control" id="price" placeholder="e.g., 102.44"
           data-bs-toggle="tooltip"
@@ -30,7 +30,7 @@
   <div class="row mb-3">
     <label for="volatility" class="col-sm-2 col-form-label">Volatility</label>
     <div class="col-sm-6">
-      <div class="input-group">
+      <div class="input-group has-validation">
         <input type="number" step=".01" min="0" class="form-control" id="volatility" placeholder="e.g., 10.5 for 10.5%"
           data-bs-toggle="tooltip"
           title="Latest annualized volatility — you can auto-populate via the 'Get data' button or add yourself">
