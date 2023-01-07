@@ -165,7 +165,7 @@ class ESPP:
         buy_shares_count = self.purchase_discount * self.maximum_shares_purchased
         buy_shares_position = Position(security=self.stock,count=buy_shares_count)
 
-        sell_call_option_strike_price = self.shares_cap_transition
+        sell_call_option_strike_price = min(self.shares_cap_transition,self.stock.price)
         sell_call_option = CallOption(
             strike_price=sell_call_option_strike_price,
             expiration_years=self.expiration_years,
@@ -178,7 +178,7 @@ class ESPP:
             expiration_years=self.expiration_years,
             stock=self.stock
             )
-        buy_call_options_count = self.maximum_investment / self.maximum_purchase_price
+        buy_call_options_count = min(self.maximum_investment / self.maximum_purchase_price,self.maximum_shares_purchased)
         buy_call_options_position = Position(security=buy_call_option,count=buy_call_options_count)
 
         ReplicatingPortfolio = namedtuple(
