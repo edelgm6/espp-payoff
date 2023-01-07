@@ -85,7 +85,7 @@ async function populateStockChart(event) {
   stock_data[today][ticker]['price'] = data.price;
   stock_data[today][ticker]['volatility'] = volatility;
   stock_data[today][ticker]['price_history'] = price_history;
-  stock_data[today][ticker]['daily_percent_changes'] = daily_percent_changes;
+  stock_data[today][ticker]['daily_percent_changes'] = daily_percent_changes.unshift(null);
   stock_data[today][ticker]['dates'] = dates;
 
   if (is_first_update) {
