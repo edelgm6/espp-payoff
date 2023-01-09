@@ -53,7 +53,10 @@ value_chart = new Chart(value_chart_html, {
                 }
             },
             y: {
-                stacked: true
+                stacked: true,
+                grid: {
+                    display: false
+                }
             }
         }
     }
