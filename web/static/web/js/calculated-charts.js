@@ -32,7 +32,7 @@ value_chart = new Chart(value_chart_html, {
         datasets: [
             {
                 label: 'Value',
-                data: [buy_shares_value, sell_call_options_value, buy_call_options_value, total_value],
+                data: [4200, -2026.95, 936.92, 3109.97],
             },
         ]
     },
