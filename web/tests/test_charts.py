@@ -1,8 +1,6 @@
 from django.test import TestCase
 from web.espp import Stock, ESPP
 from web.charts import ReplicatingPortfolioValueChart, ReplicatingPortfolioChart
-from rest_framework.test import APIRequestFactory
-import json
 
 class ReplicatingPortfolioValueChartTestCase(TestCase):
 
