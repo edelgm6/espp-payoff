@@ -19,7 +19,7 @@ replicating_portfolio_chart = new Chart(portfolio_chart_html, {
     type: 'line',
     data: {
         labels: example_labels,
-        datasets: [buy_shares_dataset, payoff_dataset, sell_calls_dataset, buy_calls_dataset]
+        datasets: [buy_shares_dataset, sell_calls_dataset, buy_calls_dataset]
     },
     options: base_options
 });
