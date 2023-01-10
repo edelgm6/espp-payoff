@@ -7,6 +7,8 @@ async function getStockData(ticker) {
   const params = new URLSearchParams();
   params.set('ticker', ticker);
   const queryString = params.toString();
+  const parentDiv = tickerField.parentNode;
+  const targetDiv = parentDiv.querySelector('div');
 
   try {
     const response = await fetch(`/stock-data?${queryString}`);
@@ -14,11 +16,10 @@ async function getStockData(ticker) {
       throw response;
     }
     const data = await response.json();
+    tickerField.className = 'form-control is-valid';
+    targetDiv.innerHTML = '<a href="#stockModal" data-bs-toggle="modal">Click here for stock information</a>'
     return data;
   } catch (response) {
-    const parentDiv = tickerField.parentNode;
-    const targetDiv = parentDiv.querySelector('div');
-
     if (response.status == 429) {
       targetDiv.innerHTML = 'Too many requests, try again in a minute!'
     } else {
