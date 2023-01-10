@@ -7,7 +7,9 @@ class StockChart:
         self.volatility = volatility
         self.price_history = price_history
         self.daily_percent_changes = daily_percent_changes
+        self.daily_percent_changes.insert(0, None)
         self.dates = dates
+        print(self.daily_percent_changes)
 
 class TotalData:
 
