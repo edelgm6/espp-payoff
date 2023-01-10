@@ -7,6 +7,8 @@ async function getStockData(ticker) {
   const params = new URLSearchParams();
   params.set('ticker', ticker);
   const queryString = params.toString();
+  const parentDiv = tickerField.parentNode;
+  const targetDiv = parentDiv.querySelector('div');
 
   try {
     const response = await fetch(`/stock-data?${queryString}`);
@@ -14,11 +16,10 @@ async function getStockData(ticker) {
       throw response;
     }
     const data = await response.json();
+    tickerField.className = 'form-control is-valid';
+    targetDiv.innerHTML = '<a href="#stockModal" data-bs-toggle="modal">Click here for stock information</a>'
     return data;
   } catch (response) {
-    const parentDiv = tickerField.parentNode;
-    const targetDiv = parentDiv.querySelector('div');
-
     if (response.status == 429) {
       targetDiv.innerHTML = 'Too many requests, try again in a minute!'
     } else {
@@ -50,6 +51,10 @@ async function populateStockChart(event) {
   if (today in stock_data) {
     if (ticker in stock_data[today]) {
       data = stock_data[today][ticker];
+      const parentDiv = tickerField.parentNode;
+      const targetDiv = parentDiv.querySelector('div');
+      tickerField.className = 'form-control is-valid';
+      targetDiv.innerHTML = '<a href="#stockModal" data-bs-toggle="modal">Click here for stock information</a>'
       called_api = false;
     } else {
       data = await getStockData(ticker);
@@ -85,7 +90,7 @@ async function populateStockChart(event) {
   stock_data[today][ticker]['price'] = data.price;
   stock_data[today][ticker]['volatility'] = volatility;
   stock_data[today][ticker]['price_history'] = price_history;
-  stock_data[today][ticker]['daily_percent_changes'] = daily_percent_changes.unshift(null);
+  stock_data[today][ticker]['daily_percent_changes'] = daily_percent_changes;
   stock_data[today][ticker]['dates'] = dates;
 
   if (is_first_update) {
@@ -161,6 +166,7 @@ async function populateStockChart(event) {
     });
   is_first_update = false;
   } else {
+    console.log('updated modal');
     price_history_chart['data']['datasets'][0]['data'] = price_history;
     price_history_chart['data']['datasets'][1]['data'] = daily_percent_changes;
     price_history_chart['data']['labels'] = dates;
