@@ -1,3 +1,30 @@
+import numpy as np
+import math
+from web.espp import CallOption
+
+class VarianceChart:
+
+    def __init__(self, stock):
+        
+        # Define the standard deviation and average
+        standard_deviation = math.sqrt(stock.volatility)
+        mean = stock.price
+
+        # Create the data for the chart
+        # x = np.linspace(mean - 3*standard_deviation, mean + 3*standard_deviation, 100)
+        x = np.linspace(0, 8, 100)
+        y = 1/(standard_deviation * np.sqrt(2 * np.pi)) * np.exp( - (x - mean)**2 / (2 * standard_deviation**2))
+        
+        x = [round(x_value,4) for x_value in x]
+        y = [round(y_value,4) for y_value in y]
+        print(x)
+        print(y)
+
+        option = CallOption(strike_price=4,expiration_years=1,stock=stock)
+        payoffs = [round(option.get_payoff(price),4) for price in x]
+        print(payoffs)
+
+
 
 class StockChart:
     
