@@ -20,26 +20,24 @@ volatility_chart = new Chart(volatility_canvas, {
     ]
     },
     scales: {
-        // x: {
-        //     distribution: 'linear',
-        //     ticks: {
-        //         autoSkip: true
-        //     }
-        // },
         y: {
             type: 'linear',
             display: true,
-            position: 'left',
+            position: 'right',
         },
         y1: {
             type: 'linear',
             display: true,
-            position: 'right',
+            position: 'left',
         },
     },
     options: {
         scales: {
             x: {
+                title: {
+                    display: true,
+                    text: 'Stock price'
+                },
                 type: 'linear',
                 grid: {
                     display: false
@@ -49,34 +47,31 @@ volatility_chart = new Chart(volatility_canvas, {
                     max: 8,
                     stepSize: 1,
                     fixedStepSize: 1,
+                    callback: function(value,index,ticks) {
+                        return '$' + value.toFixed(2).toLocaleString();
+                    }
                 }
             },
             y: {
                 title: {
                     display: true,
-                    text: 'Stock price'
-                },
-                ticks: {
-                    callback: function(value,index,ticks) {
-                    return '$' + value.toLocaleString();
-                    }
+                    text: 'Probability'
                 }
             },
             y1: {
                 title: {
                     display: true,
-                    text: 'Daily percent change'
+                    text: 'Payoff'
                 },
                 grid: {
                     display: false
                 },
                 position: 'right',
-                // ticks: {
-                //     min: 0,
-                //     max: 4,
-                //     stepSize: 1,
-                //     fixedStepSize: 1,
-                // }
+                ticks: {
+                    callback: function(value,index,ticks) {
+                    return '$' + value.toFixed(2).toLocaleString();
+                    }
+                }
             }
         }
     }
