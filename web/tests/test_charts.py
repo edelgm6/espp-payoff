@@ -5,7 +5,7 @@ from web.charts import ReplicatingPortfolioValueChart, ReplicatingPortfolioChart
 class VarianceChartTestCase(TestCase):
     
     def test_create_variance_chart(self):
-        stock = Stock(price=4,volatility=.5)
+        stock = Stock(price=4,volatility=1)
         variance_chart = VarianceChart(stock)
 
 
