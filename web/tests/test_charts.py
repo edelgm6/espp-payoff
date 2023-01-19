@@ -1,6 +1,13 @@
 from django.test import TestCase
 from web.espp import Stock, ESPP
-from web.charts import ReplicatingPortfolioValueChart, ReplicatingPortfolioChart
+from web.charts import ReplicatingPortfolioValueChart, ReplicatingPortfolioChart, VarianceChart
+
+class VarianceChartTestCase(TestCase):
+    
+    def test_create_variance_chart(self):
+        stock = Stock(price=4,volatility=1)
+        variance_chart = VarianceChart(stock)
+
 
 class ReplicatingPortfolioValueChartTestCase(TestCase):
 
