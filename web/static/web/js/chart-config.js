@@ -83,14 +83,6 @@ const highlight_color = '#FDF002'
 const primary_gray = '#B4B7B7'
 const secondary_gray = '#999E9E'
 
-payoff_dataset = {
-  label: 'payoff',
-  data: [0, 150.0, 300.0, 450.0, 600.0, 750.0, 900.0, 1050.0, 1200.0, 1350.000000000001, 1500.0, 1650.0, 1800.0, 1950.0000000000018, 2100.0, 2205.8823529411784, 2205.8823529411766, 2205.8823529411766, 2205.8823529411766, 2205.8823529411784, 2205.8823529411784, 2205.8823529411748, 2205.8823529411784, 2205.8823529411784, 2205.8823529411766, 2205.8823529411766, 2205.8823529411766, 2205.8823529411784, 2205.8823529411766, 2731.09243697479, 3256.3025210084033, 3781.5126050420167, 4306.72268907563, 4831.9327731092435, 5357.142857142857],
-  borderWidth: 1,
-  borderColor: primary_color,
-  backgroundColor: primary_color
-}
-
 buy_shares_dataset = {
   label: 'buy 150 shares',
   data: [0, 150.0, 300.0, 450.0, 600.0, 750.0, 900.0, 1050.0, 1200.0, 1350.0, 1500.0, 1650.0, 1800.0, 1950.0, 2100.0, 2250.0,2400.0,2550.0,2700,2850,3000,3150,3300,3450,3600,3750,3900,4050,4200,4350,4500,4650,4800,4950,5100],
@@ -113,4 +105,12 @@ buy_calls_dataset = {
   borderWidth: 1,
   borderColor: fourth_color,
   backgroundColor: fourth_color
+}
+
+payoff_dataset = {
+  label: 'payoff',
+  data: buy_shares_dataset.data.map((val, index) => val + sell_calls_dataset.data[index] + buy_calls_dataset.data[index]),
+  borderWidth: 1,
+  borderColor: primary_color,
+  backgroundColor: primary_color
 }
