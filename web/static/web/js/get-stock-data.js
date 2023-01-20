@@ -11,7 +11,7 @@ async function getStockData(ticker) {
   const targetDiv = parentDiv.querySelector('div');
 
   try {
-    const response = await fetch(`/stock-data?${queryString}`);
+    const response = await fetch(`/stock-data/?${queryString}`);
     if (!response.ok) {
       throw response;
     }

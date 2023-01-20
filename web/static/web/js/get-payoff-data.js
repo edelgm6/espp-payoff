@@ -14,7 +14,7 @@ function getPayoffData(event) {
     params.set('volatility', decimal_volatility);
     const queryString = params.toString();
 
-    fetch(`/payoffs?${queryString}`)
+    fetch(`/payoffs/?${queryString}`)
     .then(response => response.json())
     .then(data => {
 
