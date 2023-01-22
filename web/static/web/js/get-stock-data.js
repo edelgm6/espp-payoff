@@ -1,7 +1,7 @@
-var stock_data = {};
+var stockData = {};
 var ticker;
-var is_first_update = true;
-var price_history_chart = {};
+var isFirstUpdate = true;
+var priceHistoryChart = {};
 
 async function getStockData(ticker) {
   const params = new URLSearchParams();
@@ -47,15 +47,15 @@ async function populateStockChart(event) {
   ticker = tickerField.value
 
   var data = {};
-  var called_api = true;
-  if (today in stock_data) {
-    if (ticker in stock_data[today]) {
-      data = stock_data[today][ticker];
+  var calledApi = true;
+  if (today in stockData) {
+    if (ticker in stockData[today]) {
+      data = stockData[today][ticker];
       const parentDiv = tickerField.parentNode;
       const targetDiv = parentDiv.querySelector('div');
       tickerField.className = 'form-control is-valid';
       targetDiv.innerHTML = '<a href="#stockModal" data-bs-toggle="modal">Click here for stock information</a>'
-      called_api = false;
+      calledApi = false;
     } else {
       data = await getStockData(ticker);
       console.log(data);
@@ -65,7 +65,7 @@ async function populateStockChart(event) {
       }
     }
   } else {
-    stock_data[today] = {};
+    stockData[today] = {};
     data = await getStockData(ticker);
     console.log(data);
     if (!data) {
@@ -75,40 +75,40 @@ async function populateStockChart(event) {
   }
 
   var volatility = data.volatility;
-  if (called_api) {
+  if (calledApi) {
     volatility = (data.volatility * 100.0).toFixed(2);
   }
 
   volatilityField.value = volatility;
   priceField.value = data.price.toFixed(2);
-  const price_history = data.price_history;
-  const daily_percent_changes = data.daily_percent_changes;
+  const priceHistory = data.price_history;
+  const dailyPercentChanges = data.daily_percent_changes;
   const dates = data.dates;
 
   //Set the local variable so we don't call the API each time
-  stock_data[today][ticker] = {};
-  stock_data[today][ticker]['price'] = data.price;
-  stock_data[today][ticker]['volatility'] = volatility;
-  stock_data[today][ticker]['price_history'] = price_history;
-  stock_data[today][ticker]['daily_percent_changes'] = daily_percent_changes;
-  stock_data[today][ticker]['dates'] = dates;
+  stockData[today][ticker] = {};
+  stockData[today][ticker]['price'] = data.price;
+  stockData[today][ticker]['volatility'] = volatility;
+  stockData[today][ticker]['price_history'] = priceHistory;
+  stockData[today][ticker]['daily_percent_changes'] = dailyPercentChanges;
+  stockData[today][ticker]['dates'] = dates;
 
-  if (is_first_update) {
-    const price_history_canvas = document.getElementById('price-history');
-    price_history_chart = new Chart(price_history_canvas, {
+  if (isFirstUpdate) {
+    const priceHistoryCanvas = document.getElementById('price-history');
+    priceHistoryChart = new Chart(priceHistoryCanvas, {
       type: 'line',
       data: {
         labels: dates,
         datasets: [
           {
               label: 'daily prices',
-              data: price_history,
+              data: priceHistory,
               borderWidth: 1,
               yAxisID: 'y',
           },
           {
             label: 'daily percent change',
-            data: daily_percent_changes,
+            data: dailyPercentChanges,
             borderWidth: 1,
             yAxisID: 'y1',
           },
@@ -164,13 +164,13 @@ async function populateStockChart(event) {
         }
       }
     });
-  is_first_update = false;
+  isFirstUpdate = false;
   } else {
     console.log('updated modal');
-    price_history_chart['data']['datasets'][0]['data'] = price_history;
-    price_history_chart['data']['datasets'][1]['data'] = daily_percent_changes;
-    price_history_chart['data']['labels'] = dates;
-    price_history_chart.update();
+    priceHistoryChart['data']['datasets'][0]['data'] = priceHistory;
+    priceHistoryChart['data']['datasets'][1]['data'] = dailyPercentChanges;
+    priceHistoryChart['data']['labels'] = dates;
+    priceHistoryChart.update();
   };
   validateVolatilityAndPrice(priceField);
   validateVolatilityAndPrice(volatilityField);

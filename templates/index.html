@@ -201,13 +201,13 @@
         <div class="row">
           <div class="col-sm-2"></div>
           <div class="btn-group btn-group-sm col-sm-8" role="group" aria-label="Basic radio toggle button group">
-            <input type="checkbox" class="btn-check" name="btnradio" id="buy-stock-btn" autocomplete="off" onclick="togglePayoffChart('buy_stock')" checked>
+            <input type="checkbox" class="btn-check" name="btnradio" id="buy-stock-btn" autocomplete="off" onclick="buyCallsChart.toggleDatasetHidden('buyStock')" checked>
             <label class="btn btn-outline-primary" for="buy-stock-btn">Buy Stock</label>
           
-            <input type="checkbox" class="btn-check" name="btnradio" id="sell-calls-btn" autocomplete="off" onclick="togglePayoffChart('sell_calls')" checked>
+            <input type="checkbox" class="btn-check" name="btnradio" id="sell-calls-btn" autocomplete="off" onclick="buyCallsChart.toggleDatasetHidden('sellCalls')" checked>
             <label class="btn btn-outline-primary" for="sell-calls-btn">Sell Calls</label>
           
-            <input type="checkbox" class="btn-check" name="btnradio" id="buy-calls-btn" autocomplete="off" onclick="togglePayoffChart('buy_calls')" checked>
+            <input type="checkbox" class="btn-check" name="btnradio" id="buy-calls-btn" autocomplete="off" onclick="buyCallsChart.toggleDatasetHidden('buyCalls')" checked>
             <label class="btn btn-outline-primary" for="buy-calls-btn">Buy Calls</label>
           </div>
           <div class="col-sm-2"></div>
@@ -286,15 +286,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
-    <script src="{% static "/web/js/chart-config.js" %}"></script>
-    <script src="{% static "/web/js/calculated-charts.js" %}"></script>
-    <script src="{% static "/web/js/payoff-example.js" %}"></script>
-    <script src="{% static "/web/js/middle-example.js" %}"></script>
-    <script src="{% static "/web/js/upside-example.js" %}"></script>
-    <script src="{% static "/web/js/shares-cap-example.js" %}"></script>
-    <script src="{% static "/web/js/buy-stock-example.js" %}"></script>
-    <script src="{% static "/web/js/sell-calls-example.js" %}"></script>
-    <script src="{% static "/web/js/buy-calls-example.js" %}"></script>
+    <script src="{% static "/web/js/PayoffChart.js" %}"></script>
+    <script src="{% static "/web/js/initial-charts.js" %}"></script>
 
     <script src="{% static "/web/js/form-fields.js" %}"></script>
     <script src="{% static "/web/js/get-stock-data.js" %}"></script>
