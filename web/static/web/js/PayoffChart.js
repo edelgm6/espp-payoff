@@ -5,7 +5,8 @@ class PayoffChart {
     fourthColor = '#F7DBA7'
     fifthColor = '#9CAFB7'
     
-    highlightColor = '#FDF002'
+    // highlightColor = '#FDF002'
+    highlightColor = '#FFD166'
     primaryGray = '#B4B7B7'
     secondaryGray = '#999E9E'
 
@@ -97,8 +98,7 @@ class PayoffChart {
         includeBuyCalls, 
         canvasId, 
         hideLegend=false,
-        attachChartOnCreate=true
-        ) {
+        attachChartOnCreate=true) {
         
         this.datasets = [];
         if (includePayoff) {
@@ -159,13 +159,12 @@ class PayoffChart {
             }
         }
 
-        const highlightColor = '#FDF002'
         const highlightDataset = {
             label: name,
             data: highlightData,
             borderWidth: 1,
-            borderColor: highlightColor,
-            backgroundColor: highlightColor,
+            borderColor: this.fourthColor,
+            backgroundColor: this.fourthColor,
 
         }
         this.datasets.push(highlightDataset);
