@@ -53,5 +53,8 @@ function getPayoffData(event) {
         valueChart['data']['datasets'][0]['data'][2] = buyCallOptionsValue;
         valueChart['data']['datasets'][0]['data'][3] = totalValue;
         valueChart.update();
+
+        valueCompareChart['data']['datasets'][1]['data'][4] = totalValue;
+        valueCompareChart.update();
     });
 }

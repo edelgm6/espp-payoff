@@ -105,12 +105,16 @@ async function populateStockChart(event) {
               data: priceHistory,
               borderWidth: 1,
               yAxisID: 'y',
+              borderColor: fourthColor,
+              backgroundColor: fourthColor
           },
           {
             label: 'daily percent change',
             data: dailyPercentChanges,
             borderWidth: 1,
             yAxisID: 'y1',
+            borderColor: fifthColor,
+            backgroundColor: fifthColor
           },
         ]
       },
