@@ -48,8 +48,44 @@ var buyCallsChart = new PayoffChart(
     canvasId='buy-calls-example'
 )
 
-const value_chart_html = document.getElementById('value-chart')
-value_chart = new Chart(value_chart_html, {
+var sharesCapChart = new PayoffChart(
+    includePayoff=true, 
+    includeBuyShares=false, 
+    includeSellCalls=false, 
+    includeBuyCalls=false, 
+    canvasId='shares-cap-example',
+    undefined,
+    attachChartOnCreate=false
+  )
+sharesCapChart.highLightPayoffSegment('buyStock', 'Shares cap');
+sharesCapChart.attachChart();
+
+var flatPayoffChart = new PayoffChart(
+    includePayoff=true, 
+    includeBuyShares=false, 
+    includeSellCalls=false, 
+    includeBuyCalls=false, 
+    canvasId='middle-example',
+    undefined,
+    attachChartOnCreate=false
+  )
+flatPayoffChart.highLightPayoffSegment('sellCalls', 'Flat payoff');
+flatPayoffChart.attachChart();
+
+var upsidePayoffChart = new PayoffChart(
+    includePayoff=true, 
+    includeBuyShares=false, 
+    includeSellCalls=false, 
+    includeBuyCalls=false, 
+    canvasId='upside-example',
+    undefined,
+    attachChartOnCreate=false
+  )
+upsidePayoffChart.highLightPayoffSegment('buyCalls', 'Upside outcome');
+upsidePayoffChart.attachChart();
+
+const valueChartCanvas = document.getElementById('value-chart')
+valueChart = new Chart(valueChartCanvas, {
     type: 'bar',
     data: {
         labels: ['Buy shares','Sell call options', 'Buy call options', 'Total'],

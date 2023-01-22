@@ -1,17 +1,17 @@
 function getPayoffData(event) {
     event.preventDefault();
 
-    const price_field_valid = validateVolatilityAndPrice(priceField);
-    const volatility_field_valid = validateVolatilityAndPrice(volatilityField);
-    if (!price_field_valid || !volatility_field_valid) {
+    const priceFieldValid = validateVolatilityAndPrice(priceField);
+    const volatilityFieldValid = validateVolatilityAndPrice(volatilityField);
+    if (!priceFieldValid || !volatilityFieldValid) {
         return;
     }
 
     const params = new URLSearchParams();
-    const decimal_volatility = (parseFloat(volatilityField.value) / 100.0).toString();
+    const decimalVolatility = (parseFloat(volatilityField.value) / 100.0).toString();
 
     params.set('price', priceField.value);
-    params.set('volatility', decimal_volatility);
+    params.set('volatility', decimalVolatility);
     const queryString = params.toString();
 
     fetch(`/payoffs/?${queryString}`)
@@ -48,10 +48,10 @@ function getPayoffData(event) {
             buyCallOptionsSeries
         );
 
-        value_chart['data']['datasets'][0]['data'][0] = buySharesValue;
-        value_chart['data']['datasets'][0]['data'][1] = sellCallOptionsValue;
-        value_chart['data']['datasets'][0]['data'][2] = buyCallOptionsValue;
-        value_chart['data']['datasets'][0]['data'][3] = totalValue;
-        value_chart.update();
+        valueChart['data']['datasets'][0]['data'][0] = buySharesValue;
+        valueChart['data']['datasets'][0]['data'][1] = sellCallOptionsValue;
+        valueChart['data']['datasets'][0]['data'][2] = buyCallOptionsValue;
+        valueChart['data']['datasets'][0]['data'][3] = totalValue;
+        valueChart.update();
     });
 }

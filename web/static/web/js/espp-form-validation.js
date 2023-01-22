@@ -4,16 +4,16 @@
 function validateTicker() {
     const parentDiv = tickerField.parentNode;
     const validationDiv = parentDiv.querySelector('div');
-    var ticker_value = tickerField.value;
+    var tickerValue = tickerField.value;
 
-    if (ticker_value.length == 0 || ticker_value.length > 5) {
+    if (tickerValue.length == 0 || tickerValue.length > 5) {
         validationDiv.innerHTML = 'Invalid ticker'
         tickerField.className = 'form-control is-invalid';
         return false;
     }
 
     let regex = /[^a-z]/i;
-    if (regex.test(ticker_value)) {
+    if (regex.test(tickerValue)) {
         validationDiv.innerHTML = 'Invalid ticker'
         tickerField.className = 'form-control is-invalid';
         return false;
@@ -24,9 +24,9 @@ function validateTicker() {
 }
 
 function validateVolatilityAndPrice(input) {
-    var input_value = Number(input.value);
+    var inputValue = Number(input.value);
 
-    if (isNaN(input_value) || input_value <= 0) {
+    if (isNaN(inputValue) || inputValue <= 0) {
         input.className = 'form-control is-invalid';
         return false;
     }
