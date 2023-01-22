@@ -1,0 +1,89 @@
+<h2>Creating a replicating portfolio</h2>
+<p>
+    We know what the payoff looks like, but now we need to put a value on that payoff. Enter
+    the <strong>replicating portfolio.</strong>
+    Put simply: What combination of stocks, bonds, and options recreates the same payoff
+    that we observe with the ESPP? And since each of the components of the replicating
+    portfolio can be valued, we will know the value of the ESPP!
+</p>
+
+<div class="row">
+    <div class="col-sm-5">
+      <p>
+        Before jumping into each of the individual parts of the replicating portfolio, it'll be good to get an 
+        intuitive understanding of how the individual components of the portfolio combine into the payoff 
+        chart we explored above.
+      </p>
+      <p>
+        The chart to the right let's you toggle the three replciating portfolio components on and off so you 
+        can see how each contributes to the final payoff line.
+      </p>
+    </div>
+    <div class="col-md-7">
+        <div class="row" style="height: 300px">
+            <div class="col">
+                <canvas id="toggle-chart"></canvas>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2"></div>
+            <div class="btn-group btn-group-sm col-sm-8" role="group" aria-label="Basic radio toggle button group">
+            <input type="checkbox" class="btn-check" name="btnradio" id="buy-stock-btn" autocomplete="off" onclick="toggleChart.toggleDatasetHidden('buyStock')" checked>
+            <label class="btn btn-outline-primary" for="buy-stock-btn">Buy Stock</label>
+            
+            <input type="checkbox" class="btn-check" name="btnradio" id="sell-calls-btn" autocomplete="off" onclick="toggleChart.toggleDatasetHidden('sellCalls')" checked>
+            <label class="btn btn-outline-primary" for="sell-calls-btn">Sell Calls</label>
+            
+            <input type="checkbox" class="btn-check" name="btnradio" id="buy-calls-btn" autocomplete="off" onclick="toggleChart.toggleDatasetHidden('buyCalls')" checked>
+            <label class="btn btn-outline-primary" for="buy-calls-btn">Buy Calls</label>
+            </div>
+            <div class="col-sm-2"></div>
+        </div>
+    </div>
+</div>
+<br><br>
+<div class="row">
+    <div class="col-sm-4">
+        <div class="row" style="height: 300px">
+            <canvas id="buy-stock-example"></canvas>
+        </div>
+        <div class="row">
+            <p>
+                We know from earlier that the payoff chart rises by $150 for each $1 increase in the stock price up to
+                the point where we can invest the full $12,500 (i.e., ~$14.70). We can <strong>replicate this payoff by
+                buying 150 shares of the stock!</strong> I.e., when the price of the stock goes up by $1, we will gain
+                $150 if we have 150 shares.
+            </p>
+        
+            <p>
+                But we also need a way to <strong>neutralize that $150 increase beyond the $14.70 mark</strong> — we'll
+                do that by <strong>selling call options</strong>.
+            </p>
+        </div>      
+    </div>
+
+    <div class="col-sm-4">
+        <div class="row" style="height: 300px">
+            <canvas id="sell-calls-example"></canvas>
+        </div>
+        <div class="row">
+            <p>
+                A call option is the <strong>option to buy a stock at a given price (known as the 'strike price').</strong>
+            </p>
+        </div>      
+    </div>
+
+    <div class="col-sm-4">
+        <div class="row" style="height: 300px">
+            <canvas id="buy-calls-example"></canvas>
+        </div>
+        <div class="row">
+            <p>
+                The final upward kink in the payoff is done by <strong>buying call options.</strong> The number of 
+                call options is the <strong>maximum investment (i.e., $12,500) divided by the maximum purchase 
+                price (i.e., .85 * the current price).</strong>
+            </p>
+        </div>      
+    </div>
+
+</div>
