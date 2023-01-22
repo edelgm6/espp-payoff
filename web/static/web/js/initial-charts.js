@@ -84,6 +84,51 @@ var upsidePayoffChart = new PayoffChart(
 upsidePayoffChart.highLightPayoffSegment('buyCalls', 'Upside outcome');
 upsidePayoffChart.attachChart();
 
+const valueCompareCanvas = document.getElementById('value-compare')
+valueCompareChart = new Chart(valueCompareCanvas, {
+    type: 'bar',
+    data: {
+        labels: ['Apple','Tesla','ExxonMobil','John Deere','Custom'],
+        datasets: [
+            {
+                label: 'Value',
+                data: [4200, 3000, 1400, 2000, null],
+                borderColor: primaryGray,
+                backgroundColor: primaryGray
+            },
+            {
+                label: 'Value',
+                data: [null,null,null,null,3109.97],
+                borderColor: fourthColor,
+                backgroundColor: fourthColor
+            },
+        ]
+    },
+    options: {
+        plugins: {
+            legend: {
+                display: false
+            }
+        },
+        scales: {
+            x: {
+                stacked: true,
+                grid: {
+                    display: false
+                }
+            },
+            y: {
+                stacked: true,
+                ticks: {
+                    callback: function(value,index,ticks) {
+                        return '$' + value.toLocaleString();
+                    }
+                }
+            }
+        }
+    }
+});
+
 const valueChartCanvas = document.getElementById('value-chart')
 valueChart = new Chart(valueChartCanvas, {
     type: 'bar',
@@ -93,6 +138,8 @@ valueChart = new Chart(valueChartCanvas, {
             {
                 label: 'Value',
                 data: [4200, -2026.95, 936.92, 3109.97],
+                borderColor: primaryGray,
+                backgroundColor: primaryGray
             },
         ]
     },
