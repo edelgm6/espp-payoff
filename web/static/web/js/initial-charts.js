@@ -42,8 +42,8 @@ const sellCallsChart = new PayoffChart(
 
 var buyCallsChart = new PayoffChart(
     includePayoff=true, 
-    includeBuyShares=false, 
-    includeSellCalls=false, 
+    includeBuyShares=true, 
+    includeSellCalls=true, 
     includeBuyCalls=true, 
     canvasId='buy-calls-example'
 )

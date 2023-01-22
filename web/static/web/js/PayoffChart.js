@@ -41,6 +41,12 @@ class PayoffChart {
         backgroundColor: primary_color
     }
 
+    datasetSelector = {
+        'buyStock': this.buySharesDataset,
+        'sellCalls': this.sellCallsDataset,
+        'buyCalls': this.buyCallsDataset
+    }
+
     prices = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34]
 
     options = {
@@ -79,7 +85,15 @@ class PayoffChart {
         }
     }
     
-    constructor(includePayoff, includeBuyShares, includeSellCalls, includeBuyCalls, canvasId, hideLegend=false) {
+    constructor(includePayoff, 
+        includeBuyShares, 
+        includeSellCalls, 
+        includeBuyCalls, 
+        canvasId, 
+        hideLegend=false,
+        highlightedPayoffSegment=null
+        ) {
+        
         this.datasets = [];
         if (includePayoff) {
             this.datasets.push(this.payoffDataset);
@@ -126,18 +140,13 @@ class PayoffChart {
     }
 
     toggleDatasetHidden(dataset) {
-        let datasets = {
-            'buyStock': this.buySharesDataset,
-            'sellCalls': this.sellCallsDataset,
-            'buyCalls': this.buyCallsDataset
-        }
 
-        const toggledSeries = datasets[dataset];
+        const toggledSeries = this.datasetSelector[dataset];
         toggledSeries['hidden'] = !toggledSeries['hidden'];
 
         let allSeriesHidden = true;
-        for (let key in datasets) {
-            if (!datasets[key].hidden) {
+        for (let key in this.datasetSelector) {
+            if (!this.datasetSelector[key].hidden) {
                 allSeriesHidden = false;
                 break;
             }

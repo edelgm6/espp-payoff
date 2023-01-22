@@ -1,8 +1,8 @@
 function getPayoffData(event) {
     event.preventDefault();
 
-    var price_field_valid = validateVolatilityAndPrice(priceField);
-    var volatility_field_valid = validateVolatilityAndPrice(volatilityField);
+    const price_field_valid = validateVolatilityAndPrice(priceField);
+    const volatility_field_valid = validateVolatilityAndPrice(volatilityField);
     if (!price_field_valid || !volatility_field_valid) {
         return;
     }
