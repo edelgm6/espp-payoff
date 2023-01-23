@@ -88,8 +88,7 @@ class PayoffChart {
         includeBuyCalls, 
         canvasId, 
         hideLegend=false,
-        attachChartOnCreate=true,
-        useStaticSeriesLabels=true) {
+        attachChartOnCreate=true) {
         
         this.datasets = [];
         if (includePayoff) {
@@ -106,11 +105,6 @@ class PayoffChart {
         }
         if (hideLegend) {
             this.options['plugins']['legend']['display'] = false;
-        }
-        if (!useStaticSeriesLabels) {
-            this.buySharesDataset.label = 'Buy shares';
-            this.sellCallsDataset.label = 'Sell calls';
-            this.buyCallsDataset.label = 'Buy calls';
         }
         
         this.canvas = document.getElementById(canvasId);
@@ -175,7 +169,10 @@ class PayoffChart {
         this.buySharesDataset.data = buySharesData || this.buySharesDataset.data;
         this.sellCallsDataset.data = sellCallsData || this.sellCallsDataset.data;
         this.buyCallsDataset.data = buyCallsData || this.buyCallsDataset.data;
-        
+
+        const buyCallsCount = this.buyCallsDataset.data[this.buyCallsDataset.data.length - 1] - this.buyCallsDataset.data[this.buyCallsDataset.data.length - 2]
+        this.buyCallsDataset.label = 'buy ' + buyCallsCount.toFixed(0) + ' calls';
+
         this.updateChart();
     }
 

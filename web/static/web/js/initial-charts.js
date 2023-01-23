@@ -5,8 +5,7 @@ var calculatedPayoffsChart = new PayoffChart(
     includeBuyCalls=true, 
     canvasId='payoff-chart',
     undefined,
-    undefined,
-    useStaticSeriesLabels=false
+    undefined
 )
 
 const staticPayoffChart = new PayoffChart(
