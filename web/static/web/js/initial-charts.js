@@ -1,18 +1,9 @@
 var calculatedPayoffsChart = new PayoffChart(
     includePayoff=true, 
-    includeBuyShares=false, 
-    includeSellCalls=false, 
-    includeBuyCalls=false, 
-    canvasId='payoff-chart',
-    hideLegend=true
-)
-
-var calculatedPortfolioChart = new PayoffChart(
-    includePayoff=false, 
     includeBuyShares=true, 
     includeSellCalls=true, 
     includeBuyCalls=true, 
-    canvasId='portfolio-chart'
+    canvasId='payoff-chart'
 )
 
 const staticPayoffChart = new PayoffChart(

@@ -38,34 +38,17 @@
         <div class="col-md-5">
           <p>This chart shows the payoff from your ESPP investment assuming you invest the full $12,500. Things to note:</p>
           <ul>
-            <li>Any stock price between the current price and ~$14.70 will give a flat payoff of ~$2,300</li>
+            <li>Any stock price between the current price and ~$14.70 will give a flat payoff of ~$2,200</li>
             <li>Below ~$14.70, your payoff decreases by $150 for every dollar decrease in the stock price</li>
             <li>Any stock price above the current stock price has a payoff greater than $2,300</li>
           </ul>
+          <p>
+            This shows the <strong>replicating portfolio</strong> — i.e., the collection of stocks and options that,
+            considered together, creates the same payoff chart seen above.
+          </p>
         </div>
         <div class="col-sm-7" style="height: 300px">
           <canvas id="payoff-chart"></canvas>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-md-5">
-          <p>This shows the <strong>replicating portfolio</strong> — i.e., the collection of stocks and options that,
-          considered together, creates the same payoff chart seen above.</p>
-        </div>
-        <div class="col-md-7" style="height: 300px">
-        <canvas id="portfolio-chart"></canvas>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-md-5">
-          <p>The replicating portfolio can be valued by taking the current value of the stock and the options (using 
-            the Black-Scholes option pricing model) to identify the value of the ESPP.</p>
-          </p>
-        </div>
-        <div class="col-md-7" style="height: 300px">
-        <canvas id="value-chart"></canvas>
         </div>
       </div>
 
