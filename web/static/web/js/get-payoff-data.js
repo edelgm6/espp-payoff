@@ -36,24 +36,18 @@ function getPayoffData(event) {
         calculatedPayoffsChart.updateDatasetData(
             newPrices, 
             payoffs, 
-            undefined, 
-            undefined, 
-            undefined
-        );
-        calculatedPortfolioChart.updateDatasetData(
-            newPrices,
-            undefined,
             sharesSeries,
             sellCallOptionsSeries,
             buyCallOptionsSeries
         );
 
-        valueChart['data']['datasets'][0]['data'][0] = buySharesValue;
-        valueChart['data']['datasets'][0]['data'][1] = sellCallOptionsValue;
-        valueChart['data']['datasets'][0]['data'][2] = buyCallOptionsValue;
-        valueChart['data']['datasets'][0]['data'][3] = totalValue;
-        valueChart.update();
+        // valueChart['data']['datasets'][0]['data'][0] = buySharesValue;
+        // valueChart['data']['datasets'][0]['data'][1] = sellCallOptionsValue;
+        // valueChart['data']['datasets'][0]['data'][2] = buyCallOptionsValue;
+        // valueChart['data']['datasets'][0]['data'][3] = totalValue;
+        // valueChart.update();
 
+        console.log(totalValue);
         valueCompareChart['data']['datasets'][1]['data'][4] = totalValue;
         valueCompareChart.update();
     });

@@ -169,7 +169,10 @@ class PayoffChart {
         this.buySharesDataset.data = buySharesData || this.buySharesDataset.data;
         this.sellCallsDataset.data = sellCallsData || this.sellCallsDataset.data;
         this.buyCallsDataset.data = buyCallsData || this.buyCallsDataset.data;
-        
+
+        const buyCallsCount = this.buyCallsDataset.data[this.buyCallsDataset.data.length - 1] - this.buyCallsDataset.data[this.buyCallsDataset.data.length - 2]
+        this.buyCallsDataset.label = 'buy ' + buyCallsCount.toFixed(0) + ' calls';
+
         this.updateChart();
     }
 

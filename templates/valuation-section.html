@@ -12,7 +12,8 @@
     <div class="col-sm-5">
         <p>
             The mechanics of option pricing are beyond the scope of this website, but what's <strong>most important to grasp is 
-            that the higher the volatility, the higher the option value.</strong>
+            that the higher the volatility, the higher the option value.</strong> I.e., an ESPP companies with steady stock prices
+            is lower than that of highly unpredictable stock prices.
         </p> 
         <p>
             To see why this is, consider the chart on the right which shows a call option with a $4 strike price. Because an 
@@ -30,21 +31,21 @@
     </div>
     <div class="col-md-7" style="height: 300px">
         <div class="row">
-        <canvas id="volatility-chart"></canvas>
+            <canvas id="volatility-chart"></canvas>
         </div>
         <div class="row">
-        <div class="col-sm-4"></div>
-        <div class="btn-group btn-group-sm col-sm-4" role="group" aria-label="Basic radio toggle button group">
-            <input type="radio" class="btn-check" name="btnradio" id="ten-volatility-btn" autocomplete="off" onclick="toggleVolatilityChart(10)">
-            <label class="btn btn-outline-primary" for="ten-volatility-btn">10%</label>
-        
-            <input type="radio" class="btn-check" name="btnradio" id="fifty-volatility-btn" autocomplete="off" onclick="toggleVolatilityChart(50)" checked>
-            <label class="btn btn-outline-primary" for="fifty-volatility-btn">50%</label>
-        
-            <input type="radio" class="btn-check" name="btnradio" id="one-hundred-volatility-btn" autocomplete="off" onclick="toggleVolatilityChart(100)">
-            <label class="btn btn-outline-primary" for="one-hundred-volatility-btn">100%</label>
-        </div>
-        <div class="col-sm-4"></div>
+            <div class="col-sm-4"></div>
+            <div class="btn-group btn-group-sm col-sm-4" role="group" aria-label="Basic radio toggle button group">
+                <input type="radio" class="btn-check" name="btnradio" id="ten-volatility-btn" autocomplete="off" onclick="toggleVolatilityChart(10)">
+                <label class="btn btn-outline-primary" for="ten-volatility-btn">10%</label>
+            
+                <input type="radio" class="btn-check" name="btnradio" id="fifty-volatility-btn" autocomplete="off" onclick="toggleVolatilityChart(50)" checked>
+                <label class="btn btn-outline-primary" for="fifty-volatility-btn">50%</label>
+            
+                <input type="radio" class="btn-check" name="btnradio" id="one-hundred-volatility-btn" autocomplete="off" onclick="toggleVolatilityChart(100)">
+                <label class="btn btn-outline-primary" for="one-hundred-volatility-btn">100%</label>
+            </div>
+            <div class="col-sm-4"></div>
         </div>
     </div>
 </div>

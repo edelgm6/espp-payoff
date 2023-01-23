@@ -1,18 +1,11 @@
 var calculatedPayoffsChart = new PayoffChart(
     includePayoff=true, 
-    includeBuyShares=false, 
-    includeSellCalls=false, 
-    includeBuyCalls=false, 
-    canvasId='payoff-chart',
-    hideLegend=true
-)
-
-var calculatedPortfolioChart = new PayoffChart(
-    includePayoff=false, 
     includeBuyShares=true, 
     includeSellCalls=true, 
     includeBuyCalls=true, 
-    canvasId='portfolio-chart'
+    canvasId='payoff-chart',
+    undefined,
+    undefined
 )
 
 const staticPayoffChart = new PayoffChart(
@@ -137,42 +130,42 @@ valueCompareChart = new Chart(valueCompareCanvas, {
     }
 });
 
-const valueChartCanvas = document.getElementById('value-chart')
-valueChart = new Chart(valueChartCanvas, {
-    type: 'bar',
-    data: {
-        labels: ['Buy shares','Sell call options', 'Buy call options', 'Total'],
-        datasets: [
-            {
-                label: 'Value',
-                data: [4200, -2026.95, 936.92, 3109.97],
-                borderColor: primaryGray,
-                backgroundColor: primaryGray
-            },
-        ]
-    },
-    options: {
-        plugins: {
-            legend: {
-                display: false
-            }
-        },
-        indexAxis: 'y',
-        scales: {
-            x: {
-                stacked: true,
-                ticks: {
-                    callback: function(value,index,ticks) {
-                        return '$' + value.toLocaleString();
-                    }
-                }
-            },
-            y: {
-                stacked: true,
-                grid: {
-                    display: false
-                }
-            }
-        }
-    }
-});
+// const valueChartCanvas = document.getElementById('value-chart')
+// valueChart = new Chart(valueChartCanvas, {
+//     type: 'bar',
+//     data: {
+//         labels: ['Buy shares','Sell call options', 'Buy call options', 'Total'],
+//         datasets: [
+//             {
+//                 label: 'Value',
+//                 data: [4200, -2026.95, 936.92, 3109.97],
+//                 borderColor: primaryGray,
+//                 backgroundColor: primaryGray
+//             },
+//         ]
+//     },
+//     options: {
+//         plugins: {
+//             legend: {
+//                 display: false
+//             }
+//         },
+//         indexAxis: 'y',
+//         scales: {
+//             x: {
+//                 stacked: true,
+//                 ticks: {
+//                     callback: function(value,index,ticks) {
+//                         return '$' + value.toLocaleString();
+//                     }
+//                 }
+//             },
+//             y: {
+//                 stacked: true,
+//                 grid: {
+//                     display: false
+//                 }
+//             }
+//         }
+//     }
+// });
