@@ -11,11 +11,11 @@
     <div class="col-sm-5">
       <p>
         Before jumping into each of the individual parts of the replicating portfolio, it'll be good to get an 
-        intuitive understanding of how the individual components of the portfolio combine into the payoff 
-        chart we explored above.
+        intuitive understanding of <strong>how the individual components of the portfolio combine into the payoff 
+        chart we explored above.</strong>
       </p>
       <p>
-        The chart to the right let's you toggle the three replciating portfolio components on and off so you 
+        The chart to the right let's you <strong>toggle the three replciating portfolio components on and off</strong> so you 
         can see how each contributes to the final payoff line.
       </p>
     </div>
@@ -50,14 +50,9 @@
         <div class="row">
             <p>
                 We know from earlier that the payoff chart rises by $150 for each $1 increase in the stock price up to
-                the point where we can invest the full $12,500 (i.e., ~$14.70). We can <strong>replicate this payoff by
+                the point where we can invest the full $12,500. We can <strong>replicate this payoff by
                 buying 150 shares of the stock!</strong> I.e., when the price of the stock goes up by $1, we will gain
                 $150 if we have 150 shares.
-            </p>
-        
-            <p>
-                But we also need a way to <strong>neutralize that $150 increase beyond the $14.70 mark</strong> — we'll
-                do that by <strong>selling call options</strong>.
             </p>
         </div>      
     </div>
@@ -68,7 +63,14 @@
         </div>
         <div class="row">
             <p>
-                A call option is the <strong>option to buy a stock at a given price (known as the 'strike price').</strong>
+                Once we cross the 1000 share cap mark at about $14.70, we need the payoff chart to flatten out. We do that 
+                by <strong><i>selling</i> 150 call options such that for each dollar the stock price increases, we <i>lose</i>
+                $150.</strong>
+            </p>
+            <p>
+                For quick review — a <strong>call option</strong> is the option to buy a stock at a given price (the 'strike price').
+                If we have a call option with a strike price of $15, we <strong>make a dollar when the stock price is $16, and when the 
+                stock price is <= $15, we make $0.</strong>
             </p>
         </div>      
     </div>
@@ -79,11 +81,13 @@
         </div>
         <div class="row">
             <p>
-                The final upward kink in the payoff is done by <strong>buying call options.</strong> The number of 
-                call options is the <strong>maximum investment (i.e., $12,500) divided by the maximum purchase 
-                price (i.e., .85 * the current price).</strong>
+                The final upward kink in the payoff happens when the stock price exceeds the starting stock price. We create this kink in
+                the payoff by <strong>buying call options.</strong> The number of call options is the <strong>maximum investment (i.e., $12,500) 
+                divided by the maximum purchase price (i.e., .85 * the current price).</strong>
+            </p>
+            <p>
+                Since our starting price is $28, our maximum purchase price is $23.80. $12,500 / $23.80 == ~525.
             </p>
         </div>      
     </div>
-
 </div>

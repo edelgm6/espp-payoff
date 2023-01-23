@@ -107,66 +107,8 @@
     
       <hr>
       
-      <h2>Valuing the replicating portfolio</h2>
+      {% include "valuation-section.html" %}
 
-      <div class="row">
-        <div class="col-sm-5">
-          <p>The most critical element to understand in the valuation of the replicating portfolio is how to value a call option.</p> 
-          <p>A call option is the <strong>right to purchase a share of stock at a given price</strong> — e.g., I have the option to buy
-          one share of Apple at $100.</p>
-          <p>The primary inputs to a call option price are:
-            <ul>
-              <li>The current price relative to the strike price — if Apple is trading at $120 and I have an option to buy at 
-                $100, that's worth much more than the option to buy at $130
-              </li>
-              <li>
-                The volatility of the stock — this is best illustrated with the chart on the right: We can see that as the volatility 
-                increases, the value of the option increases because <strong>you have an asymmetric payoff!</strong> You have unlimited 
-                upside, but capped downside.
-              </li>
-            </ul>
-          </p>
-        </div>
-        <div class="col-md-7" style="height: 300px">
-          <div class="row">
-            <canvas id="volatility-chart"></canvas>
-          </div>
-          <div class="row">
-            <div class="col-sm-4"></div>
-            <div class="btn-group btn-group-sm col-sm-4" role="group" aria-label="Basic radio toggle button group">
-              <input type="radio" class="btn-check" name="btnradio" id="ten-volatility-btn" autocomplete="off" onclick="toggleVolatilityChart(10)">
-              <label class="btn btn-outline-primary" for="ten-volatility-btn">10%</label>
-            
-              <input type="radio" class="btn-check" name="btnradio" id="fifty-volatility-btn" autocomplete="off" onclick="toggleVolatilityChart(50)" checked>
-              <label class="btn btn-outline-primary" for="fifty-volatility-btn">50%</label>
-            
-              <input type="radio" class="btn-check" name="btnradio" id="one-hundred-volatility-btn" autocomplete="off" onclick="toggleVolatilityChart(100)">
-              <label class="btn btn-outline-primary" for="one-hundred-volatility-btn">100%</label>
-            </div>
-            <div class="col-sm-4"></div>
-          </div>
-        </div>
-      </div>
-
-      <p>Now, we have a replicating portfolio consisting of
-        <ul>
-          <li>150 shares of stock</li>
-          <li>Negative exposure to 150 call options at a strike price of $14.70</li>
-          <li>Positive exposure to TODO call options at a strike price of $28.00</li>
-        </ul>
-        Valuing the stock is straightforward: 150 shares x $28.00 = $4,300. But what about the call options?
-      </p>
-
-      <h3>Valuing call options</h3>
-      <p>Diving into the specifics of the Black-Scholes option pricing model is outside the scope of this site. 
-        The critical takeaways for our purposes are:
-        <ul>
-          <li>The lower the call price is relative to the current price, the higher the value of the option</li>
-          <li>The higher the volatility of the stock, the higher the value of the option</li>
-        </ul>
-      </p>
-      {% include "stock-modal.html" %}
-    </div>
     <script>
       var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
       var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
