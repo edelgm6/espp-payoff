@@ -88,7 +88,8 @@ class PayoffChart {
         includeBuyCalls, 
         canvasId, 
         hideLegend=false,
-        attachChartOnCreate=true) {
+        attachChartOnCreate=true,
+        useStaticSeriesLabels=true) {
         
         this.datasets = [];
         if (includePayoff) {
@@ -105,6 +106,11 @@ class PayoffChart {
         }
         if (hideLegend) {
             this.options['plugins']['legend']['display'] = false;
+        }
+        if (!useStaticSeriesLabels) {
+            this.buySharesDataset.label = 'Buy shares';
+            this.sellCallsDataset.label = 'Sell calls';
+            this.buyCallsDataset.label = 'Buy calls';
         }
         
         this.canvas = document.getElementById(canvasId);
