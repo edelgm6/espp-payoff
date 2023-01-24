@@ -138,9 +138,15 @@ valueChart = new Chart(valueChartCanvas, {
         datasets: [
             {
                 label: 'Value',
-                data: [4200, -2026.95, 936.92, 3109.97],
+                data: [4200,-2039,2159,null],
                 borderColor: primaryGray,
                 backgroundColor: primaryGray
+            },
+            {
+                label: 'Value',
+                data: [null,null,null,4320],
+                borderColor: fourthColor,
+                backgroundColor: fourthColor
             },
         ]
     },
@@ -158,7 +164,10 @@ valueChart = new Chart(valueChartCanvas, {
                     callback: function(value,index,ticks) {
                         return '$' + value.toLocaleString();
                     }
-                }
+                },
+                min: -3000,
+                max: 7000,
+                stepSize: 1000
             },
             y: {
                 stacked: true,
