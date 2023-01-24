@@ -4,6 +4,7 @@
             <canvas id="shares-cap-example"></canvas>
         </div>
         <div class="row">
+            <div class="col">
             <p>
                 The leftmost section of the chart represents stock prices that <strong>are low enough
                 to hit the 1000 shares purchase limit</strong>, i.e., when you cannot invest the entire
@@ -12,6 +13,7 @@
                 E.g., at $5, you purchase 1000 shares for $4.25 (i.e., the 85% discount), locking in a
                 gain of $750 (i.e., 5 x $150).
             </p> 
+            </div>
         </div>      
     </div>
     <div class="col-sm-4">
@@ -19,14 +21,14 @@
             <canvas id="middle-example"></canvas>
         </div>
         <div class="row">
-            <p>
-                The simplest part of the payoff chart to understand is the flat part in the middle. This represents the stock prices where:
-                <ul>
-                  <li>The stock price at the end of the offering period is less than the stock price at the beginning of the offering period</li>
-                  <li>And the stock price is still high enough that you can invest the entire $12,500 (i.e., you don't hit the 1000 share limit)</li>
-                </ul>
-                In this case, you will invest $12,500 at an 85% discount to the current stock price, yielding a ~17% return, or ~$2205 gain.
-            </p> 
+            <div class="col">
+            <p>The simplest part of the payoff chart to understand is the flat part in the middle. This represents the stock prices where:</p>
+            <ul>
+                <li>The stock price at the end of the offering period is less than the stock price at the beginning of the offering period</li>
+                <li>And the stock price is still high enough that you can invest the entire $12,500 (i.e., you don't hit the 1000 share limit)</li>
+            </ul>
+            <p>In this case, you will invest $12,500 at an 85% discount to the current stock price, yielding a ~17% return, or ~$2205 gain.</p>
+            </div>
         </div>      
     </div>
     <div class="col-sm-4">
@@ -34,10 +36,12 @@
             <canvas id="upside-example"></canvas>
         </div>
         <div class="row">
+            <div class="col">
             <p>
                 The rightmost section of the chart represents stock prices where <strong>the
                 price at the end of the period is greater than the price at the beginning of the period.</strong>
                 To understand why, consider our original example:
+            </p>
                 <ul>
                   <li>Stock price is $28 at the beginning of the purchase period</li>
                   <li>Stock price is $34 at the end of the purchase period</li>
@@ -45,7 +49,7 @@
                     starting price</strong> since it is lower than the ending price</li>
                   <li>You get a return of (($34 - .85 * $28) / .85 * $28) * $12,500, or $5357</li>
                 </ul>
-            </p>
+            </div>
         </div>      
     </div>
 </div>
