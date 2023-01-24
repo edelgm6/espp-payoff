@@ -99,7 +99,7 @@ valueCompareChart = new Chart(valueCompareCanvas, {
             },
             {
                 label: 'Value',
-                data: [null,null,null,null,3109.97],
+                data: [null,null,null,null,3109],
                 borderColor: fourthColor,
                 backgroundColor: fourthColor
             },
