@@ -12,7 +12,7 @@ class VarianceChart:
 
         # Create the data for the chart
         # x = np.linspace(mean - 3*standard_deviation, mean + 3*standard_deviation, 100)
-        x = np.linspace(0, 8, 100)
+        x = np.linspace(25, 31, 100)
         y = 1/(standard_deviation * np.sqrt(2 * np.pi)) * np.exp( - (x - mean)**2 / (2 * standard_deviation**2))
         
         x = [round(x_value,4) for x_value in x]
@@ -20,7 +20,7 @@ class VarianceChart:
         # print(x)
         print(y)
 
-        option = CallOption(strike_price=4,expiration_years=1,stock=stock)
+        option = CallOption(strike_price=stock.price,expiration_years=.5,stock=stock)
         payoffs = [round(option.get_payoff(price),4) for price in x]
         # print(payoffs)
 
