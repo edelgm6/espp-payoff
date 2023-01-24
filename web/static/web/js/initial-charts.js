@@ -89,11 +89,11 @@ const valueCompareCanvas = document.getElementById('value-compare')
 valueCompareChart = new Chart(valueCompareCanvas, {
     type: 'bar',
     data: {
-        labels: ['Apple','Tesla','ExxonMobil','John Deere','Custom'],
+        labels: ['Apple','Tesla','ExxonMobil','P&G','Custom'],
         datasets: [
             {
                 label: 'Value',
-                data: [4200, 3000, 1400, 2000, null],
+                data: [3758, 5015, 3714, 3196, null],
                 borderColor: primaryGray,
                 backgroundColor: primaryGray
             },
