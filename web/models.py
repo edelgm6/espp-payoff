@@ -7,3 +7,6 @@ class StockData(models.Model):
 
     class Meta:
         unique_together = [['ticker', 'date_added']]
+
+    def __str__(self):
+        return str(self.date_added) + ' ' + self.ticker

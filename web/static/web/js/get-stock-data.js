@@ -1,4 +1,4 @@
-var stockData = {};
+console.log(stockData);
 var ticker;
 var isFirstUpdate = true;
 var priceHistoryChart = {};
@@ -45,18 +45,17 @@ async function populateStockChart(event) {
   tickerField.value = tickerField.value.toUpperCase();
   ticker = tickerField.value
 
-  var data = {};
-  var calledApi = true;
-  if (ticker in stockData) {
-    data = stockData[ticker];
+  let cachedStockData = stockData.find(object => object.ticker == ticker);
+  if (cachedStockData) {
+    var data = cachedStockData.pricing_history;
+    console.log('is in!')
     const parentDiv = tickerField.parentNode;
     const targetDiv = parentDiv.querySelector('div');
     tickerField.className = 'form-control is-valid';
     targetDiv.innerHTML = '<a href="#stockModal" data-bs-toggle="modal">Click here for stock information</a>'
-    calledApi = false;
     console.log('called from cache');
   } else {
-    data = await getStockData(ticker);
+    var data = await getStockData(ticker);
     console.log(data);
     if (!data) {
       console.log('error found, cancel operation')
@@ -65,11 +64,8 @@ async function populateStockChart(event) {
     console.log('called api');
   }
 
-  var volatility = data.volatility;
-  if (calledApi) {
-    volatility = (data.volatility * 100.0).toFixed(2);
-  }
 
+  var volatility = (data.volatility * 100.0).toFixed(2);
   volatilityField.value = volatility;
   priceField.value = data.price.toFixed(2);
   const priceHistory = data.price_history;
@@ -77,9 +73,11 @@ async function populateStockChart(event) {
   const dates = data.dates;
 
   //Set the local variable so we don't call the API each time
+  //TODO: THink I need to refactor the StockData model to use lists
+  //instead of a json field for each of dates and daily_percent_changes
   stockData[ticker] = {};
   stockData[ticker]['price'] = data.price;
-  stockData[ticker]['volatility'] = volatility;
+  stockData[ticker]['volatility'] = volatility / 100.0;
   stockData[ticker]['price_history'] = priceHistory;
   stockData[ticker]['daily_percent_changes'] = dailyPercentChanges;
   stockData[ticker]['dates'] = dates;

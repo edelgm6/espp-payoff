@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from web.espp import Stock
+from web.models import StockData
 
 class ReplicatingPortfolioValueSerializer(serializers.Serializer):
     buy_shares_count = serializers.FloatField(min_value=0)
@@ -72,3 +73,9 @@ class StockChartSerializer(serializers.Serializer):
     dates = serializers.ListField(
         child=serializers.DateField()
     )
+
+class StockDataSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = StockData
+        fields = ('ticker', 'pricing_history')
