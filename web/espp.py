@@ -107,7 +107,7 @@ class Stock(Security):
 
         daily_percent_changes = []
         for day in range(1,len(closing_prices)):
-            daily_percent_change = closing_prices[day] / closing_prices[day - 1] - 1
+            daily_percent_change = round(closing_prices[day] / closing_prices[day - 1] - 1,4)
             daily_percent_changes.append(daily_percent_change)
         return daily_percent_changes
 

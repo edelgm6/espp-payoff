@@ -16,17 +16,19 @@
             is lower than that of highly unpredictable stock prices.
         </p> 
         <p>
-            To see why this is, consider the chart on the right which shows a call option with a $4 strike price. Because an 
-            option has an asymmetric payoff:
+            To see why this is, consider the chart on the right which shows a call option with a $28 strike price. Note that as 
+            you adjust the volatility upward, the spread of potential outcomes and the value of the ESPP goes up!
+        </p>
+        <p>
+            To understand why this is, consider the following:
             <ul>
-                <li>If you buy a <strong>$100 share of Apple</strong> and it goes up to $200, you make $100. If it goes down to $0, you lose $100</li>
+                <li>If you buy a <strong>$28 share of some stock</strong> and it doubles to $56, you make $28. If it goes down to $0, you lose $28</li>
                 <li>
-                    If you buy a <strong>call option for Apple stock with a strike price of $100 for $10</strong> and it goes up to $200, you make $100. 
-                    If it goes to $0, you're only out the $10!
+                    If you buy a <strong>call option on the stock with a strike price of $28</strong> and it goes up to $58, you make $28. 
+                    If it goes to $0, you're only out the cost of the option!
                 </li>
             </ul>
-            Because of this dynamic, as a call option holder you <strong>prefer a stock that is likely to go to $200 or $0 more than
-            a stock is that is likely to go to $110 or $90!</strong>
+            Because of this dynamic, as a call option holder you <strong>prefer a stock that is volatile to one that is more predictable.</strong>
         </p>
     </div>
     <div class="col-md-7">
@@ -51,15 +53,4 @@
             <canvas id="value-chart"></canvas>
         </div>
     </div>
-</div>
-
-    <h3>Valuing call options</h3>
-    <p>Diving into the specifics of the Black-Scholes option pricing model is outside the scope of this site. 
-    The critical takeaways for our purposes are:
-    <ul>
-        <li>The lower the call price is relative to the current price, the higher the value of the option</li>
-        <li>The higher the volatility of the stock, the higher the value of the option</li>
-    </ul>
-    </p>
-    {% include "stock-modal.html" %}
 </div>

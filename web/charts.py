@@ -109,12 +109,12 @@ class ReplicatingPortfolioChart(ESPPChart):
             price * replicating_portfolio.buy_shares_position.count for price in prices
             ]
         sell_call_options_series = [
-            replicating_portfolio.sell_call_options_position.security.get_payoff(price) *
-                replicating_portfolio.sell_call_options_position.count for price in prices
+            round(replicating_portfolio.sell_call_options_position.security.get_payoff(price) *
+                replicating_portfolio.sell_call_options_position.count,2) for price in prices
             ]
         buy_call_options_series = [
-            replicating_portfolio.buy_call_options_position.security.get_payoff(price) *
-                replicating_portfolio.buy_call_options_position.count for price in prices
+            round(replicating_portfolio.buy_call_options_position.security.get_payoff(price) *
+                replicating_portfolio.buy_call_options_position.count,2) for price in prices
             ]
 
         return shares_series, sell_call_options_series, buy_call_options_series
