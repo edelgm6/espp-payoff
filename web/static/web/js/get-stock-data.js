@@ -18,14 +18,19 @@ async function getStockData(ticker) {
     const data = await response.json();
     tickerField.className = 'form-control is-valid';
     targetDiv.innerHTML = '<a href="#stockModal" data-bs-toggle="modal">Click here for stock information</a>'
+    targetDiv.className = 'valid-feedback'
     return data;
   } catch (response) {
+    console.log('caught response');
     if (response.status == 429) {
       targetDiv.innerHTML = 'Too many requests, try again in a minute!'
     } else {
       targetDiv.innerHTML = 'Ticker not found'
     }
+    console.log('invalid form control');
+    console.log(targetDiv.innerHTML);
     tickerField.className = 'form-control is-invalid';
+    targetDiv.className = 'invalid-feedback'
     return false;
   }
 }
@@ -37,41 +42,27 @@ async function populateStockChart(event) {
     return;
   }
 
-  var today = new Date();
-  var dd = String(today.getDate()).padStart(2, '0');
-  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-  var yyyy = today.getFullYear();
-  
-  today = mm + '-' + dd + '-' + yyyy;
   tickerField.value = tickerField.value.toUpperCase();
   ticker = tickerField.value
 
   var data = {};
   var calledApi = true;
-  if (today in stockData) {
-    if (ticker in stockData[today]) {
-      data = stockData[today][ticker];
-      const parentDiv = tickerField.parentNode;
-      const targetDiv = parentDiv.querySelector('div');
-      tickerField.className = 'form-control is-valid';
-      targetDiv.innerHTML = '<a href="#stockModal" data-bs-toggle="modal">Click here for stock information</a>'
-      calledApi = false;
-    } else {
-      data = await getStockData(ticker);
-      console.log(data);
-      if (!data) {
-        console.log('error found, cancel operation')
-        return;
-      }
-    }
+  if (ticker in stockData) {
+    data = stockData[ticker];
+    const parentDiv = tickerField.parentNode;
+    const targetDiv = parentDiv.querySelector('div');
+    tickerField.className = 'form-control is-valid';
+    targetDiv.innerHTML = '<a href="#stockModal" data-bs-toggle="modal">Click here for stock information</a>'
+    calledApi = false;
+    console.log('called from cache');
   } else {
-    stockData[today] = {};
     data = await getStockData(ticker);
     console.log(data);
     if (!data) {
       console.log('error found, cancel operation')
       return;
     }
+    console.log('called api');
   }
 
   var volatility = data.volatility;
@@ -86,12 +77,12 @@ async function populateStockChart(event) {
   const dates = data.dates;
 
   //Set the local variable so we don't call the API each time
-  stockData[today][ticker] = {};
-  stockData[today][ticker]['price'] = data.price;
-  stockData[today][ticker]['volatility'] = volatility;
-  stockData[today][ticker]['price_history'] = priceHistory;
-  stockData[today][ticker]['daily_percent_changes'] = dailyPercentChanges;
-  stockData[today][ticker]['dates'] = dates;
+  stockData[ticker] = {};
+  stockData[ticker]['price'] = data.price;
+  stockData[ticker]['volatility'] = volatility;
+  stockData[ticker]['price_history'] = priceHistory;
+  stockData[ticker]['daily_percent_changes'] = dailyPercentChanges;
+  stockData[ticker]['dates'] = dates;
 
   if (isFirstUpdate) {
     const priceHistoryCanvas = document.getElementById('price-history');
