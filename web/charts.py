@@ -64,7 +64,7 @@ class ReplicatingPortfolioValueChart:
         self.buy_call_options_strike_price = replicating_portfolio.buy_call_options_position.security.strike_price
         self.buy_call_options_value = self.buy_call_options_count * self.buy_call_options_price
 
-        self.total_value = self.buy_shares_value + self.sell_call_options_value + self.buy_call_options_value
+        self.total_value = round(self.buy_shares_value + self.sell_call_options_value + self.buy_call_options_value,2)
 
 class ESPPChart:
 
