@@ -43,16 +43,29 @@ class Stock(Security):
             stock_data = json.loads(stock_data.pricing_history)
             dates = stock_data['dates']
             price_history = stock_data['price_history']
+            volatility = stock_data['volatility']
+            latest_price = stock_data['latest_price']
+            daily_percent_changes = stock_data['daily_percent_changes']
         else:
             history = self._get_history()
             dates = self._get_price_dates(history)
             price_history = self._get_price_history(history)
-            pricing_history_json = json.dumps({'dates': dates, 'price_history': price_history}, default=str)
-            stock_data = StockData.objects.create(ticker=self.ticker,pricing_history=pricing_history_json)
+            latest_price = price_history[-1]
+            daily_percent_changes = self._get_daily_price_change_percent(price_history)
+            volatility = self._get_annualized_volatility(daily_percent_changes)
 
-        latest_price = price_history[-1]
-        daily_percent_changes = self._get_daily_price_change_percent(price_history)
-        volatility = self._get_annualized_volatility(daily_percent_changes)
+            # Save to database for non-API retrieval later
+            pricing_history_json = json.dumps({
+                'dates': dates, 
+                'price_history': price_history,
+                'volatility': volatility,
+                'price': latest_price, 
+                'daily_percent_changes': daily_percent_changes
+                }, default=str)
+            stock_data = StockData.objects.create(
+                ticker=self.ticker,
+                pricing_history=pricing_history_json
+            )
 
         return latest_price, volatility, price_history, daily_percent_changes, dates
 

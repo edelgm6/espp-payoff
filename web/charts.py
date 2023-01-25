@@ -25,7 +25,6 @@ class VarianceChart:
         # print(payoffs)
 
 
-
 class StockChart:
     
     def __init__(self, stock):
@@ -35,7 +34,8 @@ class StockChart:
         self.price_history = price_history
         self.daily_percent_changes = daily_percent_changes
         # Since daily_percent_changes has one fewer entry than price_history, need to fill in first value
-        self.daily_percent_changes.insert(0, None)
+        if len(self.daily_percent_changes) < len(self.price_history):
+            self.daily_percent_changes.insert(0, None)
         self.dates = dates
 
 class TotalData:
