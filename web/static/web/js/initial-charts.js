@@ -89,17 +89,17 @@ const valueCompareCanvas = document.getElementById('value-compare')
 valueCompareChart = new Chart(valueCompareCanvas, {
     type: 'bar',
     data: {
-        labels: ['Apple','Tesla','ExxonMobil','John Deere','Custom'],
+        labels: ['Apple','Tesla','ExxonMobil','P&G','Custom'],
         datasets: [
             {
                 label: 'Value',
-                data: [4200, 3000, 1400, 2000, null],
+                data: [3758, 5015, 3714, 3196, null],
                 borderColor: primaryGray,
                 backgroundColor: primaryGray
             },
             {
                 label: 'Value',
-                data: [null,null,null,null,3109.97],
+                data: [null,null,null,null,3109],
                 borderColor: fourthColor,
                 backgroundColor: fourthColor
             },
@@ -130,42 +130,51 @@ valueCompareChart = new Chart(valueCompareCanvas, {
     }
 });
 
-// const valueChartCanvas = document.getElementById('value-chart')
-// valueChart = new Chart(valueChartCanvas, {
-//     type: 'bar',
-//     data: {
-//         labels: ['Buy shares','Sell call options', 'Buy call options', 'Total'],
-//         datasets: [
-//             {
-//                 label: 'Value',
-//                 data: [4200, -2026.95, 936.92, 3109.97],
-//                 borderColor: primaryGray,
-//                 backgroundColor: primaryGray
-//             },
-//         ]
-//     },
-//     options: {
-//         plugins: {
-//             legend: {
-//                 display: false
-//             }
-//         },
-//         indexAxis: 'y',
-//         scales: {
-//             x: {
-//                 stacked: true,
-//                 ticks: {
-//                     callback: function(value,index,ticks) {
-//                         return '$' + value.toLocaleString();
-//                     }
-//                 }
-//             },
-//             y: {
-//                 stacked: true,
-//                 grid: {
-//                     display: false
-//                 }
-//             }
-//         }
-//     }
-// });
+const valueChartCanvas = document.getElementById('value-chart')
+valueChart = new Chart(valueChartCanvas, {
+    type: 'bar',
+    data: {
+        labels: ['Buy shares','Sell call options', 'Buy call options', 'Total'],
+        datasets: [
+            {
+                label: 'Value',
+                data: [4200,-2039,2159,null],
+                borderColor: primaryGray,
+                backgroundColor: primaryGray
+            },
+            {
+                label: 'Value',
+                data: [null,null,null,4320],
+                borderColor: fourthColor,
+                backgroundColor: fourthColor
+            },
+        ]
+    },
+    options: {
+        plugins: {
+            legend: {
+                display: false
+            }
+        },
+        indexAxis: 'y',
+        scales: {
+            x: {
+                stacked: true,
+                ticks: {
+                    callback: function(value,index,ticks) {
+                        return '$' + value.toLocaleString();
+                    }
+                },
+                min: -3000,
+                max: 7000,
+                stepSize: 1000
+            },
+            y: {
+                stacked: true,
+                grid: {
+                    display: false
+                }
+            }
+        }
+    }
+});

@@ -8,4 +8,23 @@ function toggleVolatilityChart(volatility) {
 
     volatilityChart['data']['datasets'][0]['data'] = volatilitySeriesMap[volatility];
     volatilityChart.update();
+
+    valueSeriesMap = {
+        10: [
+            [4200,-2027,530,null],
+            [null,null,null,2703]
+        ],
+        50: [
+            [4200,-2039,2159,null],
+            [null,null,null,4320]
+        ],
+        100: [
+            [4200,-2221,4144,null],
+            [null,null,null,6123]
+        ],
+    }
+
+    valueChart['data']['datasets'][0]['data'] = valueSeriesMap[volatility][0];
+    valueChart['data']['datasets'][1]['data'] = valueSeriesMap[volatility][1];
+    valueChart.update();
 }
