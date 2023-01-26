@@ -44,7 +44,7 @@ class Stock(Security):
             dates = stock_data['dates']
             price_history = stock_data['price_history']
             volatility = stock_data['volatility']
-            latest_price = stock_data['latest_price']
+            latest_price = stock_data['price']
             daily_percent_changes = stock_data['daily_percent_changes']
         else:
             history = self._get_history()
