@@ -89,7 +89,7 @@ class PayoffChart(ESPPChart):
 
     def get_payoff_series(self, espp, prices):
 
-        payoffs = [espp.get_payoff(price) for price in prices if price > 0]
+        payoffs = [round(espp.get_payoff(price),2) for price in prices if price > 0]
         payoffs.insert(0,0)
 
         return payoffs
