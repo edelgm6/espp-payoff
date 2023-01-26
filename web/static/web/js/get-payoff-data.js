@@ -28,9 +28,9 @@ function getPayoffData(event) {
         const buyCallOptionsSeries = replicatingPortfolioData.buy_call_options_series;
 
         const replicatingPortfolioValueData = data.replicating_portfolio_value_data;
-        const buySharesValue = replicatingPortfolioValueData.buy_shares_value;
-        const sellCallOptionsValue = replicatingPortfolioValueData.sell_call_options_value;
-        const buyCallOptionsValue = replicatingPortfolioValueData.buy_call_options_value;
+        // const buySharesValue = replicatingPortfolioValueData.buy_shares_value;
+        // const sellCallOptionsValue = replicatingPortfolioValueData.sell_call_options_value;
+        // const buyCallOptionsValue = replicatingPortfolioValueData.buy_call_options_value;
         const totalValue = replicatingPortfolioValueData.total_value;
 
         calculatedPayoffsChart.updateDatasetData(
@@ -40,6 +40,10 @@ function getPayoffData(event) {
             sellCallOptionsSeries,
             buyCallOptionsSeries
         );
+
+        // console.log(buySharesValue)
+        // console.log(sellCallOptionsValue)
+        // console.log(buyCallOptionsValue)
 
         // valueChart['data']['datasets'][0]['data'][0] = buySharesValue;
         // valueChart['data']['datasets'][0]['data'][1] = sellCallOptionsValue;
