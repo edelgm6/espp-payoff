@@ -18,11 +18,13 @@ class VarianceChart:
         x = [round(x_value,4) for x_value in x]
         y = [round(y_value,4) for y_value in y]
         # print(x)
-        print(y)
+        # print(y)
 
         option = CallOption(strike_price=stock.price,expiration_years=.5,stock=stock)
         payoffs = [round(option.get_payoff(price),4) for price in x]
         # print(payoffs)
+        self.y = y
+        self.payoffs = payoffs
 
 
 class StockChart:

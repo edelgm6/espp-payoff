@@ -42,7 +42,7 @@ volatilityChart = new Chart(volatilityCanvas, {
             y: {
                 title: {
                     display: true,
-                    text: 'Probability'
+                    text: 'Probability density'
                 },
                 min: 0,
                 max: 1.4,
