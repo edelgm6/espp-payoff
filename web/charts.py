@@ -1,11 +1,11 @@
-import numpy as np
 import math
+import numpy as np
 from web.espp import CallOption
 
 class VarianceChart:
 
     def __init__(self, stock):
-        
+
         # Define the standard deviation and average
         standard_deviation = math.sqrt(stock.volatility)
         mean = stock.price
@@ -13,8 +13,8 @@ class VarianceChart:
         # Create the data for the chart
         # x = np.linspace(mean - 3*standard_deviation, mean + 3*standard_deviation, 100)
         x = np.linspace(25, 31, 100)
-        y = 1/(standard_deviation * np.sqrt(2 * np.pi)) * np.exp( - (x - mean)**2 / (2 * standard_deviation**2))
-        
+        y = 1 / (standard_deviation * np.sqrt(2 * np.pi)) * np.exp( - (x - mean)**2 / (2 * standard_deviation**2))
+
         x = [round(x_value,4) for x_value in x]
         y = [round(y_value,4) for y_value in y]
         # print(x)
@@ -28,7 +28,7 @@ class VarianceChart:
 
 
 class StockChart:
-    
+
     def __init__(self, stock):
         price, volatility, price_history, daily_percent_changes, dates = stock.get_price_and_volatility_data()
         self.price = price
@@ -48,7 +48,7 @@ class TotalData:
         self.payoff_data = PayoffChart(espp)
 
 class ReplicatingPortfolioValueChart:
-    
+
     def __init__(self, espp):
         replicating_portfolio = espp.get_replicating_portfolio()
 
@@ -74,7 +74,6 @@ class ESPPChart:
         self.prices = self.get_price_series(espp)
 
     def get_price_series(self, espp):
-        # TODO: What if returns kink and share price is already in the prices list?
 
         max_price_model = max(round(espp.stock.price * 1.25),20)
         MIN_PRICE_MODEL = 1
@@ -104,7 +103,7 @@ class ReplicatingPortfolioChart(ESPPChart):
 
 
     def get_replicating_portfolio_series(self, espp, prices):
-        
+
         replicating_portfolio = espp.get_replicating_portfolio()
 
         shares_series = [

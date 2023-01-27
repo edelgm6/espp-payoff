@@ -8,7 +8,6 @@ from scipy.stats import norm
 from django.conf import settings
 from polygon import RESTClient, NoResultsError, BadResponse
 import numpy as np
-from rest_framework import status
 from rest_framework.exceptions import NotFound, Throttled
 
 class Position:
@@ -19,10 +18,9 @@ class Position:
     def get_value(self):
         return self.security.price * self.count
 
-# TODO: Security has a price
 class Security:
-    
-    def get_price():
+
+    def get_price(self):
         pass
 
 class Stock(Security):
@@ -33,7 +31,7 @@ class Stock(Security):
         self.volatility = volatility
 
     def get_price_and_volatility_data(self):
-        
+
         try:
             stock_data = StockData.objects.get(ticker=self.ticker,date_added=datetime.date.today())
         except StockData.DoesNotExist:
@@ -56,10 +54,10 @@ class Stock(Security):
 
             # Save to database for non-API retrieval later
             pricing_history_json = json.dumps({
-                'dates': dates, 
+                'dates': dates,
                 'price_history': price_history,
                 'volatility': volatility,
-                'price': latest_price, 
+                'price': latest_price,
                 'daily_percent_changes': daily_percent_changes
                 }, default=str)
             stock_data = StockData.objects.create(
@@ -191,7 +189,10 @@ class ESPP:
             expiration_years=self.expiration_years,
             stock=self.stock
             )
-        buy_call_options_count = min(self.maximum_investment / self.maximum_purchase_price,self.maximum_shares_purchased)
+        buy_call_options_count = min(
+            self.maximum_investment / self.maximum_purchase_price,
+            self.maximum_shares_purchased
+            )
         buy_call_options_position = Position(security=buy_call_option,count=buy_call_options_count)
 
         ReplicatingPortfolio = namedtuple(

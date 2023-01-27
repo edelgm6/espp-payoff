@@ -75,7 +75,7 @@ class StockChartSerializer(serializers.Serializer):
     )
 
 class StockDataSerializer(serializers.ModelSerializer):
-    
+
     class Meta:
         model = StockData
         fields = ('ticker', 'pricing_history')

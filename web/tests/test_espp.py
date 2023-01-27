@@ -1,5 +1,4 @@
 from django.test import TestCase
-from web.views import Payoffs
 from web.espp import Stock, CallOption, ESPP
 
 class ESPPTestCase(TestCase):
@@ -20,9 +19,18 @@ class ESPPTestCase(TestCase):
         espp = ESPP(stock)
 
         replicating_portfolio = espp.get_replicating_portfolio()
-        self.assertEqual(replicating_portfolio.buy_shares_position.count,espp.maximum_shares_purchased * espp.purchase_discount)
-        self.assertEqual(replicating_portfolio.sell_call_options_position.count,-espp.maximum_shares_purchased * espp.purchase_discount)
-        self.assertEqual(replicating_portfolio.buy_call_options_position.count,(1 / espp.maximum_purchase_price) * espp.maximum_investment)
+        self.assertEqual(
+            replicating_portfolio.buy_shares_position.count,
+            espp.maximum_shares_purchased * espp.purchase_discount
+            )
+        self.assertEqual(
+            replicating_portfolio.sell_call_options_position.count,
+            -espp.maximum_shares_purchased * espp.purchase_discount
+            )
+        self.assertEqual(
+            replicating_portfolio.buy_call_options_position.count,
+            (1 / espp.maximum_purchase_price) * espp.maximum_investment
+            )
 
     def test_get_replicating_portfolio_for_low_value(self):
         stock = Stock(ticker='SQ',price=10,volatility=.1)
@@ -39,6 +47,7 @@ class StockTestCase(TestCase):
 
     def test_create_stock_with_vol_present(self):
         stock = Stock(ticker='SQ',price=100,volatility=.1)
+        self.assertTrue(stock)
 
     def test_get_price(self):
         stock = Stock(ticker='SQ',price=100,volatility=.1)
@@ -63,6 +72,3 @@ class CallOptionTestCase(TestCase):
 
         #https://goodcalculators.com/black-scholes-calculator/
         self.assertEqual(round(payoff,2),90.39)
-
-
-

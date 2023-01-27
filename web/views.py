@@ -1,15 +1,17 @@
+import json
+import datetime
 from django.shortcuts import render
 from django.views import View
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
 from web.serializers import StockSerializer, StockChartSerializer, TotalDataSerializer, StockDataSerializer
 from web.espp import ESPP
 from web.charts import StockChart, TotalData
 from web.models import StockData
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
-from rest_framework.exceptions import NotFound
-import datetime
-import json
+
+
+
 
 class Index(View):
     template = 'index.html'
@@ -22,7 +24,7 @@ class Index(View):
         # Need to explicitly render the json since we're including in a template
         for stock_data in stock_datas_serializer.data:
             stock_data['pricing_history'] = json.loads(stock_data['pricing_history'])
-        
+
         stock_datas_json = json.dumps(stock_datas_serializer.data)
         return render(request, self.template, {'stock_data': stock_datas_json})
 
@@ -38,7 +40,7 @@ class Payoffs(APIView):
         espp = ESPP(stock=stock)
         total_data = TotalData(espp)
         total_data_serializer = TotalDataSerializer(total_data)
-        return Response(total_data_serializer.data)  
+        return Response(total_data_serializer.data)
 
 class StockChartView(APIView):
 
