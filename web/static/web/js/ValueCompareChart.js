@@ -1,34 +1,37 @@
 class ValueCompareChart {
 
     constructor(comparisonEsppList,calculatedEspp,canvas='value-compare') {
-        // this.comparisonEsppList = comparisonEsppList;
-        // this.calculatedEspp = calculatedEspp;
 
         let comparisonValues = [];
         let customValue = [];
         this.labels = [];
         let comparisonVolatilities = [];
         let customVolatility = [];
+        let comparisonPrices = [];
+        let customPrice = [];
         for (let index in comparisonEsppList) {
             let espp = comparisonEsppList[index];
-            console.log(espp);
             comparisonValues.push(espp.value);
             comparisonVolatilities.push(espp.volatility);
+            comparisonPrices.push(espp.price);
             customValue.push(null);
             customVolatility.push(null);
+            customPrice.push(null);
             this.labels.push(espp.label);
         };
         comparisonEsppList.push(null);
         this.labels.push('Custom');
         customValue.push(calculatedEspp.value);
         customVolatility.push(calculatedEspp.volatility);
+        customPrice.push(calculatedEspp.price);
 
         this.comparisonDataset = {
             label: 'Value',
             data: comparisonValues,
             borderColor: primaryGray,
             backgroundColor: primaryGray,
-            volatilities: comparisonVolatilities
+            volatilities: comparisonVolatilities,
+            prices: comparisonPrices
         }
 
         this.customDataset = {
@@ -36,11 +39,24 @@ class ValueCompareChart {
             data: customValue,
             borderColor: fourthColor,
             backgroundColor: fourthColor,
-            volatilities: customVolatility
+            volatilities: customVolatility,
+            prices: customPrice
         }
 
         this.canvas = canvas;
         this.attachChart();
+    }
+
+    updateChart() {
+        this.chart.update();
+    }
+
+    updateCustomData(calculatedEspp) {
+        const dataLength = this.customDataset.data.length;
+        this.customDataset.data[dataLength - 1] = calculatedEspp.value;
+        this.customDataset.volatilities[dataLength - 1] = calculatedEspp.volatility;
+        this.customDataset.prices[dataLength - 1] = calculatedEspp.price;
+        this.updateChart();
     }
 
     attachChart() {
@@ -58,10 +74,9 @@ class ValueCompareChart {
                     tooltip: {
                         callbacks: {
                             label: function(context) {
-                                console.log(context);
                                 let label = ['Value: $' + context.parsed['y']];
-                                label.push('Price: $28.00');
-                                label.push('Volatility: ' + context.dataset.volatilities[context.dataIndex]);
+                                label.push('Price: $' + context.dataset.prices[context.dataIndex]);
+                                label.push('Volatility: ' + context.dataset.volatilities[context.dataIndex] + '%');
                                 return label;
                             }
                         }

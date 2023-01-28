@@ -90,18 +90,21 @@ var valueCompareChart = new ValueCompareChart(
         {
             value: 1000,
             label: 'Tesla',
-            volatility: '10%'
+            volatility: '10',
+            price: '100.15'
         },
         {
             value: 2000,
             label: 'Apple',
-            volatility: '20%'
+            volatility: '20',
+            price: '200.10'
         }
     ],
     calculatedEspp = {
-        value: 3000,
+        value: 3109.96,
         label: 'Custom',
-        volatility: '30%'
+        volatility: '20',
+        price: '28.00'
     }
 )
 
