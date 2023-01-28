@@ -1,59 +1,59 @@
 var calculatedPayoffsChart = new PayoffChart(
-    includePayoff=true, 
-    includeBuyShares=true, 
-    includeSellCalls=true, 
-    includeBuyCalls=true, 
+    includePayoff=true,
+    includeBuyShares=true,
+    includeSellCalls=true,
+    includeBuyCalls=true,
     canvasId='payoff-chart',
     undefined,
     undefined
 )
 
 const staticPayoffChart = new PayoffChart(
-    includePayoff=true, 
-    includeBuyShares=false, 
-    includeSellCalls=false, 
-    includeBuyCalls=false, 
+    includePayoff=true,
+    includeBuyShares=false,
+    includeSellCalls=false,
+    includeBuyCalls=false,
     canvasId='payoff-example',
-    hideLegend=true 
+    hideLegend=true
 )
 
 const buyStockChart = new PayoffChart(
-    includePayoff=true, 
-    includeBuyShares=true, 
-    includeSellCalls=false, 
-    includeBuyCalls=false, 
+    includePayoff=true,
+    includeBuyShares=true,
+    includeSellCalls=false,
+    includeBuyCalls=false,
     canvasId='buy-stock-example'
 )
 
 const sellCallsChart = new PayoffChart(
-    includePayoff=true, 
-    includeBuyShares=false, 
-    includeSellCalls=true, 
-    includeBuyCalls=false, 
+    includePayoff=true,
+    includeBuyShares=false,
+    includeSellCalls=true,
+    includeBuyCalls=false,
     canvasId='sell-calls-example'
 )
 
 var toggleChart = new PayoffChart(
-    includePayoff=true, 
-    includeBuyShares=true, 
-    includeSellCalls=true, 
-    includeBuyCalls=true, 
+    includePayoff=true,
+    includeBuyShares=true,
+    includeSellCalls=true,
+    includeBuyCalls=true,
     canvasId='toggle-chart'
 )
 
 var buyCallsChart = new PayoffChart(
-    includePayoff=true, 
-    includeBuyShares=false, 
-    includeSellCalls=false, 
-    includeBuyCalls=true, 
+    includePayoff=true,
+    includeBuyShares=false,
+    includeSellCalls=false,
+    includeBuyCalls=true,
     canvasId='buy-calls-example'
 )
 
 var sharesCapChart = new PayoffChart(
-    includePayoff=true, 
-    includeBuyShares=false, 
-    includeSellCalls=false, 
-    includeBuyCalls=false, 
+    includePayoff=true,
+    includeBuyShares=false,
+    includeSellCalls=false,
+    includeBuyCalls=false,
     canvasId='shares-cap-example',
     undefined,
     attachChartOnCreate=false
@@ -62,10 +62,10 @@ sharesCapChart.highLightPayoffSegment('buyStock', 'Shares cap');
 sharesCapChart.attachChart();
 
 var flatPayoffChart = new PayoffChart(
-    includePayoff=true, 
-    includeBuyShares=false, 
-    includeSellCalls=false, 
-    includeBuyCalls=false, 
+    includePayoff=true,
+    includeBuyShares=false,
+    includeSellCalls=false,
+    includeBuyCalls=false,
     canvasId='middle-example',
     undefined,
     attachChartOnCreate=false
@@ -74,10 +74,10 @@ flatPayoffChart.highLightPayoffSegment('sellCalls', 'Flat payoff');
 flatPayoffChart.attachChart();
 
 var upsidePayoffChart = new PayoffChart(
-    includePayoff=true, 
-    includeBuyShares=false, 
-    includeSellCalls=false, 
-    includeBuyCalls=false, 
+    includePayoff=true,
+    includeBuyShares=false,
+    includeSellCalls=false,
+    includeBuyCalls=false,
     canvasId='upside-example',
     undefined,
     attachChartOnCreate=false
@@ -109,6 +109,16 @@ valueCompareChart = new Chart(valueCompareCanvas, {
         plugins: {
             legend: {
                 display: false
+            },
+            tooltip: {
+                callbacks: {
+                    label: function(context) {
+                        let label = ['Value: $' + context.parsed['y']];
+                        label.push('Price: $28.00');
+                        label.push('Volatility: 20%');
+                        return label;
+                    }
+                }
             }
         },
         scales: {

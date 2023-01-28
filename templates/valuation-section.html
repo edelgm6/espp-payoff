@@ -7,17 +7,17 @@
         <li>Positive exposure to 525 call options at a strike price of $28.00</li>
     </ul>
     Valuing the stock is straightforward: 150 shares x $28.00 = $4,300. But what about the call options?
-</p>    
+</p>
 <div class="row">
     <div class="col-md-12">
         <p>
-            The mechanics of option pricing are beyond the scope of this website 
+            The mechanics of option pricing are beyond the scope of this website
             (this tool uses the <a href="https://en.wikipedia.org/wiki/Black%E2%80%93Scholes_model">Black-Scholes model</a>),
-            but what's <strong>most important to grasp is that the higher the volatility, the higher the option value.</strong> 
+            but what's <strong>most important to grasp is that the higher the volatility, the higher the option value.</strong>
             I.e., an ESPP companies with steady stock prices is lower than that of highly unpredictable stock prices.
-        </p> 
+        </p>
         <p>
-            To see why this is, consider the chart on the right which shows a call option with a $28 strike price. Note that as 
+            To see why this is, consider the chart on the right which shows a call option with a $28 strike price. Note that as
             you adjust the volatility upward, the spread of potential outcomes and the value of the ESPP goes up!
         </p>
         <div class="row">
@@ -27,7 +27,7 @@
                     <ul>
                         <li>If you buy a <strong>$28 share of some stock</strong> and it doubles to $56, you make $28. If it goes down to $0, you lose $28</li>
                         <li>
-                            If you buy a <strong>call option on the stock with a strike price of $28</strong> and it goes up to $58, you make $28. 
+                            If you buy a <strong>call option on the stock with a strike price of $28</strong> and it goes up to $58, you make $28.
                             If it goes to $0, you're only out the cost of the option!
                         </li>
                     </ul>
@@ -40,7 +40,7 @@
             <div class="btn-group btn-group-sm col-md-6" role="group" aria-label="Basic radio toggle button group">
                 <input type="radio" class="btn-check" name="btnradio" id="ten-volatility-btn" autocomplete="off" onclick="toggleVolatilityChart(10)">
                 <label class="btn btn-outline-primary" for="ten-volatility-btn">10%</label>
-            
+
                 <input type="radio" class="btn-check" name="btnradio" id="twentyfive-volatility-btn" autocomplete="off" onclick="toggleVolatilityChart(25)">
                 <label class="btn btn-outline-primary" for="twentyfive-volatility-btn">25%</label>
 
@@ -49,7 +49,7 @@
 
                 <input type="radio" class="btn-check" name="btnradio" id="seventyfive-volatility-btn" autocomplete="off" onclick="toggleVolatilityChart(75)">
                 <label class="btn btn-outline-primary" for="seventyfive-volatility-btn">70%</label>
-            
+
                 <input type="radio" class="btn-check" name="btnradio" id="one-hundred-volatility-btn" autocomplete="off" onclick="toggleVolatilityChart(100)">
                 <label class="btn btn-outline-primary" for="one-hundred-volatility-btn">100%</label>
             </div>
@@ -57,7 +57,7 @@
         </div>
     </div>
 </div>
-<div class="row">
+<div class="row" style="height: 300px">
     <div class="col">
         <canvas id="volatility-chart"></canvas>
     </div>

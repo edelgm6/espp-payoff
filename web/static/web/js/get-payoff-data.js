@@ -34,8 +34,8 @@ function getPayoffData(event) {
         const totalValue = replicatingPortfolioValueData.total_value;
 
         calculatedPayoffsChart.updateDatasetData(
-            newPrices, 
-            payoffs, 
+            newPrices,
+            payoffs,
             sharesSeries,
             sellCallOptionsSeries,
             buyCallOptionsSeries
