@@ -85,60 +85,28 @@ var upsidePayoffChart = new PayoffChart(
 upsidePayoffChart.highLightPayoffSegment('buyCalls', 'Upside outcome');
 upsidePayoffChart.attachChart();
 
-const valueCompareCanvas = document.getElementById('value-compare')
-valueCompareChart = new Chart(valueCompareCanvas, {
-    type: 'bar',
-    data: {
-        labels: ['Apple','Tesla','ExxonMobil','P&G','Custom'],
-        datasets: [
-            {
-                label: 'Value',
-                data: [3758, 5015, 3714, 3196, null],
-                borderColor: primaryGray,
-                backgroundColor: primaryGray
-            },
-            {
-                label: 'Value',
-                data: [null,null,null,null,3109],
-                borderColor: fourthColor,
-                backgroundColor: fourthColor
-            },
-        ]
-    },
-    options: {
-        plugins: {
-            legend: {
-                display: false
-            },
-            tooltip: {
-                callbacks: {
-                    label: function(context) {
-                        let label = ['Value: $' + context.parsed['y']];
-                        label.push('Price: $28.00');
-                        label.push('Volatility: 20%');
-                        return label;
-                    }
-                }
-            }
+var valueCompareChart = new ValueCompareChart(
+    comparisonEsppList = [
+        {
+            value: 1000,
+            label: 'Tesla',
+            volatility: '10',
+            price: '100.15'
         },
-        scales: {
-            x: {
-                stacked: true,
-                grid: {
-                    display: false
-                }
-            },
-            y: {
-                stacked: true,
-                ticks: {
-                    callback: function(value,index,ticks) {
-                        return '$' + value.toLocaleString();
-                    }
-                }
-            }
+        {
+            value: 2000,
+            label: 'Apple',
+            volatility: '20',
+            price: '200.10'
         }
+    ],
+    calculatedEspp = {
+        value: 3109.96,
+        label: 'Custom',
+        volatility: '20',
+        price: '28.00'
     }
-});
+)
 
 const valueChartCanvas = document.getElementById('value-chart')
 valueChart = new Chart(valueChartCanvas, {
