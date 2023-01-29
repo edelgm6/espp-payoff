@@ -66,9 +66,31 @@ class PayoffChart extends EsppChart {
                 },
                 callbacks: {
                     title: function(context) {
-                        return null;
+                        try {
+                            var highlightIndex = context[0].dataIndex;
+                        } catch(err) {
+                            return;
+                        }
+
+                        switch (highlightIndex) {
+                            case 8:
+                                return '1000 shares cap';
+                            case 15:
+                                return 'Shares cap to value cap transition point';
+                            case 21:
+                                return 'Invest $12,500, stock below starting value';
+                            case 28:
+                                return 'Starting value';
+                            case 32:
+                                return 'Increasing payoff section';
+                            default:
+                                return null;
+                        }
                     },
                     beforeLabel: function(context) {
+                        return 'Hey yo';
+                    },
+                    label: function(context) {
                         return null;
                     }
                 }
@@ -77,29 +99,29 @@ class PayoffChart extends EsppChart {
         maintainAspectRatio: false,
         scales: {
             x: {
-            title: {
-                display: true,
-                text: 'Stock price'
-            },
-            ticks: {
-                callback: function(value,index,ticks) {
-                return '$' + value.toFixed(2).toLocaleString();
+                title: {
+                    display: true,
+                    text: 'Stock price'
+                },
+                ticks: {
+                    callback: function(value,index,ticks) {
+                    return '$' + value.toFixed(2).toLocaleString();
+                    }
+                },
+                grid: {
+                    display: false
                 }
-            },
-            grid: {
-                display: false
-            }
             },
             y: {
-            title: {
-                display: true,
-                text: 'Payoff'
-            },
-            ticks: {
-                callback: function(value,index,ticks) {
-                    return '$' + value.toLocaleString();
+                title: {
+                    display: true,
+                    text: 'Payoff'
+                },
+                ticks: {
+                    callback: function(value,index,ticks) {
+                        return '$' + value.toLocaleString();
+                    }
                 }
-            }
             }
         }
     }
