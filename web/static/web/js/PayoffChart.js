@@ -1,43 +1,43 @@
-class PayoffChart {
+class PayoffChart extends EsppChart {
 
     buySharesDataset = {
         label: 'buy 150 shares',
         data: [0, 150.0, 300.0, 450.0, 600.0, 750.0, 900.0, 1050.0, 1200.0, 1350.0, 1500.0, 1650.0, 1800.0, 1950.0, 2100.0, 2250.0,2400.0,2550.0,2700,2850,3000,3150,3300,3450,3600,3750,3900,4050,4200,4350,4500,4650,4800,4950,5100],
         borderWidth: 1,
-        borderColor: secondaryColor,
-        backgroundColor: secondaryColor
+        borderColor: this.secondaryColor,
+        backgroundColor: this.secondaryColor
     }
 
     sellCallsDataset = {
         label: 'sell 150 calls',
         data: [-0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -44.11, -194.11, -344.11, -494.11, -644.11, -794.11, -944.11, -1094.11, -1244.11, -1394.11, -1544.11, -1694.11, -1844.11, -1994.11, -2144.11, -2294.11, -2444.11, -2594.11, -2744.11, -2894.11],
         borderWidth: 1,
-        borderColor: tertiaryColor,
-        backgroundColor: tertiaryColor
+        borderColor: this.tertiaryColor,
+        backgroundColor: this.tertiaryColor
     }
 
     buyCallsDataset = {
         label: 'buy 525 calls',
         data: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 525.21, 1050.42, 1575.63, 2100.84, 2626.05, 3151.26],
         borderWidth: 1,
-        borderColor: fourthColor,
-        backgroundColor: fourthColor
+        borderColor: this.fourthColor,
+        backgroundColor: this.fourthColor
     }
 
     payoffDataset = {
         label: 'payoff',
         data: this.buySharesDataset.data.map((val, index) => val + this.sellCallsDataset.data[index] + this.buyCallsDataset.data[index]),
         borderWidth: 1,
-        borderColor: primaryColor,
-        backgroundColor: primaryColor
+        borderColor: this.primaryColor,
+        backgroundColor: this.primaryColor
     }
 
     highlightDataDataset = {
         label: 'highlight',
         data: [null,null,null,null,null,null,null,null,1200,null,null,null,null,null,null,2205.89,null,null,null,null,null,2205.89,null,null,null,null,null,null,2205.89,null,null,null,4306.73,null,null],
         borderWidth: 4,
-        borderColor: highlightColor,
-        backgroundColor: highlightColor
+        borderColor: this.highlightColor,
+        backgroundColor: this.highlightColor
     }
 
     datasetSelector = {
@@ -113,6 +113,7 @@ class PayoffChart {
         attachChartOnCreate=true,
         addHighlightDataset=false) {
 
+        super();
         this.datasets = [];
         if (includePayoff) {
             this.datasets.push(this.payoffDataset);
@@ -151,10 +152,6 @@ class PayoffChart {
           });
     }
 
-    updateChart() {
-        this.chart.update();
-    }
-
     highLightPayoffSegment(segment, name) {
         // Build index of values to excise from payoff dataset
         const segmentBoundaries = this.payoffSegments[segment];
@@ -179,8 +176,8 @@ class PayoffChart {
             label: name,
             data: highlightData,
             borderWidth: 1,
-            borderColor: fourthColor,
-            backgroundColor: fourthColor,
+            borderColor: this.fourthColor,
+            backgroundColor: this.fourthColor,
 
         }
         this.datasets.push(highlightDataset);
