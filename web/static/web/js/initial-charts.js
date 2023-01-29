@@ -110,51 +110,5 @@ var valueCompareChart = new ValueCompareChart(
     }
 )
 
-const valueChartCanvas = document.getElementById('value-chart')
-valueChart = new Chart(valueChartCanvas, {
-    type: 'bar',
-    data: {
-        labels: ['Buy shares','Sell call options', 'Buy call options', 'Total'],
-        datasets: [
-            {
-                label: 'Value',
-                data: [4200,-2039,2159,null],
-                borderColor: primaryGray,
-                backgroundColor: primaryGray
-            },
-            {
-                label: 'Value',
-                data: [null,null,null,4320],
-                borderColor: fourthColor,
-                backgroundColor: fourthColor
-            },
-        ]
-    },
-    options: {
-        plugins: {
-            legend: {
-                display: false
-            }
-        },
-        indexAxis: 'y',
-        scales: {
-            x: {
-                stacked: true,
-                ticks: {
-                    callback: function(value,index,ticks) {
-                        return '$' + value.toLocaleString();
-                    }
-                },
-                min: -3000,
-                max: 7000,
-                stepSize: 1000
-            },
-            y: {
-                stacked: true,
-                grid: {
-                    display: false
-                }
-            }
-        }
-    }
-});
+var valueChart = new ValueChart('value-chart');
+var volatilityChart = new VolatilityChart('volatility-chart');
