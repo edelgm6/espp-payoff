@@ -7,7 +7,7 @@ class PayoffChart {
         borderColor: secondaryColor,
         backgroundColor: secondaryColor
     }
-    
+
     sellCallsDataset = {
         label: 'sell 150 calls',
         data: [-0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -44.11, -194.11, -344.11, -494.11, -644.11, -794.11, -944.11, -1094.11, -1244.11, -1394.11, -1544.11, -1694.11, -1844.11, -1994.11, -2144.11, -2294.11, -2444.11, -2594.11, -2744.11, -2894.11],
@@ -15,7 +15,7 @@ class PayoffChart {
         borderColor: tertiaryColor,
         backgroundColor: tertiaryColor
     }
-    
+
     buyCallsDataset = {
         label: 'buy 525 calls',
         data: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 525.21, 1050.42, 1575.63, 2100.84, 2626.05, 3151.26],
@@ -23,7 +23,7 @@ class PayoffChart {
         borderColor: fourthColor,
         backgroundColor: fourthColor
     }
-    
+
     payoffDataset = {
         label: 'payoff',
         data: this.buySharesDataset.data.map((val, index) => val + this.sellCallsDataset.data[index] + this.buyCallsDataset.data[index]),
@@ -81,15 +81,15 @@ class PayoffChart {
             }
         }
     }
-    
-    constructor(includePayoff, 
-        includeBuyShares, 
-        includeSellCalls, 
-        includeBuyCalls, 
-        canvasId, 
+
+    constructor(includePayoff,
+        includeBuyShares,
+        includeSellCalls,
+        includeBuyCalls,
+        canvasId,
         hideLegend=false,
         attachChartOnCreate=true) {
-        
+
         this.datasets = [];
         if (includePayoff) {
             this.datasets.push(this.payoffDataset);
@@ -106,12 +106,13 @@ class PayoffChart {
         if (hideLegend) {
             this.options['plugins']['legend']['display'] = false;
         }
-        
+
         this.canvas = document.getElementById(canvasId);
         this.chart = null;
         if (attachChartOnCreate) {
             this.attachChart();
         }
+        console.log(this.this.payoffDataset.data);
     }
 
     attachChart() {
@@ -139,7 +140,7 @@ class PayoffChart {
 
         // Loop through payoff data — if i is in the highlight indices, set to null
         // and put value into a new dataset, else leave it
-        let highlightData = []      
+        let highlightData = []
         for(let i = 0; i <= this.payoffDataset.data.length; i++) {
             if (highlightIndices.includes(i)) {
                 highlightData.push(this.payoffDataset.data[i]);
@@ -161,7 +162,7 @@ class PayoffChart {
     }
 
     updateDatasetData(prices=null, payoffData=null, buySharesData=null, sellCallsData=null, buyCallsData=null) {
-        
+
         this.prices = prices || this.prices;
         this.chart.data.labels = this.prices;
 
@@ -188,7 +189,7 @@ class PayoffChart {
                 break;
             }
         }
-        
+
         //Need this top function to correct for slight variances from zero when all are subtracted out
         var payoffDatasetData = this.payoffDataset.data;
         if (allSeriesHidden) {
@@ -199,7 +200,7 @@ class PayoffChart {
             payoffDatasetData = payoffDatasetData.map((val, index) => val + toggledSeries.data[index]);
         };
 
-        this.payoffDataset.data = payoffDatasetData;    
+        this.payoffDataset.data = payoffDatasetData;
         this.updateChart();
     }
 }
