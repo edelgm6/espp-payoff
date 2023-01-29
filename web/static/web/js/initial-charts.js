@@ -14,7 +14,9 @@ const staticPayoffChart = new PayoffChart(
     includeSellCalls=false,
     includeBuyCalls=false,
     canvasId='payoff-example',
-    hideLegend=true
+    hideLegend=true,
+    undefined,
+    addHighlightDataset=true
 )
 
 const buyStockChart = new PayoffChart(

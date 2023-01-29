@@ -32,6 +32,14 @@ class PayoffChart {
         backgroundColor: primaryColor
     }
 
+    highlightDataDataset = {
+        label: 'highlight',
+        data: [null,null,null,null,null,null,null,null,1200,null,null,null,null,null,null,2205.89,null,null,null,null,null,2205.89,null,null,null,null,null,null,2205.89,null,null,null,4306.73,null,null],
+        borderWidth: 4,
+        borderColor: highlightColor,
+        backgroundColor: highlightColor
+    }
+
     datasetSelector = {
         'buyStock': this.buySharesDataset,
         'sellCalls': this.sellCallsDataset,
@@ -50,6 +58,20 @@ class PayoffChart {
         plugins: {
             legend: {
                 display: true
+            },
+            tooltip: {
+                displayColors: false,
+                filter: function(context) {
+                    return context.datasetIndex === 0;
+                },
+                callbacks: {
+                    title: function(context) {
+                        return null;
+                    },
+                    beforeLabel: function(context) {
+                        return null;
+                    }
+                }
             }
         },
         maintainAspectRatio: false,
@@ -75,7 +97,7 @@ class PayoffChart {
             },
             ticks: {
                 callback: function(value,index,ticks) {
-                return '$' + value.toLocaleString();
+                    return '$' + value.toLocaleString();
                 }
             }
             }
@@ -88,7 +110,8 @@ class PayoffChart {
         includeBuyCalls,
         canvasId,
         hideLegend=false,
-        attachChartOnCreate=true) {
+        attachChartOnCreate=true,
+        addHighlightDataset=false) {
 
         this.datasets = [];
         if (includePayoff) {
@@ -106,13 +129,15 @@ class PayoffChart {
         if (hideLegend) {
             this.options['plugins']['legend']['display'] = false;
         }
+        if (addHighlightDataset) {
+            this.datasets.unshift(this.highlightDataDataset);
+        }
 
         this.canvas = document.getElementById(canvasId);
         this.chart = null;
         if (attachChartOnCreate) {
             this.attachChart();
         }
-        console.log(this.this.payoffDataset.data);
     }
 
     attachChart() {
