@@ -54,46 +54,41 @@ class PayoffChart extends EsppChart {
 
     prices = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34]
 
+    highlightTooltipConfig = {
+        title: {
+            8: 'whatever'
+        }
+    }
+
+    highlightTooltip = {
+        displayColors: false,
+        filter: function(context) {
+            return context.datasetIndex === 0;
+        },
+        callbacks: {
+            title: (context) => {
+                console.log(this.highlightTooltipConfig);
+                console.log(context);
+                try {
+                    var highlightIndex = context[0].dataIndex;
+                } catch(err) {
+                    return;
+                }
+                return this.highlightTooltipConfig.title[highlightIndex];
+            },
+            beforeLabel: function(context) {
+                return 'Hey yo';
+            },
+            label: function(context) {
+                return null;
+            }
+        }
+    }
+
     options = {
         plugins: {
             legend: {
                 display: true
-            },
-            tooltip: {
-                displayColors: false,
-                filter: function(context) {
-                    return context.datasetIndex === 0;
-                },
-                callbacks: {
-                    title: function(context) {
-                        try {
-                            var highlightIndex = context[0].dataIndex;
-                        } catch(err) {
-                            return;
-                        }
-
-                        switch (highlightIndex) {
-                            case 8:
-                                return '1000 shares cap';
-                            case 15:
-                                return 'Shares cap to value cap transition point';
-                            case 21:
-                                return 'Invest $12,500, stock below starting value';
-                            case 28:
-                                return 'Starting value';
-                            case 32:
-                                return 'Increasing payoff section';
-                            default:
-                                return null;
-                        }
-                    },
-                    beforeLabel: function(context) {
-                        return 'Hey yo';
-                    },
-                    label: function(context) {
-                        return null;
-                    }
-                }
             }
         },
         maintainAspectRatio: false,
@@ -153,7 +148,9 @@ class PayoffChart extends EsppChart {
             this.options['plugins']['legend']['display'] = false;
         }
         if (addHighlightDataset) {
+            console.log(this.highlightTooltipConfig);
             this.datasets.unshift(this.highlightDataDataset);
+            this.options.plugins['tooltip'] = this.highlightTooltip;
         }
 
         this.canvas = document.getElementById(canvasId);
