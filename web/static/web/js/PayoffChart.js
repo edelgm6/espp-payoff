@@ -76,6 +76,17 @@ class PayoffChart extends EsppChart {
                 'will equal $12.50.'
             ]
         },
+        21: {
+            title: 'Ending price below starting price',
+            beforeLabel: [
+                'The flat payoff represents the stock prices between ',
+                'the shares cap transition and the starting price. Here ',
+                'you can spend the full $12,500 and the payoff is ~$2200 ',
+                '(e.g., if the stock price is $20.00, the purchase price is ',
+                '$17.00. $12,500 / $17.00 == ~735 shares. 735 * $20.00 == ',
+                '$14,700. $14,700 - $12,500 == $2200).'
+            ]
+        },
         28: {
             title: 'Starting price',
             beforeLabel: [
