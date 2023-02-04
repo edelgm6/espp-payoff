@@ -1,7 +1,7 @@
-class ValueCompareChart {
+class ValueCompareChart extends EsppChart {
 
     constructor(comparisonEsppList,calculatedEspp,canvas='value-compare') {
-
+        super();
         let comparisonValues = [];
         let customValue = [];
         this.labels = [];
@@ -28,8 +28,8 @@ class ValueCompareChart {
         this.comparisonDataset = {
             label: 'Value',
             data: comparisonValues,
-            borderColor: primaryGray,
-            backgroundColor: primaryGray,
+            borderColor: this.primaryGray,
+            backgroundColor: this.primaryGray,
             volatilities: comparisonVolatilities,
             prices: comparisonPrices
         }
@@ -37,18 +37,14 @@ class ValueCompareChart {
         this.customDataset = {
             label: 'Value',
             data: customValue,
-            borderColor: fourthColor,
-            backgroundColor: fourthColor,
+            borderColor: this.fourthColor,
+            backgroundColor: this.fourthColor,
             volatilities: customVolatility,
             prices: customPrice
         }
 
         this.canvas = canvas;
         this.attachChart();
-    }
-
-    updateChart() {
-        this.chart.update();
     }
 
     updateCustomData(calculatedEspp) {
