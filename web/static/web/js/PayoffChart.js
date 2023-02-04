@@ -55,8 +55,46 @@ class PayoffChart extends EsppChart {
     prices = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34]
 
     highlightTooltipConfig = {
-        title: {
-            8: 'whatever'
+        8: {
+            title: 'Shares cap section',
+            beforeLabel: [
+                'Here, the payoff is limited by the 1000 share cap — i.e.,',
+                'irrespective of the price you buy 1000 shares. Here, the ',
+                'payoff increases by $150 (i.e., 15% * 1000) for each dollar ',
+                'increase in the stock price. At $1, you buy 1000 shares for ',
+                'a 15% discount ($0.85) so the payoff is $150 ($1000 - $850). ',
+                'At $2, you buy 1000 shares for a 15% discount ($1.70) so ',
+                'the payoff is $300 ($2000 - $1700) and so forth.'
+            ]
+        },
+        15: {
+            title: 'Shares cap to value cap transition',
+            beforeLabel: [
+                'Here, the payoff is limited by the total investment cap ',
+                '(i.e., $12,500). For a 1000 share cap, this will occur ',
+                'at about $14.70 (i.e., the price where the 15% discount ',
+                'will equal $12.50.'
+            ]
+        },
+        28: {
+            title: 'Starting price',
+            beforeLabel: [
+                'This kink represents the price of the stock at the ',
+                'beginning of the purchase period. Below this price, ',
+                'the actual purchase price will be the less than ',
+                'the starting price. Beyond it, the purchase price ',
+                'will be the starting price.'
+            ]
+        },
+        32: {
+            title: 'Value cap, ending price below starting price',
+            beforeLabel: [
+                'Now we are realy making money. In this segment ',
+                'the purchase price is fixed at 85% of the star-',
+                'ting price. Each dollar increase in the stock ',
+                'price increases the payoff by $525 (i.e. $12,500 ',
+                ' / 85% * 28 == 525 shares).'
+            ]
         }
     }
 
@@ -67,17 +105,18 @@ class PayoffChart extends EsppChart {
         },
         callbacks: {
             title: (context) => {
-                console.log(this.highlightTooltipConfig);
-                console.log(context);
+                console.log(context)
                 try {
                     var highlightIndex = context[0].dataIndex;
                 } catch(err) {
                     return;
                 }
-                return this.highlightTooltipConfig.title[highlightIndex];
+                return this.highlightTooltipConfig[highlightIndex].title;
             },
-            beforeLabel: function(context) {
-                return 'Hey yo';
+            beforeLabel: (context) => {
+                console.log(context)
+                var highlightIndex = context.dataIndex;
+                return this.highlightTooltipConfig[highlightIndex].beforeLabel;
             },
             label: function(context) {
                 return null;
@@ -148,7 +187,6 @@ class PayoffChart extends EsppChart {
             this.options['plugins']['legend']['display'] = false;
         }
         if (addHighlightDataset) {
-            console.log(this.highlightTooltipConfig);
             this.datasets.unshift(this.highlightDataDataset);
             this.options.plugins['tooltip'] = this.highlightTooltip;
         }
