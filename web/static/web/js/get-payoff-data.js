@@ -1,9 +1,14 @@
 function getPayoffData(event) {
     event.preventDefault();
 
-    const priceFieldValid = validateVolatilityAndPrice(priceField);
-    const volatilityFieldValid = validateVolatilityAndPrice(volatilityField);
-    if (!priceFieldValid || !volatilityFieldValid) {
+    const volatilityField = document.querySelector('#volatility');
+    const priceField = document.querySelector('#price');
+    const sharesCapField = document.querySelector('#shares-cap');
+
+    const priceFieldValid = validateVolatilityAndPriceAndSharesCap(priceField);
+    const volatilityFieldValid = validateVolatilityAndPriceAndSharesCap(volatilityField);
+    const sharesCapFieldValid = validateVolatilityAndPriceAndSharesCap(sharesCapField);
+    if (!priceFieldValid || !volatilityFieldValid || !sharesCapFieldValid) {
         return;
     }
 
@@ -12,6 +17,7 @@ function getPayoffData(event) {
 
     params.set('price', priceField.value);
     params.set('volatility', decimalVolatility);
+    params.set('shares_cap', sharesCapField.value);
     const queryString = params.toString();
 
     fetch(`/payoffs/?${queryString}`)
@@ -28,9 +34,6 @@ function getPayoffData(event) {
         const buyCallOptionsSeries = replicatingPortfolioData.buy_call_options_series;
 
         const replicatingPortfolioValueData = data.replicating_portfolio_value_data;
-        // const buySharesValue = replicatingPortfolioValueData.buy_shares_value;
-        // const sellCallOptionsValue = replicatingPortfolioValueData.sell_call_options_value;
-        // const buyCallOptionsValue = replicatingPortfolioValueData.buy_call_options_value;
         const totalValue = replicatingPortfolioValueData.total_value;
 
         calculatedPayoffsChart.updateDatasetData(
@@ -40,16 +43,6 @@ function getPayoffData(event) {
             sellCallOptionsSeries,
             buyCallOptionsSeries
         );
-
-        // console.log(buySharesValue)
-        // console.log(sellCallOptionsValue)
-        // console.log(buyCallOptionsValue)
-
-        // valueChart['data']['datasets'][0]['data'][0] = buySharesValue;
-        // valueChart['data']['datasets'][0]['data'][1] = sellCallOptionsValue;
-        // valueChart['data']['datasets'][0]['data'][2] = buyCallOptionsValue;
-        // valueChart['data']['datasets'][0]['data'][3] = totalValue;
-        // valueChart.update();
 
         valueCompareChart.updateCustomData(
             {

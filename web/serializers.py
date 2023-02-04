@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from web.espp import Stock
+from web.espp import Stock, ESPP
 from web.models import StockData
 
 class ReplicatingPortfolioValueSerializer(serializers.Serializer):
@@ -46,20 +46,21 @@ class TotalDataSerializer(serializers.Serializer):
     replicating_portfolio_data = ReplicatingPortfolioChartSerializer()
     payoff_data = PayoffChartSerializer()
 
+class CalculatorInputSerializer(serializers.Serializer):
+    price = serializers.FloatField(min_value=.01)
+    volatility = serializers.FloatField(min_value=.01)
+    shares_cap = serializers.IntegerField(min_value=1)
+
+    def create(self, validated_data):
+        stock = Stock(price=validated_data['price'],volatility=validated_data['volatility'])
+        espp = ESPP(stock=stock,shares_cap=validated_data['shares_cap'])
+        return espp
+
 class StockSerializer(serializers.Serializer):
     ticker = serializers.CharField(min_length=0, required=False)
-    price = serializers.FloatField(min_value=.01, required=False)
-    volatility = serializers.FloatField(min_value=.01, required=False)
 
     def create(self, validated_data):
         return Stock(**validated_data)
-
-    def validate(self, data):
-        if data.get('ticker') is None and (not data.get('price') or not data.get('volatility')):
-            raise serializers.ValidationError(
-                "if ticker is None, must have both price and volatility"
-                )
-        return data
 
 class StockChartSerializer(serializers.Serializer):
     price = serializers.FloatField(min_value=0)

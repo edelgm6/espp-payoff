@@ -143,10 +143,10 @@ class CallOption(Security):
             )
 
 class ESPP:
-    def __init__(self, stock):
+    def __init__(self, stock, shares_cap):
         self.risk_free_rate = .03
         self.maximum_investment = 12500
-        self.maximum_shares_purchased = 1000
+        self.maximum_shares_purchased = shares_cap
         self.purchase_discount = .15
         self.stock = stock
 

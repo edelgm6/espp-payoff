@@ -4,11 +4,13 @@ var isFirstUpdate = true;
 var priceHistoryChart = {};
 
 async function getStockData(ticker) {
+  const tickerField = document.querySelector('#ticker');
   const params = new URLSearchParams();
   params.set('ticker', ticker);
   const queryString = params.toString();
   const parentDiv = tickerField.parentNode;
   const targetDiv = parentDiv.querySelector('div');
+
 
   try {
     const response = await fetch(`/stock-data/?${queryString}`);

@@ -23,7 +23,7 @@ function validateTicker() {
     return true;
 }
 
-function validateVolatilityAndPrice(input) {
+function validateVolatilityAndPriceAndSharesCap(input) {
     var inputValue = Number(input.value);
 
     if (isNaN(inputValue) || inputValue <= 0) {
