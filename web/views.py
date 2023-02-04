@@ -5,13 +5,10 @@ from django.views import View
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from web.serializers import StockSerializer, StockChartSerializer, TotalDataSerializer, StockDataSerializer
+from web.serializers import StockSerializer, StockChartSerializer, TotalDataSerializer, StockDataSerializer, CalculatorInputSerializer
 from web.espp import ESPP
 from web.charts import StockChart, TotalData
 from web.models import StockData
-
-
-
 
 class Index(View):
     template = 'index.html'
@@ -31,13 +28,12 @@ class Index(View):
 class Payoffs(APIView):
 
     def get(self, request, format=None):
-        stock_serializer = StockSerializer(data=request.query_params)
-        if not stock_serializer.is_valid():
-            print(stock_serializer.errors)
-            return Response(stock_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        calculator_serializer = CalculatorInputSerializer(data=request.query_params)
+        if not calculator_serializer.is_valid():
+            print(calculator_serializer.errors)
+            return Response(calculator_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-        stock = stock_serializer.save()
-        espp = ESPP(stock=stock)
+        espp = calculator_serializer.save()
         total_data = TotalData(espp)
         total_data_serializer = TotalDataSerializer(total_data)
         return Response(total_data_serializer.data)
