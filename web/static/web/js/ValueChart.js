@@ -59,6 +59,10 @@ class ValueChart extends EsppChart {
                 plugins: {
                     legend: {
                         display: false
+                    },
+                    title: {
+                        display: true,
+                        text: 'ESPP value by replicating portfolio component'
                     }
                 },
                 indexAxis: 'y',

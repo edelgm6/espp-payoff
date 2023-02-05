@@ -4,8 +4,10 @@ var calculatedPayoffsChart = new PayoffChart(
     includeSellCalls=true,
     includeBuyCalls=true,
     canvasId='payoff-chart',
-    undefined,
-    undefined
+    hideLegend=false,
+    attachChartOnCreate=true,
+    addHighlightDataset=false,
+    title='ESPP payoff and replicating portfolio'
 )
 
 const staticPayoffChart = new PayoffChart(
@@ -16,7 +18,8 @@ const staticPayoffChart = new PayoffChart(
     canvasId='payoff-example',
     hideLegend=true,
     undefined,
-    addHighlightDataset=true
+    addHighlightDataset=true,
+    title='ESPP payoff'
 )
 
 const buyStockChart = new PayoffChart(
@@ -40,7 +43,10 @@ var toggleChart = new PayoffChart(
     includeBuyShares=true,
     includeSellCalls=true,
     includeBuyCalls=true,
-    canvasId='toggle-chart'
+    canvasId='toggle-chart',
+    hideLegend=false,
+    attachChartOnCreate=true,
+    addHighlightDataset=false
 )
 
 var buyCallsChart = new PayoffChart(

@@ -149,7 +149,11 @@ class PayoffChart extends EsppChart {
             legend: {
                 display: true
             },
-            tooltip: this.defaultTooltip
+            tooltip: this.defaultTooltip,
+            title: {
+                display: false,
+                text: null
+            }
         },
         maintainAspectRatio: false,
         scales: {
@@ -189,7 +193,8 @@ class PayoffChart extends EsppChart {
         canvasId,
         hideLegend=false,
         attachChartOnCreate=true,
-        addHighlightDataset=false) {
+        addHighlightDataset=false,
+        title=null) {
 
         super();
         this.datasets = [];
@@ -213,8 +218,14 @@ class PayoffChart extends EsppChart {
             this.options.plugins['tooltip'] = this.highlightTooltip;
         }
 
+        this.title = title;
+        console.log(title);
         this.canvas = document.getElementById(canvasId);
+        this.options.plugins.title.display = (this.title === null) ? false : true;
+        this.options.plugins.title.text = this.title;
+
         this.chart = null;
+
         if (attachChartOnCreate) {
             this.attachChart();
         }

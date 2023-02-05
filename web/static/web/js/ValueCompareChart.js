@@ -44,6 +44,7 @@ class ValueCompareChart extends EsppChart {
         }
 
         this.canvas = canvas;
+
         this.attachChart();
     }
 
@@ -66,6 +67,10 @@ class ValueCompareChart extends EsppChart {
                 plugins: {
                     legend: {
                         display: false
+                    },
+                    title: {
+                        display: true,
+                        text: 'ESPP value comparison'
                     },
                     tooltip: {
                         callbacks: {
