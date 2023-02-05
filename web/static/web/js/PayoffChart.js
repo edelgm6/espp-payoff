@@ -171,7 +171,8 @@ class PayoffChart extends EsppChart {
         }
     }
 
-    constructor(includePayoff,
+    constructor(
+        includePayoff,
         includeBuyShares,
         includeSellCalls,
         includeBuyCalls,
@@ -246,7 +247,6 @@ class PayoffChart extends EsppChart {
             borderWidth: 1,
             borderColor: this.fourthColor,
             backgroundColor: this.fourthColor,
-
         }
         this.datasets.push(highlightDataset);
     }
@@ -260,6 +260,9 @@ class PayoffChart extends EsppChart {
         this.buySharesDataset.data = buySharesData || this.buySharesDataset.data;
         this.sellCallsDataset.data = sellCallsData || this.sellCallsDataset.data;
         this.buyCallsDataset.data = buyCallsData || this.buyCallsDataset.data;
+
+        const buySharesCount = this.payoffDataset.data[1] - this.payoffDataset.data[0]
+        this.buySharesDataset.label = 'buy ' + buySharesCount.toFixed(0) + ' shares';
 
         const buyCallsCount = this.buyCallsDataset.data[this.buyCallsDataset.data.length - 1] - this.buyCallsDataset.data[this.buyCallsDataset.data.length - 2]
         this.buyCallsDataset.label = 'buy ' + buyCallsCount.toFixed(0) + ' calls';
