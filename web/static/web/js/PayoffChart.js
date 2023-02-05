@@ -58,8 +58,8 @@ class PayoffChart extends EsppChart {
         8: {
             title: 'Shares cap section',
             beforeLabel: [
-                'Here, the payoff is limited by the 1000 share cap — i.e.,',
-                'irrespective of the price you buy 1000 shares. Here, the ',
+                'Here, the payoff is limited by the 1000 shares cap — i.e.,',
+                'irrespective of the stock price you buy 1000 shares. Here, the ',
                 'payoff increases by $150 (i.e., 15% * 1000) for each dollar ',
                 'increase in the stock price. At $1, you buy 1000 shares for ',
                 'a 15% discount ($0.85) so the payoff is $150 ($1000 - $850). ',
@@ -70,20 +70,20 @@ class PayoffChart extends EsppChart {
         15: {
             title: 'Shares cap to value cap transition',
             beforeLabel: [
-                'Here, the payoff is limited by the total investment cap ',
-                '(i.e., $12,500). For a 1000 share cap, this will occur ',
-                'at about $14.70 (i.e., the price where the 15% discount ',
-                'will equal $12.50.'
+                'Here, the payoff transitions from being limited by the ',
+                'shares cap to being limited by the dollar cap (i.e., $12,500). ',
+                'For a 1000 shares cap, this will occur at about $14.70 ',
+                '(i.e., the price where the 15% discount will equal $12.50).'
             ]
         },
         21: {
             title: 'Ending price below starting price',
             beforeLabel: [
-                'The flat payoff represents the stock prices between ',
-                'the shares cap transition and the starting price. Here ',
-                'you can spend the full $12,500 and the payoff is ~$2200 ',
-                '(e.g., if the stock price is $20.00, the purchase price is ',
-                '$17.00. $12,500 / $17.00 == ~735 shares. 735 * $20.00 == ',
+                'The flat payoff represents the end of period stock prices ',
+                'between the shares cap transition and the beginning of period ',
+                'stock price. Here you can spend the full $12,500 and the payoff ',
+                'is ~$2200 (e.g., if the stock price is $20.00, the purchase ',
+                'price is $17.00. $12,500 / $17.00 == ~735 shares. 735 * $20.00 == ',
                 '$14,700. $14,700 - $12,500 == $2200).'
             ]
         },
@@ -92,19 +92,22 @@ class PayoffChart extends EsppChart {
             beforeLabel: [
                 'This kink represents the price of the stock at the ',
                 'beginning of the purchase period. Below this price, ',
-                'the actual purchase price will be the less than ',
-                'the starting price. Beyond it, the purchase price ',
-                'will be the starting price.'
+                'the purchase price is the end of period stock price ',
+                'less the discount. Beyond it, the purchase price is',
+                'the beginning of period stock price less the discount.'
             ]
         },
         32: {
-            title: 'Value cap, ending price below starting price',
+            title: [
+                'End of period price greater than beginning of ',
+                'period price'
+            ],
             beforeLabel: [
                 'Now we are realy making money. In this segment ',
                 'the purchase price is fixed at 85% of the star-',
                 'ting price. Each dollar increase in the stock ',
                 'price increases the payoff by $525 (i.e. $12,500 ',
-                ' / 85% * 28 == 525 shares).'
+                ' / (85% * $28.00) == 525 shares).'
             ]
         }
     }
@@ -146,7 +149,7 @@ class PayoffChart extends EsppChart {
             x: {
                 title: {
                     display: true,
-                    text: 'Stock price'
+                    text: 'End of period stock price'
                 },
                 ticks: {
                     callback: function(value,index,ticks) {
