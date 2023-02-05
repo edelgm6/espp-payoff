@@ -14,20 +14,22 @@
             The mechanics of option pricing are beyond the scope of this website
             (this tool uses the <a href="https://en.wikipedia.org/wiki/Black%E2%80%93Scholes_model">Black-Scholes model</a>),
             but what's <strong>most important to grasp is that the higher the volatility, the higher the option value.</strong>
-            I.e., an ESPP companies with steady stock prices is lower than that of highly unpredictable stock prices.
+            I.e., the ESPP value for companies with steady stock prices is lower than that of highly unpredictable stock prices.
         </p>
         <p>
-            To see why this is, consider the chart on the right which shows a call option with a $28 strike price. Note that as
-            you adjust the volatility upward, the spread of potential outcomes and the value of the ESPP goes up!
+            To see why this is, consider the bell curve chart shows a call option with a $28 strike price and the volatility
+            of the underlying stock. Note that as you adjust the volatility upward, the spread of potential outcomes and
+            the value of the ESPP goes up!
         </p>
         <div class="row">
             <div class="col">
                 <p>
                     To understand why this is, consider the following:
                     <ul>
-                        <li>If you buy a <strong>$28 share of some stock</strong> and it doubles to $56, you make $28. If it goes down to $0, you lose $28</li>
+                        <li>A single call option at a $28.00 strike price for a 20% volatility stock with a current price of $28 costs ~$1.78</li>
+                        <li>If you buy a <strong>$28 share the stock</strong> and it doubles to $56, you make $28. If it goes down to $0, you lose $28</li>
                         <li>
-                            If you buy a <strong>call option on the stock with a strike price of $28</strong> and it goes up to $58, you make $28.
+                            If you buy the <strong>call option on the stock with a strike price of $28</strong> and it goes up to $58, you make $28 - $1.78.
                             If it goes to $0, you're only out the cost of the option!
                         </li>
                     </ul>
