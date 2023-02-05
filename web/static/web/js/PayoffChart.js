@@ -119,7 +119,6 @@ class PayoffChart extends EsppChart {
         },
         callbacks: {
             title: (context) => {
-                console.log(context)
                 try {
                     var highlightIndex = context[0].dataIndex;
                 } catch(err) {
@@ -128,12 +127,19 @@ class PayoffChart extends EsppChart {
                 return this.highlightTooltipConfig[highlightIndex].title;
             },
             beforeLabel: (context) => {
-                console.log(context)
                 var highlightIndex = context.dataIndex;
                 return this.highlightTooltipConfig[highlightIndex].beforeLabel;
             },
             label: function(context) {
-                return null;
+                return '$' + context.raw.toFixed(2).toLocaleString();;
+            }
+        }
+    }
+
+    defaultTooltip = {
+        callbacks: {
+            label: function(context) {
+                return '$' + context.raw.toFixed(2).toLocaleString();;
             }
         }
     }
@@ -142,7 +148,8 @@ class PayoffChart extends EsppChart {
         plugins: {
             legend: {
                 display: true
-            }
+            },
+            tooltip: this.defaultTooltip
         },
         maintainAspectRatio: false,
         scales: {
@@ -153,7 +160,7 @@ class PayoffChart extends EsppChart {
                 },
                 ticks: {
                     callback: function(value,index,ticks) {
-                    return '$' + value.toFixed(2).toLocaleString();
+                        return '$' + value.toFixed(2).toLocaleString();
                     }
                 },
                 grid: {
