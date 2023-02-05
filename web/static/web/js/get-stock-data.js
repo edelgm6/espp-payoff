@@ -1,16 +1,12 @@
 console.log(stockData);
-var ticker;
 var isFirstUpdate = true;
-var priceHistoryChart = {};
 
-async function getStockData(ticker) {
-  const tickerField = document.querySelector('#ticker');
+async function getStockData(tickerField) {
   const params = new URLSearchParams();
-  params.set('ticker', ticker);
+  params.set('ticker', tickerField.value);
   const queryString = params.toString();
   const parentDiv = tickerField.parentNode;
   const targetDiv = parentDiv.querySelector('div');
-
 
   try {
     const response = await fetch(`/stock-data/?${queryString}`);
@@ -40,12 +36,16 @@ async function getStockData(ticker) {
 async function populateStockChart(event) {
   event.preventDefault();
 
-  if (!validateTicker()) {
+  const tickerField = document.querySelector('#ticker');
+  const volatilityField = document.querySelector('#volatility');
+  const priceField = document.querySelector('#price');
+
+  if (!validateTicker(tickerField)) {
     return;
   }
 
   tickerField.value = tickerField.value.toUpperCase();
-  ticker = tickerField.value
+  var ticker = tickerField.value
 
   let cachedStockData = stockData.find(object => object.ticker == ticker);
   if (cachedStockData) {
@@ -57,7 +57,7 @@ async function populateStockChart(event) {
     targetDiv.innerHTML = '<a href="#stockModal" data-bs-toggle="modal">Click here for stock information</a>'
     console.log('called from cache');
   } else {
-    var data = await getStockData(ticker);
+    var data = await getStockData(tickerField);
     console.log(data);
     if (!data) {
       console.log('error found, cancel operation')
@@ -66,107 +66,19 @@ async function populateStockChart(event) {
     console.log('called api');
   }
 
-
   var volatility = (data.volatility * 100.0).toFixed(2);
   volatilityField.value = volatility;
   priceField.value = data.price.toFixed(2);
-  const priceHistory = data.price_history;
-  const dailyPercentChanges = data.daily_percent_changes;
-  const dates = data.dates;
+  let priceHistory = data.price_history;
+  let dailyPercentChanges = data.daily_percent_changes;
+  let dates = data.dates;
 
-  //Set the local variable so we don't call the API each time
-  //TODO: THink I need to refactor the StockData model to use lists
-  //instead of a json field for each of dates and daily_percent_changes
+  stockChart.updatePriceData(dates=dates,priceHistory=priceHistory,dailyPercentChanges=dailyPercentChanges);
+
   stockData[ticker] = {};
   stockData[ticker]['price'] = data.price;
   stockData[ticker]['volatility'] = volatility / 100.0;
   stockData[ticker]['price_history'] = priceHistory;
   stockData[ticker]['daily_percent_changes'] = dailyPercentChanges;
   stockData[ticker]['dates'] = dates;
-
-  if (isFirstUpdate) {
-    const priceHistoryCanvas = document.getElementById('price-history');
-    priceHistoryChart = new Chart(priceHistoryCanvas, {
-      type: 'line',
-      data: {
-        labels: dates,
-        datasets: [
-          {
-              label: 'daily prices',
-              data: priceHistory,
-              borderWidth: 1,
-              yAxisID: 'y',
-              borderColor: fourthColor,
-              backgroundColor: fourthColor
-          },
-          {
-            label: 'daily percent change',
-            data: dailyPercentChanges,
-            borderWidth: 1,
-            yAxisID: 'y1',
-            borderColor: fifthColor,
-            backgroundColor: fifthColor
-          },
-        ]
-      },
-      scales: {
-        y: {
-          type: 'linear',
-          display: true,
-          position: 'left',
-        },
-        y1: {
-          type: 'linear',
-          display: true,
-          position: 'right',
-        },
-      },
-      options: {
-        scales: {
-          x: {
-            grid: {
-              display: false
-            },
-          },
-          y: {
-            title: {
-              display: true,
-              text: 'Stock price'
-            },
-            ticks: {
-              callback: function(value,index,ticks) {
-                return '$' + value.toLocaleString();
-              }
-            }
-          },
-          y1: {
-            title: {
-              display: true,
-              text: 'Daily percent change'
-            },
-            grid: {
-              display: false
-            },
-            position: 'right',
-            ticks: {
-              callback: function(value,index,ticks) {
-                return (value * 100).toFixed(2) + '%';
-              }
-            },
-            min: -.2,
-            max: .2
-          }
-        }
-      }
-    });
-  isFirstUpdate = false;
-  } else {
-    console.log('updated modal');
-    priceHistoryChart['data']['datasets'][0]['data'] = priceHistory;
-    priceHistoryChart['data']['datasets'][1]['data'] = dailyPercentChanges;
-    priceHistoryChart['data']['labels'] = dates;
-    priceHistoryChart.update();
-  };
-  validateVolatilityAndPrice(priceField);
-  validateVolatilityAndPrice(volatilityField);
 };
