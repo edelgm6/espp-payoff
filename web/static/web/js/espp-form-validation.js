@@ -6,6 +6,9 @@ function validateTicker(tickerField) {
     const validationDiv = parentDiv.querySelector('div');
     var tickerValue = tickerField.value;
 
+    tickerField.className = 'form-control is-valid';
+    validationDiv.className = 'valid-feedback';
+
     if (tickerValue.length == 0 || tickerValue.length > 5) {
         console.log('zero length');
         validationDiv.innerHTML = 'Invalid ticker';
