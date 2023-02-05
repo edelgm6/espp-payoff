@@ -45,6 +45,12 @@ class VolatilityChart extends EsppChart {
                 ]
             },
             options: {
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Call option payoff and stock volatility'
+                    }
+                },
                 scales: {
                     x: {
                         title: {

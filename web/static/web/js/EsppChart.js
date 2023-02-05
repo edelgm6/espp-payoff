@@ -9,6 +9,12 @@ class EsppChart {
     primaryGray = '#B4B7B7'
     secondaryGray = '#999E9E'
 
+    constructor(canvasId,title=null) {
+
+        this.canvas = document.getElementById(canvasId);
+        this.title = title;
+    }
+
     updateChart() {
         this.chart.update();
     }

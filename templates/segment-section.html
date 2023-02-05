@@ -7,15 +7,15 @@
             <div class="col">
             <p>
                 \begin{align}
-                \nonumber payoff &= max\_shares \\
+                \nonumber \textit{payoff} &= max\_shares \\
                 \nonumber &\quad \times current\_price \\
                 \nonumber &\quad \times discount
                 \end{align}
             </p>
             <p>
                 The leftmost section of the chart represents stock prices that <strong>are low enough
-                to hit the 1000 shares purchase limit</strong>, i.e., when you cannot invest the entire
-                $12,500. Given the 15% purchase discount, this limit kicks in at $12.50 / .85, or $14.70.
+                to hit the 1000 shares cap</strong>, i.e., when you cannot invest the entire
+                $12,500. Given the 15% purchase discount, this limit kicks in at $12.50 / 85%, or $14.70.
                 At this point, each dollar change in the stock price drives a $150 change in the payoff.
                 E.g., at $5, you purchase 1000 shares for $4.25 (i.e., the 85% discount), locking in a
                 gain of $750 (i.e., 1000 x $5 * 15%).
@@ -31,17 +31,27 @@
             <div class="col">
             <p>
                 \begin{align}
-                \nonumber payoff &= \frac{1}{1-discount} \\
+                \nonumber \textit{payoff} &= \frac{1}{1-discount} \\
                 \nonumber &\quad \times max\_investment
                 \end{align}
             </p>
-            <p>The simplest part of the payoff chart to understand is the flat part in the middle. This represents the stock prices where:</p>
+            <p>
+                The simplest part of the payoff chart to understand is the flat part in the middle. This represents
+                the stock prices where:
+            </p>
             <ul>
-                <li>The stock price at the end of the offering period is less than the stock price at the beginning of the offering period</li>
-                <li>And the stock price is still high enough that you can invest the entire $12,500 (i.e., you don't hit the 1000 share limit)</li>
+                <li>
+                    The stock <strong>price at the end of the offering period is less than the stock price at the beginning</strong>
+                    of the offering period and
+                </li>
+                <li>
+                    The stock <strong>price is still high enough that you can invest the entire $12,500</strong> (i.e., you don't
+                    hit the 1000 share limit)
+                </li>
             </ul>
-            <p>In this case, you will invest $12,500 at an 85% discount to the current stock price, yielding a ~17% return, or ~$2205 gain.
-                (i.e., (1/1-15%) * $12,500)
+            <p>
+                In this case, you will invest $12,500 at an 85% discount to the current stock price, yielding a ~17%
+                return, or ~$2205 gain (i.e., (1/1-15%) * $12,500).
             </p>
             </div>
         </div>
@@ -54,7 +64,7 @@
             <div class="col">
             <p>
                 \begin{align}
-                \nonumber payoff &= ((current\_price / \\
+                \nonumber \textit{payoff} &= ((current\_price / \\
                 \nonumber &\quad (starting\_price \times \\
                 \nonumber &\quad (1 - discount))) - 1) \\
                 \nonumber &\quad \times max\_investment
@@ -66,8 +76,8 @@
                 To understand why, consider our original example:
             </p>
                 <ul>
-                  <li>Stock price is $28 at the beginning of the purchase period</li>
-                  <li>Stock price is $34 at the end of the purchase period</li>
+                  <li>Stock price is $28.00 at the beginning of the purchase period</li>
+                  <li>Stock price is $34.00 at the end of the purchase period</li>
                   <li>You buy $12,500 worth of stock at a 15% discount <strong>to the $28
                     starting price</strong> since it is lower than the ending price</li>
                   <li>You get a return of (($34 / ($28 * (1-15%))) - 1) * $12,500, or $5357</li>

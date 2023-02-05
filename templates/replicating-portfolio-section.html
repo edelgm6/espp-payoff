@@ -2,7 +2,7 @@
 <p>
     We know what the payoff looks like, but now we need to put a value on that payoff. Enter
     the <strong>replicating portfolio.</strong>
-    Put simply: What combination of stocks, bonds, and options recreates the same payoff
+    Put simply: What combination of stocks and options recreates the same payoff
     that we observe with the ESPP? And since each of the components of the replicating
     portfolio can be valued, we will know the value of the ESPP!
 </p>
@@ -10,12 +10,12 @@
 <div class="row">
     <div class="col-sm-5">
       <p>
-        Before jumping into each of the individual parts of the replicating portfolio, it'll be good to get an 
-        intuitive understanding of <strong>how the individual components of the portfolio combine into the payoff 
+        Before jumping into each of the individual parts of the replicating portfolio, it'll be good to get an
+        intuitive understanding of <strong>how the individual components of the portfolio combine into the payoff
         chart we explored above.</strong>
       </p>
       <p>
-        The chart to the right let's you <strong>toggle the three replciating portfolio components on and off</strong> so you 
+        The chart to the right let's you <strong>toggle the three replicating portfolio components on and off</strong> so you
         can see how each contributes to the final payoff line.
       </p>
     </div>
@@ -30,10 +30,10 @@
             <div class="btn-group btn-group-sm col-sm-8" role="group" aria-label="Basic radio toggle button group">
             <input type="checkbox" class="btn-check" name="btnradio" id="buy-stock-btn" autocomplete="off" onclick="toggleChart.toggleDatasetHidden('buyStock')" checked>
             <label class="btn btn-outline-primary" for="buy-stock-btn">Buy Stock</label>
-            
+
             <input type="checkbox" class="btn-check" name="btnradio" id="sell-calls-btn" autocomplete="off" onclick="toggleChart.toggleDatasetHidden('sellCalls')" checked>
             <label class="btn btn-outline-primary" for="sell-calls-btn">Sell Calls</label>
-            
+
             <input type="checkbox" class="btn-check" name="btnradio" id="buy-calls-btn" autocomplete="off" onclick="toggleChart.toggleDatasetHidden('buyCalls')" checked>
             <label class="btn btn-outline-primary" for="buy-calls-btn">Buy Calls</label>
             </div>
@@ -54,7 +54,7 @@
                 buying 150 shares of the stock!</strong> I.e., when the price of the stock goes up by $1, we will gain
                 $150 if we have 150 shares.
             </p>
-        </div>      
+        </div>
     </div>
 
     <div class="col-sm-4">
@@ -63,16 +63,16 @@
         </div>
         <div class="row">
             <p>
-                Once we cross the 1000 share cap mark at about $14.70, we need the payoff chart to flatten out. We do that 
-                by <strong><i>selling</i> 150 call options such that for each dollar the stock price increases, we <i>lose</i>
-                $150.</strong>
+                Once we cross the 1000 share cap mark at about $14.70, we need the payoff chart to flatten out. We do that
+                by <strong><i>selling</i> 150 call options at a strike price of $14.70 such that for each dollar the stock
+                price increases beyond $14.70, we <i>lose</i> $150.</strong>
             </p>
             <p>
                 For quick review — a <strong>call option</strong> is the option to buy a stock at a given price (the 'strike price').
-                If we have a call option with a strike price of $15, we <strong>make a dollar when the stock price is $16, and when the 
+                If we have a call option with a strike price of $15, we <strong>make a dollar when the stock price is $16, and when the
                 stock price is <= $15, we make $0.</strong>
             </p>
-        </div>      
+        </div>
     </div>
 
     <div class="col-sm-4">
@@ -82,12 +82,13 @@
         <div class="row">
             <p>
                 The final upward kink in the payoff happens when the stock price exceeds the starting stock price. We create this kink in
-                the payoff by <strong>buying call options.</strong> The number of call options is the <strong>maximum investment (i.e., $12,500) 
-                divided by the maximum purchase price (i.e., .85 * the current price).</strong>
+                the payoff by <strong>buying call options with a strike price of the beginning of period stock price (i.e., $28.00).</strong>
+                The number of call options is the <strong>maximum investment (i.e., $12,500) divided by the maximum purchase price
+                (i.e., .85 * the current price).</strong>
             </p>
             <p>
                 Since our starting price is $28, our maximum purchase price is $23.80. $12,500 / $23.80 == ~525.
             </p>
-        </div>      
+        </div>
     </div>
 </div>
