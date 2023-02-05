@@ -112,3 +112,4 @@ var valueCompareChart = new ValueCompareChart(
 
 var valueChart = new ValueChart('value-chart');
 var volatilityChart = new VolatilityChart('volatility-chart');
+var stockChart = new PriceHistoryChart(canvasId='price-history');
