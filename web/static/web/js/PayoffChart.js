@@ -263,6 +263,7 @@ class PayoffChart extends EsppChart {
 
         const buySharesCount = this.payoffDataset.data[1] - this.payoffDataset.data[0]
         this.buySharesDataset.label = 'buy ' + buySharesCount.toFixed(0) + ' shares';
+        this.sellCallsDataset.label = 'sell ' + buySharesCount.toFixed(0) + ' calls';
 
         const buyCallsCount = this.buyCallsDataset.data[this.buyCallsDataset.data.length - 1] - this.buyCallsDataset.data[this.buyCallsDataset.data.length - 2]
         this.buyCallsDataset.label = 'buy ' + buyCallsCount.toFixed(0) + ' calls';
