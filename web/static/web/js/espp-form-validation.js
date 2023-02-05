@@ -7,15 +7,18 @@ function validateTicker(tickerField) {
     var tickerValue = tickerField.value;
 
     if (tickerValue.length == 0 || tickerValue.length > 5) {
-        validationDiv.innerHTML = 'Invalid ticker'
+        console.log('zero length');
+        validationDiv.innerHTML = 'Invalid ticker';
         tickerField.className = 'form-control is-invalid';
+        validationDiv.className = 'invalid-feedback';
         return false;
     }
 
     let regex = /[^a-z]/i;
     if (regex.test(tickerValue)) {
-        validationDiv.innerHTML = 'Invalid ticker'
+        validationDiv.innerHTML = 'Invalid ticker';
         tickerField.className = 'form-control is-invalid';
+        validationDiv.className = 'invalid-feedback';
         return false;
     }
 
