@@ -1,6 +1,3 @@
-//TODO: Think we don't need to declare a new ticker_input variable
-//as we should already have in the form-fields.js file
-
 function validateTicker(tickerField) {
     const parentDiv = tickerField.parentNode;
     const validationDiv = parentDiv.querySelector('div');
