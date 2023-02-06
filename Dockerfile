@@ -23,4 +23,5 @@ RUN python manage.py collectstatic --noinput
 EXPOSE 8000
 
 # replace demo.wsgi with <project_name>.wsgi
-CMD ["gunicorn", "--bind", ":8000", "--workers", "2", "espp_payoff.wsgi"]
+# CMD ["python manage.py collectstatic --noinput", "gunicorn", "--bind", ":8000", "--workers", "2", "espp_payoff.wsgi"]
+CMD ["/bin/bash", "-c", "python manage.py collectstatic --noinput; gunicorn --bind :8000 --workers 2 espp_payoff.wsgi"]
