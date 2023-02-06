@@ -138,8 +138,16 @@ class PayoffChart extends EsppChart {
 
     defaultTooltip = {
         callbacks: {
+            title: function(context) {
+                try {
+                    var title = context[0].label;
+                } catch(context) {
+                    var title = context.label;
+                }
+                return '$' + title + '.00';
+            },
             label: function(context) {
-                return '$' + context.raw.toFixed(2).toLocaleString();;
+                return '$' + context.raw.toFixed(2).toLocaleString();
             }
         }
     }
@@ -219,7 +227,6 @@ class PayoffChart extends EsppChart {
         }
 
         this.title = title;
-        console.log(title);
         this.canvas = document.getElementById(canvasId);
         this.options.plugins.title.display = (this.title === null) ? false : true;
         this.options.plugins.title.text = this.title;
