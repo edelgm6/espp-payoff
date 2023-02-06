@@ -219,11 +219,11 @@ class PayoffChart extends EsppChart {
             this.datasets.push(this.buyCallsDataset);
         }
         if (hideLegend) {
-            this.options['plugins']['legend']['display'] = false;
+            this.options.plugins.legend.display = false;
         }
         if (addHighlightDataset) {
             this.datasets.unshift(this.highlightDataDataset);
-            this.options.plugins['tooltip'] = this.highlightTooltip;
+            this.options.plugins.tooltip = this.highlightTooltip;
         }
 
         this.title = title;
