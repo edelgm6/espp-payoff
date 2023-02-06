@@ -138,8 +138,16 @@ class PayoffChart extends EsppChart {
 
     defaultTooltip = {
         callbacks: {
+            title: function(context) {
+                try {
+                    var title = context[0].label;
+                } catch(context) {
+                    var title = context.label;
+                }
+                return '$' + title + '.00';
+            },
             label: function(context) {
-                return '$' + context.raw.toFixed(2).toLocaleString();;
+                return '$' + context.raw.toFixed(2).toLocaleString();
             }
         }
     }
@@ -211,15 +219,14 @@ class PayoffChart extends EsppChart {
             this.datasets.push(this.buyCallsDataset);
         }
         if (hideLegend) {
-            this.options['plugins']['legend']['display'] = false;
+            this.options.plugins.legend.display = false;
         }
         if (addHighlightDataset) {
             this.datasets.unshift(this.highlightDataDataset);
-            this.options.plugins['tooltip'] = this.highlightTooltip;
+            this.options.plugins.tooltip = this.highlightTooltip;
         }
 
         this.title = title;
-        console.log(title);
         this.canvas = document.getElementById(canvasId);
         this.options.plugins.title.display = (this.title === null) ? false : true;
         this.options.plugins.title.text = this.title;
