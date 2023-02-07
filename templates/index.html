@@ -15,6 +15,24 @@
     <!-- To automatically render math in text elements, include the auto-render extension: -->
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
         onload="renderMathInElement(document.body);"></script>
+
+    <!-- <style>
+      @media (max-width: 5000px) {
+        .col-lg-6 {
+          margin-bottom: 10px;
+        }
+      }
+      @media (max-width: 991px) {
+        .col-md-6 {
+          height: 200px;
+        }
+      }
+      @media (max-width: 767px) {
+        .col-md-6 {
+          height: 150px;
+        }
+      }
+    </style> -->
   </head>
   <body>
     <div class="container">
@@ -37,8 +55,10 @@
         <div class="col-md-5">
           {% include "espp-form.html" %}
         </div>
-        <div class="col-md-7" style="height: 300px">
-          <canvas id="value-compare"></canvas>
+        <div class="col-md-7" style="height: 350px">
+          <!-- <div class="chart-container"> -->
+            <canvas id="value-compare"></canvas>
+          <!-- </div> -->
         </div>
       </div>
 
@@ -50,8 +70,11 @@
             shares and options combine to match the payoff of the black line).
           </p>
         </div>
-        <div class="col-lg-7" style="height: 350px">
-          <canvas id="payoff-chart"></canvas>
+
+        <div class="col-lg-7">
+          <div class="chart-container" style="height: 350px">
+            <canvas id="payoff-chart"></canvas>
+          </div>
         </div>
       </div>
 

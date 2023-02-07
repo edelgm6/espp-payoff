@@ -153,6 +153,7 @@ class PayoffChart extends EsppChart {
     }
 
     options = {
+        responsive: true,
         plugins: {
             legend: {
                 display: true

@@ -54,6 +54,8 @@ class ValueCompareChart extends EsppChart {
         const comparisonDataLength = this.comparisonDataset.data.length;
         const labelsLength = this.labels.length;
         //Bump current custom to next over
+        this.comparisonDataset.data[comparisonDataLength - 3] = this.comparisonDataset.data[comparisonDataLength - 2]
+        this.labels[labelsLength - 4] = this.labels[labelsLength - 3]
         this.comparisonDataset.data[comparisonDataLength - 2] = this.comparisonDataset.data[comparisonDataLength - 1]
         this.labels[labelsLength - 3] = this.labels[labelsLength - 2]
         this.comparisonDataset.data[comparisonDataLength - 1] = this.customDataset.data[customDataLength - 1]
@@ -61,9 +63,9 @@ class ValueCompareChart extends EsppChart {
 
         this.customDataset.data[customDataLength - 1] = calculatedEspp.value;
         this.labels[labelsLength - 1] = [
-            'price: $' + Number(calculatedEspp.price).toFixed(2).toLocaleString(),
-            'volatility: ' + calculatedEspp.volatility + '%',
-            'shares cap: ' + calculatedEspp.shares_cap,
+            'p: $' + Number(calculatedEspp.price).toFixed(2).toLocaleString(),
+            'vol: ' + calculatedEspp.volatility + '%',
+            'cap: ' + calculatedEspp.shares_cap,
         ]
         this.updateChart();
     }
@@ -76,6 +78,11 @@ class ValueCompareChart extends EsppChart {
                 datasets: [this.comparisonDataset,this.customDataset]
             },
             options: {
+                responsive: true,
+                onResize: function(chart, size) {
+                    var showTicks = (size.width < 400) ? false : true;
+                    chart.options.scales['x']['ticks']['display'] = showTicks;
+                },
                 plugins: {
                     legend: {
                         display: false
@@ -108,6 +115,9 @@ class ValueCompareChart extends EsppChart {
                             callback: function(value,index,ticks) {
                                 return '$' + value.toLocaleString();
                             }
+                        },
+                        grid: {
+                            display: true
                         }
                     }
                 }
