@@ -96,23 +96,37 @@ upsidePayoffChart.attachChart();
 var valueCompareChart = new ValueCompareChart(
     comparisonEsppList = [
         {
-            value: 1000,
-            label: 'Tesla',
-            volatility: '10',
-            price: '100.15'
+            value: 3926,
+            label: [
+                'price: $50.00',
+                'volatility: 40%',
+                'shares cap: 2000',
+            ]
         },
         {
-            value: 2000,
-            label: 'Apple',
-            volatility: '20',
-            price: '200.10'
+            value: 4059,
+            label: [
+                'price: $15.00',
+                'volatility: 50%',
+                'shares cap: 1000',
+            ]
+        },
+        {
+            value: 2506,
+            label: [
+                'price: $100.00',
+                'volatility: 5%',
+                'shares cap: 500',
+            ]
         }
     ],
     calculatedEspp = {
-        value: 3109.96,
-        label: 'Custom',
-        volatility: '20',
-        price: '28.00'
+        value: 3109,
+        label: [
+            'price: $28.00',
+            'volatility: 20.0%',
+            'shares cap: 1000',
+        ]
     }
 )
 

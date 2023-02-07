@@ -48,7 +48,8 @@ function getPayoffData(event) {
             {
                 value: totalValue,
                 volatility: volatilityField.value,
-                price: priceField.value
+                price: priceField.value,
+                shares_cap: sharesCapField.value
             }
         )
     });

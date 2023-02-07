@@ -20,10 +20,8 @@ class ValueCompareChart extends EsppChart {
             this.labels.push(espp.label);
         };
         comparisonEsppList.push(null);
-        this.labels.push('Custom');
+        this.labels.push(calculatedEspp.label);
         customValue.push(calculatedEspp.value);
-        customVolatility.push(calculatedEspp.volatility);
-        customPrice.push(calculatedEspp.price);
 
         this.comparisonDataset = {
             label: 'Value',
@@ -44,15 +42,29 @@ class ValueCompareChart extends EsppChart {
         }
 
         this.canvas = canvas;
-
+        console.log(this.comparisonDataset.data);
         this.attachChart();
     }
 
     updateCustomData(calculatedEspp) {
-        const dataLength = this.customDataset.data.length;
-        this.customDataset.data[dataLength - 1] = calculatedEspp.value;
-        this.customDataset.volatilities[dataLength - 1] = calculatedEspp.volatility;
-        this.customDataset.prices[dataLength - 1] = calculatedEspp.price;
+
+        console.log(this.comparisonDataset.data);
+
+        const customDataLength = this.customDataset.data.length;
+        const comparisonDataLength = this.comparisonDataset.data.length;
+        const labelsLength = this.labels.length;
+        //Bump current custom to next over
+        this.comparisonDataset.data[comparisonDataLength - 2] = this.comparisonDataset.data[comparisonDataLength - 1]
+        this.labels[labelsLength - 3] = this.labels[labelsLength - 2]
+        this.comparisonDataset.data[comparisonDataLength - 1] = this.customDataset.data[customDataLength - 1]
+        this.labels[labelsLength - 2] = this.labels[labelsLength - 1]
+
+        this.customDataset.data[customDataLength - 1] = calculatedEspp.value;
+        this.labels[labelsLength - 1] = [
+            'price: $' + Number(calculatedEspp.price).toFixed(2).toLocaleString(),
+            'volatility: ' + calculatedEspp.volatility + '%',
+            'shares cap: ' + calculatedEspp.shares_cap,
+        ]
         this.updateChart();
     }
 
@@ -74,11 +86,11 @@ class ValueCompareChart extends EsppChart {
                     },
                     tooltip: {
                         callbacks: {
+                            title: function(context) {
+                                return null;
+                            },
                             label: function(context) {
-                                let label = ['Value: $' + context.parsed['y']];
-                                label.push('Price: $' + context.dataset.prices[context.dataIndex]);
-                                label.push('Volatility: ' + context.dataset.volatilities[context.dataIndex] + '%');
-                                return label;
+                                return 'Value: $' + context.parsed['y']
                             }
                         }
                     }
