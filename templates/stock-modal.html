@@ -8,7 +8,7 @@
       <div class="modal-body">
         <div class="modal-body">
 
-          <div class="row" style="height: 400px">
+          <div class="row">
             <div class="col">
               <canvas id="price-history"></canvas>
             </div>
@@ -20,24 +20,19 @@
           <li>Annualized volatility</li>
         </ul>
         <h6>Latest price</h6>
-        <p>The latest price matters for two reasons:
-          <ul>
-            <li><strong>Shares cap:</strong> You can only purchase 1000 shares in total,
-              irrespective of the stock price. If the ~$14.70, you can deploy less capital and therefore
-              get a lower return
-            </li>
-            <li><strong>Proximity to $0:</strong> The closer a stock price is to $0, the more likely it is that it can end up at $0!</li>
-          </ul>
+        <p>The latest price matters because of the sahres cap: You can only purchase up to the lower of the shares cap or $12,500 —
+              so a lower stock price may mean you hit the shares cap and cannot deploy the full $12,500, thus lowering your payoff.
         </p>
 
         <h6>Annualized volatility</h6>
         <p>Annualized volatility is the <strong>variance (i.e., the square of the standard deviation) of the daily
           percent change in the stock price.</strong> It's critically important for the value of the ESPP.</p>
 
-        <p>To understand why, you first need to understand that an ESPP behaves similarly to a call option — i.e.,
+        <p>To understand why, you first need to understand that an ESPP behaves similarly to a call option — i.e.,
           <strong>you have capped downside but potentially unlimited upside.</strong> Given the capped downside, an option
           is more valuable when the expected spread in values from its current value is highest.
         </p>
+        <p>See the bottom section of the tool for a more detailed explanation of why volatility matters.</p>
       </div>
     </div>
   </div>
