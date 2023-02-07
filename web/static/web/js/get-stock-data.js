@@ -54,7 +54,7 @@ async function populateStockChart(event) {
     const parentDiv = tickerField.parentNode;
     const targetDiv = parentDiv.querySelector('div');
     tickerField.className = 'form-control is-valid';
-    targetDiv.innerHTML = '<a href="#stockModal" data-bs-toggle="modal">Click here for stock information</a>'
+    targetDiv.innerHTML = '<a href="#stockModal" data-bs-toggle="modal">Click here for stock information (note: not great on mobile!)</a>'
     console.log('called from cache');
   } else {
     var data = await getStockData(tickerField);

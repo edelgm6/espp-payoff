@@ -51,6 +51,7 @@ class PriceHistoryChart extends EsppChart {
                 },
             },
             options: {
+                response: true,
                 plugins: {
                     tooltip: {
                             callbacks: {
