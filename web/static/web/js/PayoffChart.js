@@ -131,7 +131,7 @@ class PayoffChart extends EsppChart {
                 return this.highlightTooltipConfig[highlightIndex].beforeLabel;
             },
             label: function(context) {
-                return '$' + context.raw.toFixed(2).toLocaleString();;
+                return '$' + context.raw.toFixed(2).toLocaleString();
             }
         }
     }
