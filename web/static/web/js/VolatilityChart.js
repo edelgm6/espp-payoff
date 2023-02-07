@@ -45,6 +45,7 @@ class VolatilityChart extends EsppChart {
                 ]
             },
             options: {
+                responsive: true,
                 plugins: {
                     title: {
                         display: true,

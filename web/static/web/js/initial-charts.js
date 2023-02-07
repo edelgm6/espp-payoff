@@ -98,34 +98,34 @@ var valueCompareChart = new ValueCompareChart(
         {
             value: 3926,
             label: [
-                'price: $50.00',
-                'volatility: 40%',
-                'shares cap: 2000',
+                'p: $50.00',
+                'vol: 40%',
+                'cap: 2000',
             ]
         },
         {
             value: 4059,
             label: [
-                'price: $15.00',
-                'volatility: 50%',
-                'shares cap: 1000',
+                'p: $15.00',
+                'vol: 50%',
+                'cap: 1000',
             ]
         },
         {
             value: 2506,
             label: [
-                'price: $100.00',
-                'volatility: 5%',
-                'shares cap: 500',
+                'p: $100.00',
+                'vol: 5%',
+                'cap: 500',
             ]
         }
     ],
     calculatedEspp = {
         value: 3109,
         label: [
-            'price: $28.00',
-            'volatility: 20.0%',
-            'shares cap: 1000',
+            'p: $28.00',
+            'vol: 20.0%',
+            'cap: 1000',
         ]
     }
 )

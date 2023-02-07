@@ -4,8 +4,7 @@
     <div class="col-sm-6">
       <div class="input-group has-validation">
         <input type="text" class="form-control" id="ticker" name="ticker" maxlength="5" data-bs-toggle="tooltip"
-          title="Add stock ticker here and click 'Get data' button to populate latest price and volatility" autocomplete="off" value="AAPL" required>
-        <button class="btn btn-outline-secondary" onclick="populateStockChart(event)">Get data</button>
+          title="Add stock ticker here and click 'Get stock data' button to populate latest price and volatility" autocomplete="off" value="AAPL" required>
         <div class="valid-feedback">
           Click here for stock chart
         </div>
@@ -57,6 +56,7 @@
   <div class="form-group row">
     <div class="col-sm-12">
       <button class="btn btn-primary" onclick="getPayoffData(event)">Calculate ESPP value</button>
+      <button class="btn btn-outline-secondary" onclick="populateStockChart(event)">Get stock data</button>
     </div>
   </div>
 </form>
