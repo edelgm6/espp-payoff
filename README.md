@@ -52,7 +52,3 @@ DATABASES = {
 ## License
 
 MIT License
-
-Copyright (c) 2023 Garrett Edel
-
-See [LICENSE.txt](LICENSE.txt) file for details
