@@ -11,14 +11,14 @@ function toggleGetStockDataButton(turnButtonOff=null) {
     const stockButton = document.querySelector('#stock-button');
 
     if (turnButtonOff) {
-        stockButton.className = 'btn btn-sm btn-outline-secondary';
+        stockButton.className = 'btn btn-sm btn-outline-success';
         return;
     }
 
     if (volatilityField.value == '' || priceField.value == '') {
-        stockButton.className = 'btn btn-sm btn-secondary';
+        stockButton.className = 'btn btn-sm btn-success';
     } else {
-        stockButton.className = 'btn btn-sm btn-outline-secondary';
+        stockButton.className = 'btn btn-sm btn-outline-success';
     }
 }
 
