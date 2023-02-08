@@ -81,4 +81,6 @@ async function populateStockChart(event) {
   stockData[ticker]['price_history'] = priceHistory;
   stockData[ticker]['daily_percent_changes'] = dailyPercentChanges;
   stockData[ticker]['dates'] = dates;
+
+  toggleGetStockDataButton(turnButtonOff=true);
 };

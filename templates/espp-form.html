@@ -2,13 +2,12 @@
   <div class="row mb-3">
     <label for="ticker" class="col-sm-4 col-form-label">Ticker</label>
     <div class="col-sm-6">
-      <div class="input-group has-validation">
         <input type="text" class="form-control" id="ticker" name="ticker" maxlength="5" data-bs-toggle="tooltip"
           title="Add stock ticker here and click 'Get stock data' button to populate latest price and volatility" autocomplete="off" value="AAPL" required>
+        <button id="stock-button" class="btn btn-sm btn-secondary" onclick="populateStockChart(event)">Get stock data</button>
         <div class="valid-feedback">
           Click here for stock chart
         </div>
-      </div>
     </div>
   </div>
 
@@ -17,7 +16,7 @@
     <div class="col-sm-6">
       <div class="input-group has-validation">
         <span class="input-group-text">$</span>
-        <input type="number" step=".01" min="0" class="form-control" id="price" placeholder="102.44" value="28.00"
+        <input type="number" step=".01" min="0" class="form-control" id="price"
           data-bs-toggle="tooltip"
           title="Latest stock price — you can auto-populate via the 'Get data' button or add yourself">
           <div class="invalid-feedback">
@@ -30,7 +29,7 @@
     <label for="volatility" class="col-sm-4 col-form-label">Volatility</label>
     <div class="col-sm-6">
       <div class="input-group has-validation">
-        <input type="number" step=".01" min="0" class="form-control" id="volatility" placeholder="10.5 for 10.5%" value="20.0"
+        <input type="number" step=".01" min="0" class="form-control" id="volatility"
           data-bs-toggle="tooltip"
           title="Latest annualized volatility — you can auto-populate via the 'Get data' button or add yourself">
         <span class="input-group-text">%</span>
@@ -44,7 +43,7 @@
     <label for="shares-cap" class="col-sm-4 col-form-label">Shares cap</label>
     <div class="col-sm-6">
       <div class="input-group has-validation">
-        <input type="number" step="1" min="1" class="form-control" id="shares-cap" placeholder="1000"  value="1000"
+        <input type="number" step="1" min="1" class="form-control" id="shares-cap" placeholder="1000" value="1000"
           data-bs-toggle="tooltip"
           title="Maximum shares you can purchase">
         <div class="invalid-feedback">
@@ -56,7 +55,6 @@
   <div class="form-group row">
     <div class="col-sm-12">
       <button class="btn btn-primary" onclick="getPayoffData(event)">Calculate ESPP value</button>
-      <button class="btn btn-outline-secondary" onclick="populateStockChart(event)">Get stock data</button>
     </div>
   </div>
 </form>

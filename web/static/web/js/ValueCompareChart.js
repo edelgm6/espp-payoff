@@ -24,7 +24,7 @@ class ValueCompareChart extends EsppChart {
         customValue.push(calculatedEspp.value);
 
         this.comparisonDataset = {
-            label: 'Value',
+            label: 'Past calculations',
             data: comparisonValues,
             borderColor: this.primaryGray,
             backgroundColor: this.primaryGray,
@@ -33,7 +33,7 @@ class ValueCompareChart extends EsppChart {
         }
 
         this.customDataset = {
-            label: 'Value',
+            label: 'Latest calculation',
             data: customValue,
             borderColor: this.fourthColor,
             backgroundColor: this.fourthColor,
@@ -85,7 +85,7 @@ class ValueCompareChart extends EsppChart {
                 },
                 plugins: {
                     legend: {
-                        display: false
+                        display: true
                     },
                     title: {
                         display: true,

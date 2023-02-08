@@ -1,3 +1,29 @@
+document.getElementById('price').addEventListener('input', function() {
+    toggleGetStockDataButton();
+});
+document.getElementById('volatility').addEventListener('input', function() {
+    toggleGetStockDataButton();
+});
+
+function toggleGetStockDataButton(turnButtonOff=null) {
+    const volatilityField = document.querySelector('#volatility');
+    const priceField = document.querySelector('#price');
+    const stockButton = document.querySelector('#stock-button');
+
+    if (turnButtonOff) {
+        stockButton.className = 'btn btn-sm btn-outline-secondary';
+        return;
+    }
+
+    if (volatilityField.value == '' || priceField.value == '') {
+        stockButton.className = 'btn btn-sm btn-secondary';
+    } else {
+        stockButton.className = 'btn btn-sm btn-outline-secondary';
+    }
+}
+
+
+
 function validateTicker(tickerField) {
     const parentDiv = tickerField.parentNode;
     const validationDiv = parentDiv.querySelector('div');
